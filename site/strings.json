@@ -1,0 +1,18 @@
+{"lang": "en",
+ "en": {
+  "_prompt_language": "English",
+  "title": "Taxi Plan", "go_now": "GO NOW", "rest_of_today": "REST OF TODAY",
+  "updated_ok": "✓ Updated {time}", "updated_old": "⚠ Old plan, from {day} {time}", "updated_partial": "⚠ Some sources failed · {time}",
+  "quiet": "QUIET", "free_until": "Free time until {time} ({name})", "free_rest": "Free time, nothing big later",
+  "try_nearby": "Or try nearby: {names}", "tap_open": "▼ tap for more", "tap_close": "▲ tap to close",
+  "exit_event": "Comes out ~{time}", "exit_race": "Last race ~{time}", "exit_office": "Staff leave ~{time}", "exit_cruise": "Passengers arrive ~12–3pm",
+  "address": "📍 {address}", "starts_ends": "🕖 Starts {start} · ends ~{end}", "crowd": "👥 ~{size} · ages {lo}–{hi}", "wait": "🅿️ Wait: {wait}",
+  "from_you": "🚕 ~{min} min from you", "from_prev": "🚕 {min} min from {name}", "from_cbd": "🚕 {min} min from the CBD",
+  "navigate": "▶ Navigate (Maps)", "no_plan": "No plan yet. A new plan is made every morning at 10am.", "loading": "Loading…",
+  "am": "am", "pm": "pm", "AM": "AM", "PM": "PM",
+  "days": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+  "months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+  "office_late": "{name} · late finish", "cruise_name": "Cruise ship boarding · {ship}",
+  "cruise_desc": "Ship departs at {time} from the {terminal}. Pick up passengers at city hotels heading to the terminal.",
+  "cruise_wait": "City hotels, then the {terminal}"
+ }}
