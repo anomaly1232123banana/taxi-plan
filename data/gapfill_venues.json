@@ -1,0 +1,118 @@
+{
+ "estimate": true,
+ "researched": "2026-11-23",
+ "venues": [
+  {
+   "name": "Sydney Opera House",
+   "kind": "venue",
+   "area": "Circular Quay/The Rocks",
+   "address": "Bennelong Point, Sydney NSW 2000",
+   "what_on_url": "https://www.sydneyoperahouse.com/whats-on"
+  },
+  {
+   "name": "ICC Sydney",
+   "kind": "venue",
+   "area": "Darling Harbour",
+   "address": "14 Darling Dr, Sydney NSW 2000",
+   "what_on_url": "https://www.iccsydney.com.au/whats-on"
+  },
+  {
+   "name": "Capitol Theatre",
+   "kind": "venue",
+   "area": "Darling Harbour",
+   "address": "13 Campbell St, Haymarket NSW 2000",
+   "what_on_url": "https://www.capitoltheatre.com.au/"
+  },
+  {
+   "name": "State Theatre",
+   "kind": "venue",
+   "area": "CBD",
+   "address": "49 Market St, Sydney NSW 2000",
+   "what_on_url": "https://www.statetheatre.com.au/"
+  },
+  {
+   "name": "Theatre Royal",
+   "kind": "venue",
+   "area": "CBD",
+   "address": "108 King St, Sydney NSW 2000",
+   "what_on_url": "https://www.theatreroyalsydney.com.au/"
+  },
+  {
+   "name": "Lyric Theatre",
+   "kind": "venue",
+   "area": "Pyrmont",
+   "address": "The Star, 80 Pyrmont St, Pyrmont NSW 2009",
+   "what_on_url": "https://www.lyrictheatresydney.com.au/"
+  },
+  {
+   "name": "Roslyn Packer Theatre",
+   "kind": "venue",
+   "area": "Barangaroo",
+   "address": "22 Hickson Rd, Walsh Bay NSW 2000",
+   "what_on_url": "https://www.roslynpackertheatre.com.au/"
+  },
+  {
+   "name": "City Recital Hall",
+   "kind": "venue",
+   "area": "CBD",
+   "address": "2-12 Angel Pl, Sydney NSW 2000",
+   "what_on_url": "https://www.cityrecitalhall.com/"
+  },
+  {
+   "name": "Sydney Town Hall",
+   "kind": "venue",
+   "area": "CBD",
+   "address": "483 George St, Sydney NSW 2000",
+   "what_on_url": "https://www.cityofsydney.nsw.gov.au/venue-hire/sydney-town-hall"
+  },
+  {
+   "name": "Riverside Theatres",
+   "kind": "venue",
+   "area": "Parramatta",
+   "address": "Cnr Church and Market Sts, Parramatta NSW 2150",
+   "what_on_url": "https://riversideparramatta.com.au/whats-on/"
+  },
+  {
+   "name": "Enmore Theatre",
+   "kind": "venue",
+   "area": "Darling Harbour",
+   "address": "118-132 Enmore Rd, Newtown NSW 2042",
+   "what_on_url": "https://www.enmoretheatre.com.au/"
+  },
+  {
+   "name": "Hordern Pavilion",
+   "kind": "venue",
+   "area": "Moore Park",
+   "address": "1 Driver Ave, Moore Park NSW 2021",
+   "what_on_url": "https://www.hordernpavilion.com.au/"
+  },
+  {
+   "name": "Royal Randwick",
+   "kind": "racecourse",
+   "area": "Randwick",
+   "address": "Alison Rd, Randwick NSW 2031",
+   "what_on_url": "https://www.australianturfclub.com.au/"
+  },
+  {
+   "name": "Rosehill Gardens",
+   "kind": "racecourse",
+   "area": "Rosehill",
+   "address": "Grand Dr, Camellia NSW 2142",
+   "what_on_url": "https://www.australianturfclub.com.au/"
+  },
+  {
+   "name": "Canterbury Park",
+   "kind": "racecourse",
+   "area": "Canterbury",
+   "address": "Church St, Canterbury NSW 2193",
+   "what_on_url": "https://www.australianturfclub.com.au/"
+  },
+  {
+   "name": "Warwick Farm",
+   "kind": "racecourse",
+   "area": "Parramatta",
+   "address": "Hume Hwy, Warwick Farm NSW 2170",
+   "what_on_url": "https://www.australianturfclub.com.au/"
+  }
+ ]
+}

@@ -1,0 +1,698 @@
+{
+ "estimate": true,
+ "researched": "2026-11-23",
+ "places": [
+  {
+   "id": "hilton-sydney",
+   "kind": "hotel",
+   "name": "Hilton Sydney",
+   "address": "488 George St, Sydney NSW 2000",
+   "area": "CBD",
+   "lat": -33.8732,
+   "lon": 151.2066,
+   "busy": [
+    [
+     "12:00",
+     "14:00"
+    ],
+    [
+     "17:00",
+     "23:00"
+    ]
+   ],
+   "wait": "George St / Market St kerb"
+  },
+  {
+   "id": "sheraton-grand-sydney-hyde-park",
+   "kind": "hotel",
+   "name": "Sheraton Grand Sydney Hyde Park",
+   "address": "161 Elizabeth St, Sydney NSW 2000",
+   "area": "CBD",
+   "lat": -33.8738,
+   "lon": 151.2113,
+   "busy": [
+    [
+     "12:00",
+     "14:00"
+    ],
+    [
+     "17:00",
+     "23:00"
+    ]
+   ],
+   "wait": "Elizabeth St kerb"
+  },
+  {
+   "id": "hyatt-regency-sydney",
+   "kind": "hotel",
+   "name": "Hyatt Regency Sydney",
+   "address": "161 Sussex St, Sydney NSW 2000",
+   "area": "Darling Harbour",
+   "lat": -33.8719,
+   "lon": 151.2019,
+   "busy": [
+    [
+     "12:00",
+     "14:00"
+    ],
+    [
+     "17:00",
+     "23:00"
+    ]
+   ],
+   "wait": "Sussex St kerb"
+  },
+  {
+   "id": "four-seasons-hotel-sydney",
+   "kind": "hotel",
+   "name": "Four Seasons Hotel Sydney",
+   "address": "199 George St, Sydney NSW 2000",
+   "area": "Circular Quay/The Rocks",
+   "lat": -33.8625,
+   "lon": 151.2087,
+   "busy": [
+    [
+     "12:00",
+     "14:00"
+    ],
+    [
+     "17:00",
+     "23:00"
+    ]
+   ],
+   "wait": "George St kerb"
+  },
+  {
+   "id": "shangri-la-sydney",
+   "kind": "hotel",
+   "name": "Shangri-La Sydney",
+   "address": "176 Cumberland St, The Rocks NSW 2000",
+   "area": "Circular Quay/The Rocks",
+   "lat": -33.8573,
+   "lon": 151.2074,
+   "busy": [
+    [
+     "12:00",
+     "14:00"
+    ],
+    [
+     "17:00",
+     "23:00"
+    ]
+   ],
+   "wait": "Cumberland St kerb"
+  },
+  {
+   "id": "park-hyatt-sydney",
+   "kind": "hotel",
+   "name": "Park Hyatt Sydney",
+   "address": "7 Hickson Rd, The Rocks NSW 2000",
+   "area": "Circular Quay/The Rocks",
+   "lat": -33.8561,
+   "lon": 151.2096,
+   "busy": [
+    [
+     "12:00",
+     "14:00"
+    ],
+    [
+     "17:00",
+     "23:00"
+    ]
+   ],
+   "wait": "Hickson Rd forecourt"
+  },
+  {
+   "id": "sofitel-sydney-wentworth",
+   "kind": "hotel",
+   "name": "Sofitel Sydney Wentworth",
+   "address": "61-101 Phillip St, Sydney NSW 2000",
+   "area": "CBD",
+   "lat": -33.8648,
+   "lon": 151.2123,
+   "busy": [
+    [
+     "12:00",
+     "14:00"
+    ],
+    [
+     "17:00",
+     "23:00"
+    ]
+   ],
+   "wait": "Phillip St kerb"
+  },
+  {
+   "id": "intercontinental-sydney",
+   "kind": "hotel",
+   "name": "InterContinental Sydney",
+   "address": "117 Macquarie St, Sydney NSW 2000",
+   "area": "Circular Quay/The Rocks",
+   "lat": -33.8625,
+   "lon": 151.2123,
+   "busy": [
+    [
+     "12:00",
+     "14:00"
+    ],
+    [
+     "17:00",
+     "23:00"
+    ]
+   ],
+   "wait": "Macquarie St kerb"
+  },
+  {
+   "id": "the-westin-sydney",
+   "kind": "hotel",
+   "name": "The Westin Sydney",
+   "address": "1 Martin Place, Sydney NSW 2000",
+   "area": "CBD",
+   "lat": -33.868,
+   "lon": 151.2107,
+   "busy": [
+    [
+     "12:00",
+     "14:00"
+    ],
+    [
+     "17:00",
+     "23:00"
+    ]
+   ],
+   "wait": "Martin Place / Pitt St kerb"
+  },
+  {
+   "id": "swissotel-sydney",
+   "kind": "hotel",
+   "name": "Swissotel Sydney",
+   "address": "68 Market St, Sydney NSW 2000",
+   "area": "CBD",
+   "lat": -33.8715,
+   "lon": 151.2081,
+   "busy": [
+    [
+     "12:00",
+     "14:00"
+    ],
+    [
+     "17:00",
+     "23:00"
+    ]
+   ],
+   "wait": "Market St kerb"
+  },
+  {
+   "id": "sydney-harbour-marriott",
+   "kind": "hotel",
+   "name": "Sydney Harbour Marriott",
+   "address": "30 Pitt St, Sydney NSW 2000",
+   "area": "Circular Quay/The Rocks",
+   "lat": -33.8625,
+   "lon": 151.2108,
+   "busy": [
+    [
+     "12:00",
+     "14:00"
+    ],
+    [
+     "17:00",
+     "23:00"
+    ]
+   ],
+   "wait": "Pitt St kerb"
+  },
+  {
+   "id": "pullman-sydney-hyde-park",
+   "kind": "hotel",
+   "name": "Pullman Sydney Hyde Park",
+   "address": "36 College St, Sydney NSW 2000",
+   "area": "CBD",
+   "lat": -33.8765,
+   "lon": 151.2133,
+   "busy": [
+    [
+     "12:00",
+     "14:00"
+    ],
+    [
+     "17:00",
+     "23:00"
+    ]
+   ],
+   "wait": "College St kerb"
+  },
+  {
+   "id": "sofitel-sydney-darling-harbour",
+   "kind": "hotel",
+   "name": "Sofitel Sydney Darling Harbour",
+   "address": "12 Darling Dr, Sydney NSW 2000",
+   "area": "Darling Harbour",
+   "lat": -33.8737,
+   "lon": 151.2004,
+   "busy": [
+    [
+     "12:00",
+     "14:00"
+    ],
+    [
+     "17:00",
+     "23:00"
+    ]
+   ],
+   "wait": "Darling Dr forecourt"
+  },
+  {
+   "id": "novotel-sydney-darling-harbour",
+   "kind": "hotel",
+   "name": "Novotel Sydney Darling Harbour",
+   "address": "100 Murray St, Pyrmont NSW 2009",
+   "area": "Darling Harbour",
+   "lat": -33.8742,
+   "lon": 151.2001,
+   "busy": [
+    [
+     "12:00",
+     "14:00"
+    ],
+    [
+     "17:00",
+     "23:00"
+    ]
+   ],
+   "wait": "Murray St kerb"
+  },
+  {
+   "id": "qt-sydney",
+   "kind": "hotel",
+   "name": "QT Sydney",
+   "address": "49 Market St, Sydney NSW 2000",
+   "area": "CBD",
+   "lat": -33.8704,
+   "lon": 151.2088,
+   "busy": [
+    [
+     "12:00",
+     "14:00"
+    ],
+    [
+     "17:00",
+     "23:00"
+    ]
+   ],
+   "wait": "Market St kerb"
+  },
+  {
+   "id": "the-star-sydney",
+   "kind": "casino",
+   "name": "The Star Sydney",
+   "address": "80 Pyrmont St, Pyrmont NSW 2009",
+   "area": "Pyrmont",
+   "lat": -33.868,
+   "lon": 151.1949,
+   "busy": [
+    [
+     "12:00",
+     "03:00"
+    ]
+   ],
+   "wait": "Star forecourt rank, Pyrmont St"
+  },
+  {
+   "id": "crown-sydney",
+   "kind": "casino",
+   "name": "Crown Sydney",
+   "address": "1 Barangaroo Ave, Barangaroo NSW 2000",
+   "area": "Barangaroo",
+   "lat": -33.862,
+   "lon": 151.2025,
+   "busy": [
+    [
+     "12:00",
+     "03:00"
+    ]
+   ],
+   "wait": "Barangaroo Ave forecourt"
+  },
+  {
+   "id": "rooty-hill-rsl",
+   "kind": "club",
+   "name": "Rooty Hill RSL",
+   "address": "55 Sherbrooke St, Rooty Hill NSW 2766",
+   "area": "Rooty Hill",
+   "lat": -33.7708,
+   "lon": 150.8435,
+   "busy": [
+    [
+     "11:00",
+     "14:00"
+    ],
+    [
+     "17:00",
+     "23:00"
+    ]
+   ],
+   "wait": "Main entrance rank"
+  },
+  {
+   "id": "canterbury-league-club",
+   "kind": "club",
+   "name": "Canterbury League Club",
+   "address": "Belmore NSW 2192",
+   "area": "Canterbury",
+   "lat": -33.9176,
+   "lon": 151.0891,
+   "busy": [
+    [
+     "11:00",
+     "14:00"
+    ],
+    [
+     "17:00",
+     "23:00"
+    ]
+   ],
+   "wait": "Main entrance"
+  },
+  {
+   "id": "parramatta-leagues-club",
+   "kind": "club",
+   "name": "Parramatta Leagues Club",
+   "address": "15 O'Connell St, Parramatta NSW 2150",
+   "area": "Parramatta",
+   "lat": -33.8141,
+   "lon": 151.0045,
+   "busy": [
+    [
+     "11:00",
+     "14:00"
+    ],
+    [
+     "17:00",
+     "23:00"
+    ]
+   ],
+   "wait": "O'Connell St entrance"
+  },
+  {
+   "id": "wests-ashfield-leagues-club",
+   "kind": "club",
+   "name": "Wests Ashfield Leagues Club",
+   "address": "91 Liverpool Rd, Ashfield NSW 2131",
+   "area": "Canterbury",
+   "lat": -33.8914,
+   "lon": 151.1262,
+   "busy": [
+    [
+     "11:00",
+     "14:00"
+    ],
+    [
+     "17:00",
+     "23:00"
+    ]
+   ],
+   "wait": "Liverpool Rd entrance"
+  },
+  {
+   "id": "club-burwood-rsl",
+   "kind": "club",
+   "name": "Club Burwood RSL",
+   "address": "96 Shaftesbury Rd, Burwood NSW 2134",
+   "area": "Canterbury",
+   "lat": -33.8776,
+   "lon": 151.1038,
+   "busy": [
+    [
+     "11:00",
+     "14:00"
+    ],
+    [
+     "17:00",
+     "23:00"
+    ]
+   ],
+   "wait": "Shaftesbury Rd entrance"
+  },
+  {
+   "id": "city-tattersalls-club",
+   "kind": "club",
+   "name": "City Tattersalls Club",
+   "address": "198 Pitt St, Sydney NSW 2000",
+   "area": "CBD",
+   "lat": -33.8734,
+   "lon": 151.2075,
+   "busy": [
+    [
+     "12:00",
+     "14:30"
+    ],
+    [
+     "17:00",
+     "22:00"
+    ]
+   ],
+   "wait": "Pitt St kerb"
+  },
+  {
+   "id": "easts-leagues-club",
+   "kind": "club",
+   "name": "Easts Leagues Club",
+   "address": "Bondi Junction NSW 2022",
+   "area": "Randwick",
+   "lat": -33.8915,
+   "lon": 151.253,
+   "busy": [
+    [
+     "11:00",
+     "14:00"
+    ],
+    [
+     "17:00",
+     "23:00"
+    ]
+   ],
+   "wait": "Main entrance"
+  },
+  {
+   "id": "souths-juniors",
+   "kind": "club",
+   "name": "Souths Juniors",
+   "address": "558 Anzac Pde, Kingsford NSW 2032",
+   "area": "Randwick",
+   "lat": -33.921,
+   "lon": 151.2269,
+   "busy": [
+    [
+     "11:00",
+     "14:00"
+    ],
+    [
+     "17:00",
+     "23:00"
+    ]
+   ],
+   "wait": "Anzac Pde entrance"
+  },
+  {
+   "id": "st-george-leagues-club",
+   "kind": "club",
+   "name": "St George Leagues Club",
+   "address": "Princes Hwy, Kogarah NSW 2217",
+   "area": "Canterbury",
+   "lat": -33.964,
+   "lon": 151.134,
+   "busy": [
+    [
+     "11:00",
+     "14:00"
+    ],
+    [
+     "17:00",
+     "23:00"
+    ]
+   ],
+   "wait": "Main entrance"
+  },
+  {
+   "id": "mounties",
+   "kind": "club",
+   "name": "Mounties",
+   "address": "Mount Pritchard NSW 2170",
+   "area": "Parramatta",
+   "lat": -33.8955,
+   "lon": 150.905,
+   "busy": [
+    [
+     "11:00",
+     "14:00"
+    ],
+    [
+     "17:00",
+     "23:00"
+    ]
+   ],
+   "wait": "Main entrance"
+  },
+  {
+   "id": "bankstown-sports-club",
+   "kind": "club",
+   "name": "Bankstown Sports Club",
+   "address": "8 Greenfield Pde, Bankstown NSW 2200",
+   "area": "Canterbury",
+   "lat": -33.9185,
+   "lon": 151.0345,
+   "busy": [
+    [
+     "11:00",
+     "14:00"
+    ],
+    [
+     "17:00",
+     "23:00"
+    ]
+   ],
+   "wait": "Greenfield Pde entrance"
+  },
+  {
+   "id": "st-vincent-s-private-hospital-sydney",
+   "kind": "hospital",
+   "name": "St Vincent's Private Hospital Sydney",
+   "address": "406 Victoria St, Darlinghurst NSW 2010",
+   "area": "Moore Park",
+   "lat": -33.88,
+   "lon": 151.221,
+   "busy": [
+    [
+     "10:00",
+     "12:00"
+    ],
+    [
+     "15:00",
+     "17:00"
+    ]
+   ],
+   "wait": "Victoria St entrance"
+  },
+  {
+   "id": "mater-hospital-sydney",
+   "kind": "hospital",
+   "name": "Mater Hospital Sydney",
+   "address": "25 Rocklands Rd, Crows Nest NSW 2065",
+   "area": "North Sydney",
+   "lat": -33.826,
+   "lon": 151.196,
+   "busy": [
+    [
+     "10:00",
+     "12:00"
+    ],
+    [
+     "15:00",
+     "17:00"
+    ]
+   ],
+   "wait": "Rocklands Rd entrance"
+  },
+  {
+   "id": "prince-of-wales-private-hospital",
+   "kind": "hospital",
+   "name": "Prince of Wales Private Hospital",
+   "address": "Barker St, Randwick NSW 2031",
+   "area": "Randwick",
+   "lat": -33.9137,
+   "lon": 151.2403,
+   "busy": [
+    [
+     "10:00",
+     "12:00"
+    ],
+    [
+     "15:00",
+     "17:00"
+    ]
+   ],
+   "wait": "Barker St entrance"
+  },
+  {
+   "id": "macquarie-university-hospital",
+   "kind": "hospital",
+   "name": "Macquarie University Hospital",
+   "address": "3 Technology Pl, Macquarie Park NSW 2109",
+   "area": "Macquarie Park",
+   "lat": -33.7745,
+   "lon": 151.1155,
+   "busy": [
+    [
+     "10:00",
+     "12:00"
+    ],
+    [
+     "15:00",
+     "17:00"
+    ]
+   ],
+   "wait": "Technology Pl entrance"
+  },
+  {
+   "id": "norwest-private-hospital",
+   "kind": "hospital",
+   "name": "Norwest Private Hospital",
+   "address": "11 Norbrik Dr, Bella Vista NSW 2153",
+   "area": "Parramatta",
+   "lat": -33.736,
+   "lon": 150.9565,
+   "busy": [
+    [
+     "10:00",
+     "12:00"
+    ],
+    [
+     "15:00",
+     "17:00"
+    ]
+   ],
+   "wait": "Main entrance"
+  },
+  {
+   "id": "strathfield-private-hospital",
+   "kind": "hospital",
+   "name": "Strathfield Private Hospital",
+   "address": "3 Everton Rd, Strathfield NSW 2135",
+   "area": "Olympic Park",
+   "lat": -33.875,
+   "lon": 151.084,
+   "busy": [
+    [
+     "10:00",
+     "12:00"
+    ],
+    [
+     "15:00",
+     "17:00"
+    ]
+   ],
+   "wait": "Everton Rd entrance"
+  },
+  {
+   "id": "royal-north-shore-private-hospital",
+   "kind": "hospital",
+   "name": "Royal North Shore Private Hospital",
+   "address": "Westbourne St, St Leonards NSW 2065",
+   "area": "North Sydney",
+   "lat": -33.824,
+   "lon": 151.193,
+   "busy": [
+    [
+     "10:00",
+     "12:00"
+    ],
+    [
+     "15:00",
+     "17:00"
+    ]
+   ],
+   "wait": "Westbourne St entrance"
+  }
+ ]
+}

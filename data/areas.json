@@ -1,0 +1,604 @@
+{
+ "estimate": true,
+ "researched": "2026-11-23",
+ "note": "Off-peak car minutes, researched estimates.",
+ "areas": {
+  "CBD": {
+   "lat": -33.8688,
+   "lon": 151.2093
+  },
+  "Barangaroo": {
+   "lat": -33.8615,
+   "lon": 151.201
+  },
+  "Darling Harbour": {
+   "lat": -33.873,
+   "lon": 151.1987
+  },
+  "Circular Quay/The Rocks": {
+   "lat": -33.8599,
+   "lon": 151.209
+  },
+  "Moore Park": {
+   "lat": -33.8889,
+   "lon": 151.2247
+  },
+  "Randwick": {
+   "lat": -33.905,
+   "lon": 151.233
+  },
+  "Olympic Park": {
+   "lat": -33.8474,
+   "lon": 151.0636
+  },
+  "Parramatta": {
+   "lat": -33.815,
+   "lon": 151.0011
+  },
+  "Rosehill": {
+   "lat": -33.823,
+   "lon": 151.027
+  },
+  "North Sydney": {
+   "lat": -33.8397,
+   "lon": 151.2074
+  },
+  "Chatswood": {
+   "lat": -33.7968,
+   "lon": 151.183
+  },
+  "Macquarie Park": {
+   "lat": -33.777,
+   "lon": 151.126
+  },
+  "Rooty Hill": {
+   "lat": -33.7707,
+   "lon": 150.844
+  },
+  "Canterbury": {
+   "lat": -33.9118,
+   "lon": 151.113
+  },
+  "Pyrmont": {
+   "lat": -33.8697,
+   "lon": 151.194
+  }
+ },
+ "pairs": [
+  [
+   "CBD",
+   "Barangaroo",
+   6
+  ],
+  [
+   "CBD",
+   "Darling Harbour",
+   6
+  ],
+  [
+   "CBD",
+   "Circular Quay/The Rocks",
+   5
+  ],
+  [
+   "CBD",
+   "Moore Park",
+   12
+  ],
+  [
+   "CBD",
+   "Randwick",
+   17
+  ],
+  [
+   "CBD",
+   "Olympic Park",
+   28
+  ],
+  [
+   "CBD",
+   "Parramatta",
+   33
+  ],
+  [
+   "CBD",
+   "Rosehill",
+   30
+  ],
+  [
+   "CBD",
+   "North Sydney",
+   12
+  ],
+  [
+   "CBD",
+   "Chatswood",
+   22
+  ],
+  [
+   "CBD",
+   "Macquarie Park",
+   28
+  ],
+  [
+   "CBD",
+   "Rooty Hill",
+   45
+  ],
+  [
+   "CBD",
+   "Canterbury",
+   25
+  ],
+  [
+   "CBD",
+   "Pyrmont",
+   8
+  ],
+  [
+   "Barangaroo",
+   "Darling Harbour",
+   6
+  ],
+  [
+   "Barangaroo",
+   "Circular Quay/The Rocks",
+   6
+  ],
+  [
+   "Barangaroo",
+   "Moore Park",
+   15
+  ],
+  [
+   "Barangaroo",
+   "Randwick",
+   20
+  ],
+  [
+   "Barangaroo",
+   "Olympic Park",
+   28
+  ],
+  [
+   "Barangaroo",
+   "Parramatta",
+   33
+  ],
+  [
+   "Barangaroo",
+   "Rosehill",
+   30
+  ],
+  [
+   "Barangaroo",
+   "North Sydney",
+   10
+  ],
+  [
+   "Barangaroo",
+   "Chatswood",
+   22
+  ],
+  [
+   "Barangaroo",
+   "Macquarie Park",
+   28
+  ],
+  [
+   "Barangaroo",
+   "Rooty Hill",
+   45
+  ],
+  [
+   "Barangaroo",
+   "Canterbury",
+   27
+  ],
+  [
+   "Barangaroo",
+   "Pyrmont",
+   7
+  ],
+  [
+   "Darling Harbour",
+   "Circular Quay/The Rocks",
+   9
+  ],
+  [
+   "Darling Harbour",
+   "Moore Park",
+   14
+  ],
+  [
+   "Darling Harbour",
+   "Randwick",
+   19
+  ],
+  [
+   "Darling Harbour",
+   "Olympic Park",
+   26
+  ],
+  [
+   "Darling Harbour",
+   "Parramatta",
+   32
+  ],
+  [
+   "Darling Harbour",
+   "Rosehill",
+   29
+  ],
+  [
+   "Darling Harbour",
+   "North Sydney",
+   13
+  ],
+  [
+   "Darling Harbour",
+   "Chatswood",
+   24
+  ],
+  [
+   "Darling Harbour",
+   "Macquarie Park",
+   30
+  ],
+  [
+   "Darling Harbour",
+   "Rooty Hill",
+   44
+  ],
+  [
+   "Darling Harbour",
+   "Canterbury",
+   24
+  ],
+  [
+   "Darling Harbour",
+   "Pyrmont",
+   4
+  ],
+  [
+   "Circular Quay/The Rocks",
+   "Moore Park",
+   15
+  ],
+  [
+   "Circular Quay/The Rocks",
+   "Randwick",
+   20
+  ],
+  [
+   "Circular Quay/The Rocks",
+   "Olympic Park",
+   30
+  ],
+  [
+   "Circular Quay/The Rocks",
+   "Parramatta",
+   35
+  ],
+  [
+   "Circular Quay/The Rocks",
+   "Rosehill",
+   32
+  ],
+  [
+   "Circular Quay/The Rocks",
+   "North Sydney",
+   10
+  ],
+  [
+   "Circular Quay/The Rocks",
+   "Chatswood",
+   22
+  ],
+  [
+   "Circular Quay/The Rocks",
+   "Macquarie Park",
+   28
+  ],
+  [
+   "Circular Quay/The Rocks",
+   "Rooty Hill",
+   47
+  ],
+  [
+   "Circular Quay/The Rocks",
+   "Canterbury",
+   27
+  ],
+  [
+   "Circular Quay/The Rocks",
+   "Pyrmont",
+   10
+  ],
+  [
+   "Moore Park",
+   "Randwick",
+   8
+  ],
+  [
+   "Moore Park",
+   "Olympic Park",
+   30
+  ],
+  [
+   "Moore Park",
+   "Parramatta",
+   36
+  ],
+  [
+   "Moore Park",
+   "Rosehill",
+   33
+  ],
+  [
+   "Moore Park",
+   "North Sydney",
+   20
+  ],
+  [
+   "Moore Park",
+   "Chatswood",
+   28
+  ],
+  [
+   "Moore Park",
+   "Macquarie Park",
+   34
+  ],
+  [
+   "Moore Park",
+   "Rooty Hill",
+   49
+  ],
+  [
+   "Moore Park",
+   "Canterbury",
+   20
+  ],
+  [
+   "Moore Park",
+   "Pyrmont",
+   16
+  ],
+  [
+   "Randwick",
+   "Olympic Park",
+   33
+  ],
+  [
+   "Randwick",
+   "Parramatta",
+   40
+  ],
+  [
+   "Randwick",
+   "Rosehill",
+   37
+  ],
+  [
+   "Randwick",
+   "North Sydney",
+   25
+  ],
+  [
+   "Randwick",
+   "Chatswood",
+   33
+  ],
+  [
+   "Randwick",
+   "Macquarie Park",
+   38
+  ],
+  [
+   "Randwick",
+   "Rooty Hill",
+   52
+  ],
+  [
+   "Randwick",
+   "Canterbury",
+   22
+  ],
+  [
+   "Randwick",
+   "Pyrmont",
+   21
+  ],
+  [
+   "Olympic Park",
+   "Parramatta",
+   14
+  ],
+  [
+   "Olympic Park",
+   "Rosehill",
+   12
+  ],
+  [
+   "Olympic Park",
+   "North Sydney",
+   26
+  ],
+  [
+   "Olympic Park",
+   "Chatswood",
+   28
+  ],
+  [
+   "Olympic Park",
+   "Macquarie Park",
+   24
+  ],
+  [
+   "Olympic Park",
+   "Rooty Hill",
+   28
+  ],
+  [
+   "Olympic Park",
+   "Canterbury",
+   20
+  ],
+  [
+   "Olympic Park",
+   "Pyrmont",
+   26
+  ],
+  [
+   "Parramatta",
+   "Rosehill",
+   7
+  ],
+  [
+   "Parramatta",
+   "North Sydney",
+   28
+  ],
+  [
+   "Parramatta",
+   "Chatswood",
+   25
+  ],
+  [
+   "Parramatta",
+   "Macquarie Park",
+   20
+  ],
+  [
+   "Parramatta",
+   "Rooty Hill",
+   22
+  ],
+  [
+   "Parramatta",
+   "Canterbury",
+   28
+  ],
+  [
+   "Parramatta",
+   "Pyrmont",
+   30
+  ],
+  [
+   "Rosehill",
+   "North Sydney",
+   27
+  ],
+  [
+   "Rosehill",
+   "Chatswood",
+   24
+  ],
+  [
+   "Rosehill",
+   "Macquarie Park",
+   20
+  ],
+  [
+   "Rosehill",
+   "Rooty Hill",
+   25
+  ],
+  [
+   "Rosehill",
+   "Canterbury",
+   25
+  ],
+  [
+   "Rosehill",
+   "Pyrmont",
+   28
+  ],
+  [
+   "North Sydney",
+   "Chatswood",
+   12
+  ],
+  [
+   "North Sydney",
+   "Macquarie Park",
+   20
+  ],
+  [
+   "North Sydney",
+   "Rooty Hill",
+   50
+  ],
+  [
+   "North Sydney",
+   "Canterbury",
+   30
+  ],
+  [
+   "North Sydney",
+   "Pyrmont",
+   14
+  ],
+  [
+   "Chatswood",
+   "Macquarie Park",
+   10
+  ],
+  [
+   "Chatswood",
+   "Rooty Hill",
+   45
+  ],
+  [
+   "Chatswood",
+   "Canterbury",
+   36
+  ],
+  [
+   "Chatswood",
+   "Pyrmont",
+   24
+  ],
+  [
+   "Macquarie Park",
+   "Rooty Hill",
+   40
+  ],
+  [
+   "Macquarie Park",
+   "Canterbury",
+   40
+  ],
+  [
+   "Macquarie Park",
+   "Pyrmont",
+   30
+  ],
+  [
+   "Rooty Hill",
+   "Canterbury",
+   40
+  ],
+  [
+   "Rooty Hill",
+   "Pyrmont",
+   46
+  ],
+  [
+   "Canterbury",
+   "Pyrmont",
+   22
+  ]
+ ],
+ "same_area_min": 5,
+ "peak": {
+  "from": "16:00",
+  "to": "19:00",
+  "factor": 1.5
+ },
+ "late": {
+  "from": "21:00",
+  "factor": 0.8
+ }
+}
