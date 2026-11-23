@@ -49,8 +49,6 @@ def make_root(tmp: Path) -> Path:
 def get(url):
     if "ticketmaster" in url:
         return fx("tm_page.json")
-    if "portauthoritynsw" in url:
-        return fx("cruise.html")
     if "open-meteo" in url:
         return fx("weather_dry.json")
     raise AssertionError("unexpected url " + url)
@@ -91,7 +89,7 @@ class TestScan(unittest.TestCase):
         z = next(s for s in stops(plan, "2026-11-25") if s["id"] == "tm:Z1")
         self.assertEqual((z["score"], z["block"]), (62, [600, 720]))
         self.assertEqual([s["id"] for s in stops(plan, "2026-11-23")],
-                         ["cruise:anthem-of-the-seas:2026-11-23", "office:kpmg-barangaroo:normal:2026-11-23",
+                         ["office:kpmg-barangaroo:normal:2026-11-23",
                           "office:kpmg-barangaroo:late:2026-11-23"])
         self.assertEqual(json.loads((self.root / "site" / "plan.json").read_text("utf-8")), plan)
         self.assertIn("tm:Z1", json.loads((self.root / "cache" / "estimates.json").read_text("utf-8"))["estimates"])
@@ -149,13 +147,6 @@ class TestScan(unittest.TestCase):
         self.assertEqual(plan["status"], "ok")
         self.assertTrue(plan["sources"]["weather"].startswith("error"))
 
-    def test_cruise_error_is_partial(self):
-        def no_cruise(url):
-            if "portauthoritynsw" in url:
-                raise SourceError("portauthoritynsw.com.au: HTTP 500")
-            return get(url)
-        self.assertEqual(self.scan(get_text=no_cruise)["status"], "partial")
-
     def test_gapfill_error_status_is_partial_and_cleaned(self):
         with patch("taxi.gapfill.gapfill", Mock(return_value=([], [], "error: bad https://x.test/p?apikey=SECRETKEY123"))):
             plan = self.scan()
@@ -195,16 +186,16 @@ class TestScan(unittest.TestCase):
         with patch("taxi.net.get_text", get):
             self.assertEqual(main(["--root", str(self.root), "--no-claude", "--no-publish"]), 0)
         log = (self.root / "logs" / "scan.log").read_text("utf-8")
-        for s in ("ticketmaster: ok", "cruise: ok", "offices: ok", "weather: ok"):
+        for s in ("ticketmaster: ok", "offices: ok", "weather: ok"):
             self.assertIn(s, log)
         self.assertNotIn("SECRETKEY123", log)
 
     def test_source_error_hides_local_paths(self):
-        def no_cruise(url):
-            if "portauthoritynsw" in url:
+        def no_weather(url):
+            if "open-meteo" in url:
                 raise SourceError(r"cannot open C:\Users\x\foo.txt and /home/bob/.claude/x")
             return get(url)
-        text = json.dumps(self.scan(get_text=no_cruise))
+        text = json.dumps(self.scan(get_text=no_weather))
         self.assertNotIn("x\\\\foo", text)
         self.assertNotIn("bob", text)
 

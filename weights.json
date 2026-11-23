@@ -7,11 +7,6 @@
  "rain": {"min_mm": 0.5, "min_prob": 60},
  "plan": {"big_threshold": 40, "far_minutes": 30, "far_threshold": 55, "load_minutes": 25, "fallbacks": 3, "drive_penalty": 0.1, "area_max_km": 12},
  "office": {"late_crowd_share": 0.2},
- "cruise": {"exit": "13:00", "min_departure": "14:00", "size": 3000, "median_age": 55, "age_lo": 45, "age_hi": 75, "pays": 0.1, "spend": 0.7,
-   "terminals": {
-     "Overseas Passenger Terminal": {"address": "Circular Quay West, The Rocks NSW 2000", "area": "Circular Quay/The Rocks", "lat": -33.8583, "lon": 151.2099},
-     "White Bay Cruise Terminal": {"address": "5 Robert St, Rozelle NSW 2039", "area": "Pyrmont", "lat": -33.8665, "lon": 151.1838},
-     "White Bay 4": {"address": "5 Robert St, Rozelle NSW 2039", "area": "Pyrmont", "lat": -33.8665, "lon": 151.1838}}},
  "ticketmaster": {"radius_km": 50, "max_pages": 5, "skip_words": ["parking", "vip", "package", "upgrade", "gift card", "voucher"]},
  "claude": {"estimate_batch_max": 80, "estimate_timeout_s": 300, "estimate_max_turns": 2, "gapfill_timeout_s": 600, "gapfill_max_turns": 12, "gapfill_max_searches": 8, "gapfill_max_events": 40},
  "cache_keep_days": 30

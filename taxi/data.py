@@ -7,7 +7,7 @@ from typing import Any
 
 from taxi.model import shift_minute
 
-WEIGHT_KEYS = ("points", "age_curve", "size", "late", "boost", "rain", "plan", "office", "cruise",
+WEIGHT_KEYS = ("points", "age_curve", "size", "late", "boost", "rain", "plan", "office",
                "ticketmaster", "claude", "cache_keep_days")
 STEADY_KINDS = ("hotel", "casino", "club", "hospital")
 VENUE_KINDS = ("venue", "racecourse")

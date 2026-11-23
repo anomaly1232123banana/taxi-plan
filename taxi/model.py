@@ -12,7 +12,7 @@ SHIFT_END = 900
 @dataclass
 class Candidate:
     id: str
-    kind: str  # "event" | "race" | "office" | "cruise"
+    kind: str  # "event" | "race" | "office"
     name: str
     venue: str
     address: str

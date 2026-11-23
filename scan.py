@@ -11,7 +11,7 @@ from pathlib import Path
 from taxi import cache as cache_mod, claude, data, estimate as est_mod, gapfill as gf_mod, net, plan as planner, publish as pub_mod
 from taxi.model import SYD, shift_date, shift_slot, working_days
 from taxi.score import score_candidate
-from taxi.sources import cruise, offices as office_src, ticketmaster, weather
+from taxi.sources import offices as office_src, ticketmaster, weather
 
 log = logging.getLogger("scan")
 
@@ -82,7 +82,6 @@ def run(now: datetime, root: Path, get_text=None, call_claude=None, publish_fn=N
         return ticketmaster.to_candidates(ticketmaster.fetch_events(secrets["ticketmaster_key"], days, get_text, w), t, w)
 
     collect("ticketmaster", tm)
-    collect("cruise", lambda: cruise.boarding_candidates(cruise.fetch_departures(get_text, today), days, w, S))
     collect("offices", lambda: office_src.office_candidates(office_rows, days, w, S, holidays))
     collect("weather", lambda: weather.fetch_rain(get_text, w))
     rain = results["weather"] or set()
@@ -115,7 +114,7 @@ def run(now: datetime, root: Path, get_text=None, call_claude=None, publish_fn=N
         log.warning("estimate cache not pruned or saved: %s", net.clean(str(e)))
 
     by_day: dict[date, list] = {d: [] for d in days}
-    for c in tm_est + gf_cands + results["cruise"] + results["offices"]:
+    for c in tm_est + gf_cands + results["offices"]:
         slot = shift_slot(c.exit)
         if slot and slot[0] in by_day:
             score_candidate(c, w, rain, disruptions)
@@ -123,7 +122,7 @@ def run(now: datetime, root: Path, get_text=None, call_claude=None, publish_fn=N
 
     sources = {k: net.clean(v)[:ERR_MAX] for k, v in sources.items()}
     # a weather error alone stays "ok": rain is only a score boost, a red header would cry wolf
-    healthy = (sources["ticketmaster"] == "ok" and sources["estimate"] == "ok" and sources["cruise"] == "ok"
+    healthy = (sources["ticketmaster"] == "ok" and sources["estimate"] == "ok"
                and not sources["gapfill"].startswith("error"))
     plan = {"schema": 1, "generated_at": now.isoformat(timespec="seconds"), "status": "ok" if healthy else "partial", "sources": sources,
             "days": [{"date": d.isoformat(), "entries": planner.plan_day(by_day[d], steady, t, w)} for d in days]}

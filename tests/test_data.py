@@ -96,7 +96,7 @@ class TestData(unittest.TestCase):
     def test_real_weights_and_strings(self):
         self.assertEqual(sum(W["points"].values()), 100)
         self.assertEqual(W["plan"]["big_threshold"], 40)
-        for k in ("go_now", "free_until", "exit_office", "cruise_desc", "office_late", "_prompt_language", "am", "pm", "days", "months"):
+        for k in ("go_now", "free_until", "exit_office", "office_late", "_prompt_language", "am", "pm", "days", "months"):
             self.assertIn(k, S)
 
     def test_weights_rules(self):
