@@ -72,6 +72,10 @@ class TestPlan(unittest.TestCase):
         self.assertEqual(nearby(steady, "Pyrmont", (120, 600), TABLE, 3), ["The Star", "H1", "H2"])
         self.assertEqual(nearby(steady, "Pyrmont", (720, 900), TABLE, 3), ["The Star", "RH"])
 
+    def test_nearby_pre_noon_window(self):
+        steady = [place("RSL", "club", "Pyrmont", "11:00", "14:00"), place("Morning", "hotel", "Pyrmont", "10:00", "12:00")]
+        self.assertEqual(nearby(steady, "Pyrmont", (0, 120), TABLE, 3), ["RSL"])
+
     def test_no_candidates(self):
         e = plan_day([], [], TABLE, W)
         self.assertEqual(len(e), 1)

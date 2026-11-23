@@ -7,7 +7,13 @@ KIND_RANK = {"casino": 0, "hotel": 1, "club": 2, "hospital": 3}
 
 def nearby(steady: list[dict], anchor: str, span: tuple[int, int], t: dict, n: int) -> list[str]:
     def busy(p):
-        return any(shift_minute(a) < span[1] and shift_minute(b) > span[0] for a, b in p["busy"])
+        for a, b in p["busy"]:
+            start, end = shift_minute(a), shift_minute(b)
+            if start > end:  # window began before noon
+                start = 0
+            if start < span[1] and end > span[0]:
+                return True
+        return False
 
     ok = [p for p in steady if busy(p)]
     ok.sort(key=lambda p: (base_minutes(t, anchor, p["area"]), KIND_RANK[p["kind"]], p["name"]))
