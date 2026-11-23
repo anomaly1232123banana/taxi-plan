@@ -1,0 +1,273 @@
+{
+ "_embedded": {
+  "events": [
+   {
+    "id": "Z1",
+    "name": "Qudos concert",
+    "url": "https://www.ticketmaster.com.au/event/Z1",
+    "dates": {
+     "start": {
+      "localDate": "2026-11-25",
+      "localTime": "19:30:00"
+     }
+    },
+    "classifications": [
+     {
+      "segment": {
+       "name": "Music"
+      },
+      "genre": {
+       "name": "Rock"
+      }
+     }
+    ],
+    "_embedded": {
+     "venues": [
+      {
+       "name": "Qudos Bank Arena",
+       "address": {
+        "line1": "Olympic Blvd"
+       },
+       "city": {
+        "name": "Sydney Olympic Park"
+       },
+       "location": {
+        "latitude": "-33.8473",
+        "longitude": "151.0628"
+       }
+      }
+     ]
+    },
+    "priceRanges": [
+     {
+      "min": 89.0,
+      "max": 189.0
+     }
+    ]
+   },
+   {
+    "id": "Z2",
+    "name": "Parking Pass - Qudos",
+    "url": "https://www.ticketmaster.com.au/event/Z2",
+    "dates": {
+     "start": {
+      "localDate": "2026-11-25",
+      "localTime": "19:30:00"
+     }
+    },
+    "classifications": [
+     {
+      "segment": {
+       "name": "Music"
+      },
+      "genre": {
+       "name": "Rock"
+      }
+     }
+    ],
+    "_embedded": {
+     "venues": [
+      {
+       "name": "Qudos Bank Arena",
+       "address": {
+        "line1": "Olympic Blvd"
+       },
+       "city": {
+        "name": "Sydney Olympic Park"
+       },
+       "location": {
+        "latitude": "-33.8473",
+        "longitude": "151.0628"
+       }
+      }
+     ]
+    },
+    "priceRanges": [
+     {
+      "min": 89.0,
+      "max": 189.0
+     }
+    ]
+   },
+   {
+    "id": "Z3",
+    "name": "Qudos concert",
+    "url": "https://www.ticketmaster.com.au/event/Z3",
+    "dates": {
+     "start": {
+      "localDate": "2026-11-25",
+      "localTime": "19:30:00"
+     }
+    },
+    "classifications": [
+     {
+      "segment": {
+       "name": "Music"
+      },
+      "genre": {
+       "name": "Rock"
+      }
+     }
+    ],
+    "_embedded": {
+     "venues": [
+      {
+       "name": "Qudos Bank Arena",
+       "address": {
+        "line1": "Olympic Blvd"
+       },
+       "city": {
+        "name": "Sydney Olympic Park"
+       },
+       "location": {
+        "latitude": "-33.8473",
+        "longitude": "151.0628"
+       }
+      }
+     ]
+    },
+    "priceRanges": [
+     {
+      "min": 89.0,
+      "max": 189.0
+     }
+    ]
+   },
+   {
+    "id": "Z4",
+    "name": "Mystery show",
+    "url": "https://www.ticketmaster.com.au/event/Z4",
+    "dates": {
+     "start": {
+      "localDate": "2026-11-25"
+     }
+    },
+    "classifications": [
+     {
+      "segment": {
+       "name": "Music"
+      },
+      "genre": {
+       "name": "Rock"
+      }
+     }
+    ],
+    "_embedded": {
+     "venues": [
+      {
+       "name": "Qudos Bank Arena",
+       "address": {
+        "line1": "Olympic Blvd"
+       },
+       "city": {
+        "name": "Sydney Olympic Park"
+       },
+       "location": {
+        "latitude": "-33.8473",
+        "longitude": "151.0628"
+       }
+      }
+     ]
+    },
+    "priceRanges": [
+     {
+      "min": 89.0,
+      "max": 189.0
+     }
+    ]
+   },
+   {
+    "id": "Z5",
+    "name": "Melbourne gig",
+    "url": "https://www.ticketmaster.com.au/event/Z5",
+    "dates": {
+     "start": {
+      "localDate": "2026-11-25",
+      "localTime": "19:30:00"
+     }
+    },
+    "classifications": [
+     {
+      "segment": {
+       "name": "Music"
+      },
+      "genre": {
+       "name": "Rock"
+      }
+     }
+    ],
+    "_embedded": {
+     "venues": [
+      {
+       "name": "Melbourne Arena",
+       "address": {
+        "line1": "Olympic Blvd"
+       },
+       "city": {
+        "name": "Sydney Olympic Park"
+       },
+       "location": {
+        "latitude": "-37.8136",
+        "longitude": "144.9631"
+       }
+      }
+     ]
+    },
+    "priceRanges": [
+     {
+      "min": 89.0,
+      "max": 189.0
+     }
+    ]
+   },
+   {
+    "id": "Z6",
+    "name": "Morning kids show",
+    "url": "https://www.ticketmaster.com.au/event/Z6",
+    "dates": {
+     "start": {
+      "localDate": "2026-11-25",
+      "localTime": "09:30:00"
+     }
+    },
+    "classifications": [
+     {
+      "segment": {
+       "name": "Music"
+      },
+      "genre": {
+       "name": "Rock"
+      }
+     }
+    ],
+    "_embedded": {
+     "venues": [
+      {
+       "name": "Qudos Bank Arena",
+       "address": {
+        "line1": "Olympic Blvd"
+       },
+       "city": {
+        "name": "Sydney Olympic Park"
+       },
+       "location": {
+        "latitude": "-33.8473",
+        "longitude": "151.0628"
+       }
+      }
+     ]
+    },
+    "priceRanges": [
+     {
+      "min": 89.0,
+      "max": 189.0
+     }
+    ]
+   }
+  ]
+ },
+ "page": {
+  "totalPages": 1,
+  "number": 0
+ }
+}
