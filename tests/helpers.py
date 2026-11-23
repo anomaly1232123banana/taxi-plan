@@ -34,3 +34,12 @@ def cand(**kw) -> Candidate:
                 lat=-33.8688, lon=151.2093, source_url="https://example.com")
     base.update(kw)
     return Candidate(**base)
+
+
+def assert_covers(tc, entries) -> None:
+    """Entries' blocks run contiguously from shift minute 0 to 900."""
+    blocks = [e["block"] for e in entries]
+    tc.assertEqual(blocks[0][0], 0)
+    tc.assertEqual(blocks[-1][1], 900)
+    for (_, end), (start, _) in zip(blocks, blocks[1:]):
+        tc.assertEqual(end, start)
