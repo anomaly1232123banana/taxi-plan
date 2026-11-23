@@ -1,4 +1,5 @@
 import json
+import logging
 import time
 from datetime import datetime, time as dtime, timedelta, timezone
 from urllib.parse import urlencode
@@ -11,6 +12,8 @@ SYDNEY_LATLONG = "-33.8688,151.2093"
 PAGE_SIZE = 200
 PAGE_SLEEP_S = 0.25  # Discovery API rate limit is 5 requests/s
 RANGE_END_HOUR = 3  # include the small hours after the last shift day
+DEAD_STATUS = ("cancelled", "canceled", "postponed")  # API docs spell it "canceled"
+log = logging.getLogger(__name__)
 SKIP_FROM, SKIP_TO = "03:00", "10:00"  # start times in [03:00, 10:00) are morning shows, not shift crowds
 
 
@@ -35,31 +38,42 @@ def fetch_events(key, days, get_text, w):
     return events
 
 
+def _candidate(e, t, w, seen):
+    start = e["dates"]["start"]
+    lt = start.get("localTime")
+    if (not lt or start.get("timeTBA") or start.get("noSpecificTime") or SKIP_FROM <= lt[:5] < SKIP_TO
+            or e["dates"].get("status", {}).get("code", "").lower() in DEAD_STATUS):
+        return None
+    v = e["_embedded"]["venues"][0]
+    lat, lon = float(v["location"]["latitude"]), float(v["location"]["longitude"])
+    area = nearest_area(t, lat, lon, w["plan"]["area_max_km"])
+    key = (v["name"], start["localDate"], lt)
+    if area is None or key in seen:
+        return None
+    c0 = (e.get("classifications") or [{}])[0]
+    info = f'{c0.get("segment", {}).get("name", "")} / {c0.get("genre", {}).get("name", "")}'
+    pr = (e.get("priceRanges") or [None])[0]
+    if pr:
+        info += f' · ${pr["min"]:.0f}–{pr.get("max", pr["min"]):.0f}'
+    d = datetime.strptime(f'{start["localDate"]} {lt[:5]}', "%Y-%m-%d %H:%M").replace(tzinfo=SYD)
+    c = Candidate(id=f'tm:{e["id"]}', kind="event", name=e["name"], venue=v["name"],
+                  address=f'{v["address"]["line1"]}, {v["city"]["name"]}', area=area, lat=lat, lon=lon,
+                  source_url=e["url"], start=d, info=info)
+    seen.add(key)
+    return c
+
+
 def to_candidates(events, t, w):
     skip = [s.lower() for s in w["ticketmaster"]["skip_words"]]
     out, seen = [], set()
     for e in events:
-        start = e["dates"]["start"]
-        lt = start.get("localTime")
-        if not lt or any(s in e["name"].lower() for s in skip) or SKIP_FROM <= lt[:5] < SKIP_TO:
+        try:
+            if any(s in e["name"].lower() for s in skip):
+                continue
+            c = _candidate(e, t, w, seen)
+        except (KeyError, IndexError, TypeError, ValueError, AttributeError) as ex:
+            log.warning("ticketmaster: skipped malformed event %s (%s)", e.get("id") if isinstance(e, dict) else "?", type(ex).__name__)
             continue
-        v = e["_embedded"]["venues"][0]
-        loc = v.get("location") or {}
-        if "latitude" not in loc:
-            continue
-        lat, lon = float(loc["latitude"]), float(loc["longitude"])
-        area = nearest_area(t, lat, lon, w["plan"]["area_max_km"])
-        key = (v["name"], start["localDate"], lt)
-        if area is None or key in seen:
-            continue
-        seen.add(key)
-        c0 = (e.get("classifications") or [{}])[0]
-        info = f'{c0.get("segment", {}).get("name", "")} / {c0.get("genre", {}).get("name", "")}'
-        pr = (e.get("priceRanges") or [None])[0]
-        if pr:
-            info += f' · ${pr["min"]:.0f}–{pr.get("max", pr["min"]):.0f}'
-        d = datetime.strptime(f'{start["localDate"]} {lt[:5]}', "%Y-%m-%d %H:%M").replace(tzinfo=SYD)
-        out.append(Candidate(id=f'tm:{e["id"]}', kind="event", name=e["name"], venue=v["name"],
-                             address=f'{v["address"]["line1"]}, {v["city"]["name"]}', area=area, lat=lat, lon=lon,
-                             source_url=e["url"], start=d, info=info))
+        if c:
+            out.append(c)
     return out

@@ -1,3 +1,4 @@
+import http.client
 import urllib.request
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlsplit
@@ -34,5 +35,5 @@ def url_alive(url: str, timeout: int = ALIVE_TIMEOUT_S) -> bool:
         return True
     except HTTPError as e:
         return e.code not in GONE_CODES
-    except URLError:
+    except (URLError, OSError, ValueError, http.client.HTTPException):  # stalls, resets, scheme-less links
         return False

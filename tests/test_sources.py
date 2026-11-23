@@ -34,7 +34,27 @@ class TestSources(unittest.TestCase):
 
     def test_unknown_berth_skipped(self):
         deps = parse_schedule(row("Odd Ship", "Mon 23 Nov<br>18:00", "Mystery Wharf"), date(2026, 11, 23))
-        self.assertEqual(boarding_candidates(deps, DAYS, W, S), [])
+        with self.assertLogs("taxi.sources.cruise", "WARNING"):
+            self.assertEqual(boarding_candidates(deps, DAYS, W, S), [])
+
+    def test_bad_row_skipped_not_fatal(self):
+        html = read("cruise.html").replace("Mon 23 Nov<br>18:00", "Mon 23 Nov").replace("Tue 24 Nov<br>12:30", "Blah")
+        with self.assertLogs("taxi.sources.cruise", "WARNING") as lg:
+            deps = parse_schedule(html, date(2026, 11, 23))
+        self.assertEqual([d["ship"] for d in deps], ["Anthem of the Seas", "Sea Ship"]); self.assertEqual(len(lg.records), 2)
+        with self.assertLogs("taxi.sources.cruise", "WARNING"), self.assertRaises(SourceError):
+            parse_schedule(row("X", "Mon 23 Nov"), date(2026, 11, 23))
+
+    def test_page1_bad_or_empty_keeps_page0(self):
+        html = read("cruise.html")
+        for page1, warns in (("<html></html>", False), (row("X", "Mon 23 Nov"), True)):
+            get = lambda u, p=page1: html if u == CRUISE_URL else p
+            if warns:
+                with self.assertLogs("taxi.sources.cruise", "WARNING"):
+                    self.assertEqual(len(fetch_departures(get, date(2026, 11, 23))), 4)
+            else:
+                with self.assertNoLogs("taxi.sources.cruise", "WARNING"):
+                    self.assertEqual(len(fetch_departures(get, date(2026, 11, 23))), 4)
 
     def test_year_rollover(self):
         d = parse_schedule(row("New Year", "Fri 1 Jan<br>17:00"), date(2026, 12, 30))[0]["departure"]
@@ -51,7 +71,8 @@ class TestSources(unittest.TestCase):
             if url == CRUISE_URL:
                 return html
             raise SourceError("boom")
-        self.assertEqual(len(fetch_departures(get, date(2026, 11, 23))), 4)
+        with self.assertLogs("taxi.sources.cruise", "WARNING"):
+            self.assertEqual(len(fetch_departures(get, date(2026, 11, 23))), 4)
         urls = []
         self.assertEqual(len(fetch_departures(lambda u: urls.append(u) or html, date(2026, 11, 23))), 4)
         self.assertEqual(urls, [CRUISE_URL, CRUISE_URL + "?page=1"])

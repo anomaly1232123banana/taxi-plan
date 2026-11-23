@@ -57,9 +57,15 @@ def _departure(text: str, today: date) -> datetime:
 def parse_schedule(html: str, today: date) -> list[dict]:
     p = _Rows()
     p.feed(html)
-    if not p.rows:
+    out = []
+    for r in p.rows:
+        try:
+            out.append({"ship": r["ship"], "departure": _departure(r["when"], today), "berth": r["berth"]})
+        except (SourceError, IndexError) as e:  # a cell with no time, or an unparseable date: skip the row only
+            log.warning("cruise: skipped bad row %r (%s)", r["ship"], e)
+    if not out:
         raise SourceError("cruise: no rows")
-    return [{"ship": r["ship"], "departure": _departure(r["when"], today), "berth": r["berth"]} for r in p.rows]
+    return out
 
 
 def fetch_departures(get_text, today: date) -> list[dict]:
@@ -67,7 +73,8 @@ def fetch_departures(get_text, today: date) -> list[dict]:
     try:
         deps += parse_schedule(get_text(CRUISE_URL + "?page=1"), today)
     except SourceError as e:
-        log.warning("cruise page 2 ignored: %s", e)
+        if "no rows" not in str(e):  # an empty second page is normal
+            log.warning("cruise ?page=1 ignored: %s", e)
     seen, out = set(), []
     for d in deps:
         k = (d["ship"], d["departure"])

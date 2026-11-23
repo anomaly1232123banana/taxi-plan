@@ -1,3 +1,4 @@
+import http.client
 import json
 import unittest
 from datetime import date, datetime
@@ -59,11 +60,35 @@ class TestTicketmaster(unittest.TestCase):
         url = "https://example.com/x"
         for outcome, want in ((None, True), (HTTPError(url, 403, "Forbidden", {}, None), True),
                               (HTTPError(url, 404, "Not Found", {}, None), False),
-                              (HTTPError(url, 410, "Gone", {}, None), False), (URLError("down"), False)):
+                              (HTTPError(url, 410, "Gone", {}, None), False), (URLError("down"), False),
+                              (TimeoutError(), False), (ConnectionResetError(), False), (http.client.RemoteDisconnected("x"), False)):
             with self.subTest(outcome=outcome), patch("taxi.net.urllib.request.urlopen", side_effect=outcome) as m:
                 if outcome is None:
                     m.side_effect = None
                 self.assertEqual(url_alive(url), want)
+        with self.subTest(outcome="scheme-less"):
+            self.assertFalse(url_alive("www.example.com/x"))
+
+    def test_malformed_and_dead_events_skipped(self):
+        good = load("tm_page.json")["_embedded"]["events"][0]
+        import copy
+        def broken(fn, id_):
+            e = copy.deepcopy(good); e["id"] = id_; e["dates"]["start"]["localTime"] = "20:%02d:00" % len(id_)
+            fn(e); return e
+        evs = [broken(lambda e: e["_embedded"]["venues"][0].pop("address"), "B1"),
+               broken(lambda e: e["_embedded"].pop("venues"), "B22"),
+               broken(lambda e: e.pop("url"), "B333"),
+               broken(lambda e: e.__setitem__("priceRanges", [{"max": 5}]), "B4444"),
+               broken(lambda e: e["dates"].__setitem__("status", {"code": "cancelled"}), "C1"),
+               broken(lambda e: e["dates"].__setitem__("status", {"code": "canceled"}), "C22"),
+               broken(lambda e: e["dates"].__setitem__("status", {"code": "postponed"}), "C333"),
+               broken(lambda e: e["dates"]["start"].__setitem__("timeTBA", True), "T1"),
+               broken(lambda e: e["dates"]["start"].__setitem__("noSpecificTime", True), "T22"),
+               good]
+        with self.assertLogs("taxi.sources.ticketmaster", "WARNING") as lg:
+            cs = to_candidates(evs, TABLE, W)
+        self.assertEqual([c.id for c in cs], ["tm:Z1"])
+        self.assertEqual(len(lg.records), 4)
 
 
 if __name__ == "__main__":
