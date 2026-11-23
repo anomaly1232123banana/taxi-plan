@@ -39,5 +39,7 @@ def prune(cache: dict, today: date, keep_days: int) -> None:
     cutoff = (today - timedelta(days=keep_days)).isoformat()
     for k in [k for k, v in cache["estimates"].items() if v.get("seen", "") < cutoff]:
         del cache["estimates"][k]
+    if "disruptions" in cache:
+        cache["disruptions"] = [d for d in cache["disruptions"] if d["date"] >= today.isoformat()]
     for k in [k for k, v in cache["gapfill"].items() if v["event"].get("date", "") < today.isoformat()]:
         del cache["gapfill"][k]

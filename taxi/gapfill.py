@@ -118,6 +118,8 @@ def gapfill(call: Callable[[str], str] | None, venues: list[dict], days: list[da
 
     if call is None:
         status = "skipped"
+    elif cache.get("gapfill_ran") == today.isoformat():
+        status = "cached"  # same-day re-run: the search is the costliest Claude call, so reuse today's result
     else:
         names = set(t["areas"])
         pool = existing + cached()
@@ -147,5 +149,9 @@ def gapfill(call: Callable[[str], str] | None, venues: list[dict], days: list[da
             store[c.id] = {"event": ev, "seen": today.isoformat()}
             pool.append(c)
             kept += 1
-        disruptions = [d for d in (validate_disruption(x, set(days), names) for x in dis) if d] if isinstance(dis, list) else []
+        if status == "ok":
+            cache["gapfill_ran"] = today.isoformat()
+            cache["disruptions"] = ([d for d in (validate_disruption(x, set(days), names) for x in dis) if d]
+                                    if isinstance(dis, list) else [])
+    disruptions = [d for d in cache.get("disruptions", []) if d["date"] >= today.isoformat()]
     return [c for c in cached() if not _overlaps(c, existing)], disruptions, status

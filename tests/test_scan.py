@@ -235,6 +235,12 @@ class TestScan(unittest.TestCase):
         self.assertIn("nearby", got)
         self.assertEqual(got["nearby"], want["nearby"], "nearby")
 
+    def test_freshness_workflow(self):
+        y = (ROOT / ".github" / "workflows" / "freshness.yml").read_text(encoding="utf-8")
+        self.assertIn('cron: "30 1 * * *"', y)
+        self.assertIn("generated_at", y)
+        self.assertNotIn("secrets.", y)
+
     def test_plan_has_schema(self):
         self.assertEqual(self.scan()["schema"], 1)
 

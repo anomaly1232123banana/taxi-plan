@@ -155,7 +155,9 @@ class EstimateTests(unittest.TestCase):
         cache = {"estimates": {"old": {"est": {}, "seen": "2026-10-01"}, "new": {"est": {}, "seen": "2026-11-01"}},
                  "gapfill": {"past": {**ev, "event": {"date": "2026-11-22"}, "seen": "2026-11-20"},
                              "today": {"event": {"date": "2026-11-23"}, "seen": "2026-11-20"}}}
+        cache["disruptions"] = [{"date": "2026-11-22"}, {"date": "2026-11-23"}]
         prune(cache, TODAY, 30)
+        self.assertEqual(cache["disruptions"], [{"date": "2026-11-23"}])
         self.assertEqual(list(cache["estimates"]), ["new"])
         self.assertEqual(list(cache["gapfill"]), ["today"])
 

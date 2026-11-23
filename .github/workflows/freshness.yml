@@ -1,0 +1,25 @@
+name: freshness
+on:
+  schedule:
+    - cron: "30 1 * * *"  # 11:30 AEST / 12:30 AEDT, after the morning scan should have been pushed
+  workflow_dispatch:
+permissions: {contents: read}
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: plan.json is from today and healthy
+        run: |
+          python3 - <<'PY'
+          import json
+          from datetime import datetime
+          from zoneinfo import ZoneInfo
+          syd = ZoneInfo("Australia/Sydney")
+          plan = json.load(open("site/plan.json", encoding="utf-8"))
+          today = datetime.now(syd).date()
+          made = datetime.fromisoformat(plan["generated_at"]).astimezone(syd).date()
+          assert made == today, f"plan.json is from {made}, expected {today}"
+          assert plan["status"] in ("ok", "partial"), f"status is {plan['status']}"
+          print("fresh:", plan["generated_at"], plan["status"])
+          PY

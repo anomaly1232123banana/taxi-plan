@@ -154,6 +154,23 @@ class GapfillTests(unittest.TestCase):
         (cands, dis, status), _ = run(None, cache=cache)
         self.assertEqual(([c.id for c in cands], dis, status), ([cid], [], "skipped"))
 
+    def test_same_day_rerun_skips_call_and_keeps_disruptions(self):
+        strike = {"area": "ALL", "date": "2026-11-24", "from": "10:00", "to": "14:00", "what": "strike", "source_url": "https://t.nsw/x"}
+        (_, dis, status), cache = run(fake(reply([GOOD], [strike])))
+        self.assertEqual((status, dis), ("ok", [strike]))
+        call = fake()
+        (cands, dis, status), _ = run(call, cache=cache)
+        self.assertEqual((call.prompts, status, dis, len(cands)), ([], "cached", [strike], 1))
+        cache["gapfill_ran"] = "2026-11-22"  # a new day searches again
+        (_, _, status), _ = run(fake(reply()), cache=cache)
+        self.assertEqual(status, "ok")
+
+    def test_failed_search_keeps_old_disruptions(self):
+        strike = {"area": "ALL", "date": "2026-11-24", "from": "10:00", "to": "14:00", "what": "strike", "source_url": "https://t.nsw/x"}
+        cache = empty() | {"disruptions": [strike], "gapfill_ran": "2026-11-22"}
+        (_, dis, status), _ = run(fake(ClaudeError("auth")), cache=cache)
+        self.assertEqual((status.startswith("error"), dis), (True, [strike]))
+
     def test_cached_past_not_returned(self):
         cache, _ = self.cached("2026-11-22")
         (cands, _, _), _ = run(None, cache=cache)
