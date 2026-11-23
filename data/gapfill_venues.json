@@ -21,7 +21,7 @@
    "kind": "venue",
    "area": "Darling Harbour",
    "address": "13 Campbell St, Haymarket NSW 2000",
-   "what_on_url": "https://www.capitoltheatre.com.au/"
+   "what_on_url": "https://www.capitoltheatre.com.au/whats-on"
   },
   {
    "name": "State Theatre",
@@ -35,14 +35,14 @@
    "kind": "venue",
    "area": "CBD",
    "address": "108 King St, Sydney NSW 2000",
-   "what_on_url": "https://www.theatreroyalsydney.com.au/"
+   "what_on_url": "https://theatreroyalsydney.com/"
   },
   {
    "name": "Lyric Theatre",
    "kind": "venue",
    "area": "Pyrmont",
    "address": "The Star, 80 Pyrmont St, Pyrmont NSW 2009",
-   "what_on_url": "https://www.lyrictheatresydney.com.au/"
+   "what_on_url": "https://www.sydneylyric.com.au/whats-on"
   },
   {
    "name": "Roslyn Packer Theatre",
@@ -56,14 +56,14 @@
    "kind": "venue",
    "area": "CBD",
    "address": "2-12 Angel Pl, Sydney NSW 2000",
-   "what_on_url": "https://www.cityrecitalhall.com/"
+   "what_on_url": "https://www.cityrecitalhall.com/whats-on"
   },
   {
    "name": "Sydney Town Hall",
    "kind": "venue",
    "area": "CBD",
    "address": "483 George St, Sydney NSW 2000",
-   "what_on_url": "https://www.cityofsydney.nsw.gov.au/venue-hire/sydney-town-hall"
+   "what_on_url": "https://whatson.cityofsydney.nsw.gov.au/"
   },
   {
    "name": "Riverside Theatres",
@@ -84,35 +84,35 @@
    "kind": "venue",
    "area": "Moore Park",
    "address": "1 Driver Ave, Moore Park NSW 2021",
-   "what_on_url": "https://www.hordernpavilion.com.au/"
+   "what_on_url": "https://www.entertainmentquarter.com.au/whats-on"
   },
   {
    "name": "Royal Randwick",
    "kind": "racecourse",
    "area": "Randwick",
    "address": "Alison Rd, Randwick NSW 2031",
-   "what_on_url": "https://www.australianturfclub.com.au/"
+   "what_on_url": "https://www.australianturfclub.com.au/races/"
   },
   {
    "name": "Rosehill Gardens",
    "kind": "racecourse",
    "area": "Rosehill",
    "address": "Grand Dr, Camellia NSW 2142",
-   "what_on_url": "https://www.australianturfclub.com.au/"
+   "what_on_url": "https://www.australianturfclub.com.au/races/"
   },
   {
    "name": "Canterbury Park",
    "kind": "racecourse",
    "area": "Canterbury",
    "address": "Church St, Canterbury NSW 2193",
-   "what_on_url": "https://www.australianturfclub.com.au/"
+   "what_on_url": "https://www.australianturfclub.com.au/races/"
   },
   {
    "name": "Warwick Farm",
    "kind": "racecourse",
    "area": "Parramatta",
    "address": "Hume Hwy, Warwick Farm NSW 2170",
-   "what_on_url": "https://www.australianturfclub.com.au/"
+   "what_on_url": "https://www.australianturfclub.com.au/races/"
   }
  ]
 }

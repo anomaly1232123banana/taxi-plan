@@ -8,8 +8,8 @@
    "name": "Hilton Sydney",
    "address": "488 George St, Sydney NSW 2000",
    "area": "CBD",
-   "lat": -33.8732,
-   "lon": 151.2066,
+   "lat": -33.8718,
+   "lon": 151.2076,
    "busy": [
     [
      "12:00",
@@ -48,8 +48,8 @@
    "name": "Hyatt Regency Sydney",
    "address": "161 Sussex St, Sydney NSW 2000",
    "area": "Darling Harbour",
-   "lat": -33.8719,
-   "lon": 151.2019,
+   "lat": -33.8697,
+   "lon": 151.2033,
    "busy": [
     [
      "12:00",
@@ -68,8 +68,8 @@
    "name": "Four Seasons Hotel Sydney",
    "address": "199 George St, Sydney NSW 2000",
    "area": "Circular Quay/The Rocks",
-   "lat": -33.8625,
-   "lon": 151.2087,
+   "lat": -33.8617,
+   "lon": 151.2076,
    "busy": [
     [
      "12:00",
@@ -88,8 +88,8 @@
    "name": "Shangri-La Sydney",
    "address": "176 Cumberland St, The Rocks NSW 2000",
    "area": "Circular Quay/The Rocks",
-   "lat": -33.8573,
-   "lon": 151.2074,
+   "lat": -33.8613,
+   "lon": 151.2066,
    "busy": [
     [
      "12:00",
@@ -108,8 +108,8 @@
    "name": "Park Hyatt Sydney",
    "address": "7 Hickson Rd, The Rocks NSW 2000",
    "area": "Circular Quay/The Rocks",
-   "lat": -33.8561,
-   "lon": 151.2096,
+   "lat": -33.856,
+   "lon": 151.2089,
    "busy": [
     [
      "12:00",
@@ -128,8 +128,8 @@
    "name": "Sofitel Sydney Wentworth",
    "address": "61-101 Phillip St, Sydney NSW 2000",
    "area": "CBD",
-   "lat": -33.8648,
-   "lon": 151.2123,
+   "lat": -33.8655,
+   "lon": 151.211,
    "busy": [
     [
      "12:00",
@@ -148,8 +148,8 @@
    "name": "InterContinental Sydney",
    "address": "117 Macquarie St, Sydney NSW 2000",
    "area": "Circular Quay/The Rocks",
-   "lat": -33.8625,
-   "lon": 151.2123,
+   "lat": -33.8629,
+   "lon": 151.2124,
    "busy": [
     [
      "12:00",
@@ -188,8 +188,8 @@
    "name": "Swissotel Sydney",
    "address": "68 Market St, Sydney NSW 2000",
    "area": "CBD",
-   "lat": -33.8715,
-   "lon": 151.2081,
+   "lat": -33.8707,
+   "lon": 151.2073,
    "busy": [
     [
      "12:00",
@@ -208,8 +208,8 @@
    "name": "Sydney Harbour Marriott",
    "address": "30 Pitt St, Sydney NSW 2000",
    "area": "Circular Quay/The Rocks",
-   "lat": -33.8625,
-   "lon": 151.2108,
+   "lat": -33.8628,
+   "lon": 151.2094,
    "busy": [
     [
      "12:00",
@@ -228,8 +228,8 @@
    "name": "Pullman Sydney Hyde Park",
    "address": "36 College St, Sydney NSW 2000",
    "area": "CBD",
-   "lat": -33.8765,
-   "lon": 151.2133,
+   "lat": -33.8762,
+   "lon": 151.2125,
    "busy": [
     [
      "12:00",
@@ -248,8 +248,8 @@
    "name": "Sofitel Sydney Darling Harbour",
    "address": "12 Darling Dr, Sydney NSW 2000",
    "area": "Darling Harbour",
-   "lat": -33.8737,
-   "lon": 151.2004,
+   "lat": -33.8726,
+   "lon": 151.1986,
    "busy": [
     [
      "12:00",
@@ -268,8 +268,8 @@
    "name": "Novotel Sydney Darling Harbour",
    "address": "100 Murray St, Pyrmont NSW 2009",
    "area": "Darling Harbour",
-   "lat": -33.8742,
-   "lon": 151.2001,
+   "lat": -33.872,
+   "lon": 151.1978,
    "busy": [
     [
      "12:00",
@@ -288,8 +288,8 @@
    "name": "QT Sydney",
    "address": "49 Market St, Sydney NSW 2000",
    "area": "CBD",
-   "lat": -33.8704,
-   "lon": 151.2088,
+   "lat": -33.8709,
+   "lon": 151.2077,
    "busy": [
     [
      "12:00",
@@ -308,8 +308,8 @@
    "name": "The Star Sydney",
    "address": "80 Pyrmont St, Pyrmont NSW 2009",
    "area": "Pyrmont",
-   "lat": -33.868,
-   "lon": 151.1949,
+   "lat": -33.8687,
+   "lon": 151.1956,
    "busy": [
     [
      "12:00",
@@ -324,8 +324,8 @@
    "name": "Crown Sydney",
    "address": "1 Barangaroo Ave, Barangaroo NSW 2000",
    "area": "Barangaroo",
-   "lat": -33.862,
-   "lon": 151.2025,
+   "lat": -33.8624,
+   "lon": 151.2011,
    "busy": [
     [
      "12:00",
@@ -358,10 +358,10 @@
    "id": "canterbury-league-club",
    "kind": "club",
    "name": "Canterbury League Club",
-   "address": "Belmore NSW 2192",
+   "address": "Gladstone St, Belmore NSW 2192",
    "area": "Canterbury",
-   "lat": -33.9176,
-   "lon": 151.0891,
+   "lat": -33.9186,
+   "lon": 151.0875,
    "busy": [
     [
      "11:00",
@@ -380,8 +380,8 @@
    "name": "Parramatta Leagues Club",
    "address": "15 O'Connell St, Parramatta NSW 2150",
    "area": "Parramatta",
-   "lat": -33.8141,
-   "lon": 151.0045,
+   "lat": -33.8066,
+   "lon": 151.0023,
    "busy": [
     [
      "11:00",
@@ -400,8 +400,8 @@
    "name": "Wests Ashfield Leagues Club",
    "address": "91 Liverpool Rd, Ashfield NSW 2131",
    "area": "Canterbury",
-   "lat": -33.8914,
-   "lon": 151.1262,
+   "lat": -33.8896,
+   "lon": 151.1307,
    "busy": [
     [
      "11:00",
@@ -420,8 +420,8 @@
    "name": "Club Burwood RSL",
    "address": "96 Shaftesbury Rd, Burwood NSW 2134",
    "area": "Canterbury",
-   "lat": -33.8776,
-   "lon": 151.1038,
+   "lat": -33.8806,
+   "lon": 151.1062,
    "busy": [
     [
      "11:00",
@@ -440,8 +440,8 @@
    "name": "City Tattersalls Club",
    "address": "198 Pitt St, Sydney NSW 2000",
    "area": "CBD",
-   "lat": -33.8734,
-   "lon": 151.2075,
+   "lat": -33.8712,
+   "lon": 151.2083,
    "busy": [
     [
      "12:00",
@@ -458,7 +458,7 @@
    "id": "easts-leagues-club",
    "kind": "club",
    "name": "Easts Leagues Club",
-   "address": "Bondi Junction NSW 2022",
+   "address": "93-97 Spring St, Bondi Junction NSW 2022",
    "area": "Randwick",
    "lat": -33.8915,
    "lon": 151.253,
@@ -478,7 +478,7 @@
    "id": "souths-juniors",
    "kind": "club",
    "name": "Souths Juniors",
-   "address": "558 Anzac Pde, Kingsford NSW 2032",
+   "address": "558A Anzac Pde, Kingsford NSW 2032",
    "area": "Randwick",
    "lat": -33.921,
    "lon": 151.2269,
@@ -498,10 +498,10 @@
    "id": "st-george-leagues-club",
    "kind": "club",
    "name": "St George Leagues Club",
-   "address": "Princes Hwy, Kogarah NSW 2217",
+   "address": "Princes Hwy, Beverley Park NSW 2217",
    "area": "Canterbury",
-   "lat": -33.964,
-   "lon": 151.134,
+   "lat": -33.9741,
+   "lon": 151.129,
    "busy": [
     [
      "11:00",
@@ -518,10 +518,10 @@
    "id": "mounties",
    "kind": "club",
    "name": "Mounties",
-   "address": "Mount Pritchard NSW 2170",
+   "address": "254 Humphries Rd, Mount Pritchard NSW 2170",
    "area": "Parramatta",
-   "lat": -33.8955,
-   "lon": 150.905,
+   "lat": -33.8972,
+   "lon": 150.9001,
    "busy": [
     [
      "11:00",
@@ -540,8 +540,8 @@
    "name": "Bankstown Sports Club",
    "address": "8 Greenfield Pde, Bankstown NSW 2200",
    "area": "Canterbury",
-   "lat": -33.9185,
-   "lon": 151.0345,
+   "lat": -33.92,
+   "lon": 151.0339,
    "busy": [
     [
      "11:00",
@@ -560,8 +560,8 @@
    "name": "St Vincent's Private Hospital Sydney",
    "address": "406 Victoria St, Darlinghurst NSW 2010",
    "area": "Moore Park",
-   "lat": -33.88,
-   "lon": 151.221,
+   "lat": -33.8809,
+   "lon": 151.2198,
    "busy": [
     [
      "10:00",
@@ -600,8 +600,8 @@
    "name": "Prince of Wales Private Hospital",
    "address": "Barker St, Randwick NSW 2031",
    "area": "Randwick",
-   "lat": -33.9137,
-   "lon": 151.2403,
+   "lat": -33.9186,
+   "lon": 151.2391,
    "busy": [
     [
      "10:00",
@@ -620,8 +620,8 @@
    "name": "Macquarie University Hospital",
    "address": "3 Technology Pl, Macquarie Park NSW 2109",
    "area": "Macquarie Park",
-   "lat": -33.7745,
-   "lon": 151.1155,
+   "lat": -33.7738,
+   "lon": 151.118,
    "busy": [
     [
      "10:00",
@@ -640,8 +640,8 @@
    "name": "Norwest Private Hospital",
    "address": "11 Norbrik Dr, Bella Vista NSW 2153",
    "area": "Parramatta",
-   "lat": -33.736,
-   "lon": 150.9565,
+   "lat": -33.745,
+   "lon": 150.9539,
    "busy": [
     [
      "10:00",
@@ -660,8 +660,8 @@
    "name": "Strathfield Private Hospital",
    "address": "3 Everton Rd, Strathfield NSW 2135",
    "area": "Olympic Park",
-   "lat": -33.875,
-   "lon": 151.084,
+   "lat": -33.872,
+   "lon": 151.0976,
    "busy": [
     [
      "10:00",
