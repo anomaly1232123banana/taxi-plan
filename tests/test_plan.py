@@ -12,7 +12,12 @@ def c(id, area, hh, mm, score, day=23, name=None):
 
 
 def place(name, kind, area, frm, to):
-    return {"id": name, "kind": kind, "name": name, "area": area, "busy": [[frm, to]]}
+    return {"id": name, "kind": kind, "name": name, "area": area, "busy": [[frm, to]], "address": name + " St",
+            "lat": -33.87, "lon": 151.2}
+
+
+def names(items):
+    return [i["name"] for i in items]
 
 
 class TestPlan(unittest.TestCase):
@@ -21,7 +26,7 @@ class TestPlan(unittest.TestCase):
 
     def test_single_stop(self):
         e = plan_day([c("K", "Barangaroo", 17, 30, 60, name="KPMG")], [], TABLE, W)
-        self.assertEqual(e[0], {"type": "quiet", "block": [0, 240], "until": "16:00", "next": "KPMG", "nearby": []})
+        self.assertEqual(e[0], {"type": "quiet", "block": [0, 240], "until": "17:24", "next": "KPMG", "nearby": []})
         self.assertEqual((e[1]["type"], e[1]["block"], e[1]["drive_min"], e[1]["drive_from"]), ("stop", [240, 360], 6, None))
         self.assertEqual(e[2], {"type": "quiet", "block": [360, 900], "until": None, "next": None, "nearby": []})
         self.covers(e)
@@ -54,14 +59,14 @@ class TestPlan(unittest.TestCase):
     def test_quiet_merge_and_drive(self):
         e = plan_day([c("S1", "CBD", 13, 0, 50), c("S2", "Circular Quay/The Rocks", 22, 15, 66)], [], TABLE, W)
         self.assertEqual([x["block"] for x in e], [[0, 120], [120, 600], [600, 720], [720, 900]])
-        self.assertEqual((e[1]["until"], e[1]["next"]), ("22:00", "S2"))
+        self.assertEqual((e[1]["until"], e[1]["next"]), ("22:10", "S2"))
         self.assertEqual((e[2]["drive_min"], e[2]["drive_from"]), (5, "S1"))
         self.covers(e)
 
     def test_quiet_fallback_anchor_and_nearby(self):
         steady = [place("H1", "hotel", "Pyrmont", "12:00", "23:00")]
         e = plan_day([c("P", "Pyrmont", 22, 15, 66)], steady, TABLE, W)
-        self.assertEqual(e[0]["nearby"], ["H1"])   # anchor = next stop's area
+        self.assertEqual(names(e[0]["nearby"]), ["H1"])   # anchor = next stop's area
         self.assertEqual(e[-1]["nearby"], [])      # after the stop: H1 not busy after 23:00 (700 < 720)
         self.covers(e)
 
@@ -69,12 +74,24 @@ class TestPlan(unittest.TestCase):
         steady = [place("H1", "hotel", "Pyrmont", "12:00", "23:00"), place("The Star", "casino", "Pyrmont", "12:00", "03:00"),
                   place("RH", "club", "Rooty Hill", "17:00", "02:00"), place("H2", "hotel", "Barangaroo", "12:00", "23:00"),
                   place("P", "hospital", "CBD", "12:00", "20:00")]
-        self.assertEqual(nearby(steady, "Pyrmont", (120, 600), TABLE, 3), ["The Star", "H1", "H2"])
-        self.assertEqual(nearby(steady, "Pyrmont", (720, 900), TABLE, 3), ["The Star", "RH"])
+        self.assertEqual(names(nearby(steady, "Pyrmont", (120, 600), TABLE, 3)), ["The Star", "H1", "H2"])
+        self.assertEqual(names(nearby(steady, "Pyrmont", (720, 900), TABLE, 3)), ["The Star", "RH"])
 
     def test_nearby_pre_noon_window(self):
         steady = [place("RSL", "club", "Pyrmont", "11:00", "14:00"), place("Morning", "hotel", "Pyrmont", "10:00", "12:00")]
-        self.assertEqual(nearby(steady, "Pyrmont", (0, 120), TABLE, 3), ["RSL"])
+        self.assertEqual(names(nearby(steady, "Pyrmont", (0, 120), TABLE, 3)), ["RSL"])
+
+    def test_late_fallbacks_rank_by_hours_busy_and_carry_position(self):
+        steady = [place("Hotel", "hotel", "CBD", "12:00", "23:00"), place("The Star", "casino", "Pyrmont", "12:00", "03:00")]
+        got = nearby(steady, "CBD", (600, 900), TABLE, 3)  # 22:00 onwards
+        self.assertEqual(names(got), ["The Star", "Hotel"])
+        self.assertEqual(set(got[0]), {"name", "address", "lat", "lon"})
+        self.assertEqual(names(nearby(steady, "CBD", (120, 600), TABLE, 3)), ["Hotel", "The Star"])  # earlier: nearest first
+
+    def test_near_tie_prefers_shorter_drive(self):
+        e = plan_day([c("far", "Olympic Park", 18, 30, 50), c("near", "CBD", 18, 30, 49)], [], TABLE, W)
+        self.assertEqual([x["id"] for x in e if x["type"] == "stop"], ["near"])
+        self.assertEqual([x["score"] for x in e if x["type"] == "stop"], [49])  # displayed score is untouched
 
     def test_no_candidates(self):
         e = plan_day([], [], TABLE, W)

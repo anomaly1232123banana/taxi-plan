@@ -5,7 +5,7 @@
  "late": {"full_from": "22:00", "half_from": "21:00"},
  "boost": {"rain": 1.15, "disruption": 1.2},
  "rain": {"min_mm": 0.5, "min_prob": 60},
- "plan": {"big_threshold": 40, "far_minutes": 30, "far_threshold": 55, "load_minutes": 25, "fallbacks": 3, "area_max_km": 12},
+ "plan": {"big_threshold": 40, "far_minutes": 30, "far_threshold": 55, "load_minutes": 25, "fallbacks": 3, "drive_penalty": 0.1, "area_max_km": 12},
  "office": {"late_crowd_share": 0.2},
  "cruise": {"exit": "13:00", "min_departure": "14:00", "size": 3000, "median_age": 55, "age_lo": 45, "age_hi": 75, "pays": 0.1, "spend": 0.7,
    "terminals": {

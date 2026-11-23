@@ -2,26 +2,38 @@ from taxi.drive import base_minutes, drive_minutes
 from taxi.model import BLOCKS, SYD, Candidate, block_index, hm_of, shift_minute, shift_slot
 
 HOME_AREA = "CBD"
+LATE_FROM = shift_minute("22:00")
 KIND_RANK = {"casino": 0, "hotel": 1, "club": 2, "hospital": 3}
 
 
-def nearby(steady: list[dict], anchor: str, span: tuple[int, int], t: dict, n: int) -> list[str]:
-    def busy(p):
+def nearby(steady: list[dict], anchor: str, span: tuple[int, int], t: dict, n: int) -> list[dict]:
+    def busy_min(p):
+        total = 0
         for a, b in p["busy"]:
             start, end = shift_minute(a), shift_minute(b)
             if start > end:  # window began before noon
                 start = 0
-            if start < span[1] and end > span[0]:
-                return True
-        return False
+            total += max(0, min(end, span[1]) - max(start, span[0]))
+        return total
 
-    ok = [p for p in steady if busy(p)]
-    ok.sort(key=lambda p: (base_minutes(t, anchor, p["area"]), KIND_RANK[p["kind"]], p["name"]))
-    return [p["name"] for p in ok[:n]]
+    late = span[0] >= LATE_FROM  # after 22:00 the places still busy to the end (casinos) beat hotels that wind down at 23:00
+    ok = [(busy_min(p), p) for p in steady]
+    ok = [(m, p) for m, p in ok if m > 0]
+    ok.sort(key=lambda x: (-x[0] if late else 0, base_minutes(t, anchor, x[1]["area"]), KIND_RANK[x[1]["kind"]], x[1]["name"]))
+    return [{"name": p["name"], "address": p["address"], "lat": p["lat"], "lon": p["lon"]} for _, p in ok[:n]]
 
 
 def _hm(dt) -> str:
     return dt.astimezone(SYD).strftime("%H:%M")
+
+
+def _drive(stops, k, t, p) -> int:
+    """Minutes to drive to stop k from home (first stop) or from the previous stop's exit."""
+    c, _ = stops[k]
+    if k == 0:
+        return base_minutes(t, HOME_AREA, c.area)
+    pc, pm = stops[k - 1]
+    return drive_minutes(t, pc.area, c.area, pm + p["load_minutes"])
 
 
 def _stop(c: Candidate, minute: int, drive_min: int, drive_from: str | None) -> dict:
@@ -48,11 +60,14 @@ def _choose(cands: list[Candidate], t: dict, w: dict) -> list[tuple[Candidate, i
         leave = ma + p["load_minutes"]
         return block_index(ma) < block_index(mb) and leave + drive_minutes(t, ca.area, cb.area, leave) <= mb
 
-    best = [(c.score, None) for c, _ in el]
+    pen = p["drive_penalty"]  # a small cost per drive minute: near-ties go to the shorter drive (scores shown are unchanged)
+    best = [(c.score - pen * base_minutes(t, HOME_AREA, c.area), None) for c, _ in el]
     for i in range(len(el)):
         for j in range(i):
-            if reachable(el[j], el[i]) and best[j][0] + el[i][0].score > best[i][0]:
-                best[i] = (best[j][0] + el[i][0].score, j)
+            if reachable(el[j], el[i]):
+                v = best[j][0] + el[i][0].score - pen * drive_minutes(t, el[j][0].area, el[i][0].area, el[j][1] + p["load_minutes"])
+                if v > best[i][0]:
+                    best[i] = (v, j)
     if not el:
         return []
     i = max(range(len(el)), key=lambda k: (best[k][0], -k))
@@ -75,7 +90,7 @@ def plan_day(cands: list[Candidate], steady: list[dict], t: dict, w: dict) -> li
         nxt = stops[next_k][0] if next_k < len(stops) else None
         anchor = nxt.area if nxt else prev.area if prev else HOME_AREA
         entries.append({"type": "quiet", "block": [lo, hi],
-                        "until": hm_of(BLOCKS[block_index(stops[next_k][1])][0]) if nxt else None,
+                        "until": hm_of(max(lo, stops[next_k][1] - _drive(stops, next_k, t, p))) if nxt else None,  # leave-by time
                         "next": nxt.name if nxt else None,
                         "nearby": nearby(steady, anchor, (lo, hi), t, p["fallbacks"])})
 
@@ -89,11 +104,9 @@ def plan_day(cands: list[Candidate], steady: list[dict], t: dict, w: dict) -> li
             run = None
         c, minute = stops[k]
         if k == 0:
-            entries.append(_stop(c, minute, base_minutes(t, HOME_AREA, c.area), None))
+            entries.append(_stop(c, minute, _drive(stops, k, t, p), None))
         else:
-            pc, pm = stops[k - 1]
-            leave = pm + p["load_minutes"]
-            entries.append(_stop(c, minute, drive_minutes(t, pc.area, c.area, leave), pc.name))
+            entries.append(_stop(c, minute, _drive(stops, k, t, p), stops[k - 1][0].name))
     if run:
         close_run(len(stops))
     return entries

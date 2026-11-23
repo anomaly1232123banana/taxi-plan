@@ -1,4 +1,5 @@
 {
+ "schema": 1,
  "generated_at": "2026-11-23T10:02:00+11:00",
  "status": "ok",
  "sources": {},
@@ -73,9 +74,24 @@
      "until": "22:00",
      "next": "Opera House",
      "nearby": [
-      "The Star",
-      "Shangri-La",
-      "Four Seasons"
+      {
+       "name": "The Star",
+       "address": "The Star, Sydney NSW",
+       "lat": -33.8672,
+       "lon": 151.1952
+      },
+      {
+       "name": "Shangri-La",
+       "address": "Shangri-La, Sydney NSW",
+       "lat": -33.8585,
+       "lon": 151.2064
+      },
+      {
+       "name": "Four Seasons",
+       "address": "Four Seasons, Sydney NSW",
+       "lat": -33.8619,
+       "lon": 151.2086
+      }
      ]
     },
     {
@@ -150,8 +166,18 @@
      "until": "16:00",
      "next": "Deloitte · Quay Quarter",
      "nearby": [
-      "Hilton",
-      "Westin"
+      {
+       "name": "Hilton",
+       "address": "Hilton, Sydney NSW",
+       "lat": -33.8737,
+       "lon": 151.2069
+      },
+      {
+       "name": "Westin",
+       "address": "Westin, Sydney NSW",
+       "lat": -33.8697,
+       "lon": 151.2093
+      }
      ]
     },
     {

@@ -216,6 +216,25 @@ class TestScan(unittest.TestCase):
         kept = drop_sunday_shift([cand(id=i, start=s) for i, s in (("a", sat), ("b", sun), ("c", mon_small))])
         self.assertEqual([c.id for c in kept], ["a"])
 
+    def test_plan_keys_match_sample_fixture(self):
+        """The phone page renders sample_plan.json in the JS tests; its shape must equal what scan.run writes."""
+        def shape(plan):
+            out = {"top": set(plan)}
+            for d in plan["days"]:
+                for e in d["entries"]:
+                    out.setdefault(e["type"], set()).update(e)
+                    if e["type"] == "quiet":
+                        for n in e["nearby"]:
+                            out.setdefault("nearby", set()).update(n)
+            return out
+        plan = self.scan()
+        sample = json.loads(fx("sample_plan.json"))
+        got, want = shape(plan), shape(sample)
+        for k in ("top", "stop", "quiet"):
+            self.assertEqual(got[k], want[k], k)
+        self.assertIn("nearby", got)
+        self.assertEqual(got["nearby"], want["nearby"], "nearby")
+
     def test_plan_has_schema(self):
         self.assertEqual(self.scan()["schema"], 1)
 
