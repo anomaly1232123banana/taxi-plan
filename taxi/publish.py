@@ -1,11 +1,12 @@
 import json
 import logging
 import os
-import re
 import subprocess
 import time
 from datetime import date
 from pathlib import Path
+
+from taxi.net import clean
 
 log = logging.getLogger(__name__)
 
@@ -14,11 +15,6 @@ REPLACE_RETRY_S = 2
 GIT_ENV = {"GIT_TERMINAL_PROMPT": "0", "GCM_INTERACTIVE": "never"}  # a scheduled run has nobody to answer a prompt
 PLAN_PATH = "site/plan.json"
 BRANCH = "main"
-
-
-def strip_query(text: str) -> str:
-    """Remove URL query strings (they can hold an API key); never truncates."""
-    return re.sub(r'(https?://[^\s?#]+)\?\S*', r'\1', text)
 
 
 def write_plan(plan: dict, path: Path) -> None:
@@ -51,7 +47,7 @@ def publish(root: Path, today: date, run=subprocess.run) -> str:
     r = step(["git", "add", PLAN_PATH])
     if r is None or r.returncode != 0:
         return "error: add failed"
-    r = step(["git", "diff", "--cached", "--quiet"])
+    r = step(["git", "diff", "--cached", "--quiet", "--", PLAN_PATH])
     if r is None or r.returncode not in (0, 1):
         return "error: diff failed"
     if r.returncode == 0:
@@ -61,6 +57,6 @@ def publish(root: Path, today: date, run=subprocess.run) -> str:
         r = step(argv)
         if r is None or r.returncode != 0:
             if r is not None:
-                log.warning("git %s failed: %s", name, strip_query((r.stderr or "").strip()))
+                log.warning("git %s failed: %s", name, clean((r.stderr or "").strip()))
             return f"error: {name} failed"
     return "ok"

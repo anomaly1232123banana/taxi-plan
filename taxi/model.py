@@ -46,6 +46,12 @@ def shift_slot(t: datetime) -> tuple[date, int] | None:
     return None if d.weekday() == 6 else (d, minute)
 
 
+def shift_date(t: datetime) -> date:
+    """Shift date of a clock time: before 03:00 still belongs to the previous day's shift."""
+    t = t.astimezone(SYD)
+    return t.date() - timedelta(days=1) if t.hour < 3 else t.date()
+
+
 def block_index(minute: int) -> int:
     return min(minute // 120, len(BLOCKS) - 1)
 

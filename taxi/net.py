@@ -1,4 +1,5 @@
 import http.client
+import re
 import urllib.request
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlsplit
@@ -11,6 +12,15 @@ GONE_CODES = (404, 410)
 
 class SourceError(Exception):
     pass
+
+
+_QUERY = re.compile(r"(https?://[^\s?#]+)\?\S*")
+_PATH = re.compile(r"(?<![\w/])(?:[A-Za-z]:[\\/]|/(?:Users|home)/)[^\s'\"<>|]*")
+
+
+def clean(text: str) -> str:
+    """Text bound for plan.json or logs: no URL query strings (API key) and no absolute local paths. Never truncates."""
+    return _PATH.sub("<path>", _QUERY.sub(r"\1", text))
 
 
 def _req(url: str, method: str = "GET") -> urllib.request.Request:

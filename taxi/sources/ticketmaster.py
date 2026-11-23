@@ -6,6 +6,7 @@ from urllib.parse import urlencode
 
 from taxi.drive import nearest_area
 from taxi.model import SYD, Candidate
+from taxi.net import clean
 
 API = "https://app.ticketmaster.com/discovery/v2/events.json"
 SYDNEY_LATLONG = "-33.8688,151.2093"
@@ -29,7 +30,13 @@ def fetch_events(key, days, get_text, w):
         q = urlencode({"apikey": key, "latlong": SYDNEY_LATLONG, "radius": cfg["radius_km"], "unit": "km",
                        "countryCode": "AU", "size": PAGE_SIZE, "sort": "date,asc",
                        "startDateTime": _utc(first), "endDateTime": _utc(last), "page": page}, safe=",:")
-        data = json.loads(get_text(f"{API}?{q}"))
+        try:
+            data = json.loads(get_text(f"{API}?{q}"))
+        except Exception as e:
+            if page == 0:
+                raise
+            log.warning("ticketmaster: page %d failed, keeping %d earlier events (%s)", page, len(events), clean(str(e)))
+            break
         events += data.get("_embedded", {}).get("events", [])
         pages = data.get("page", {}).get("totalPages", 1)
         page += 1

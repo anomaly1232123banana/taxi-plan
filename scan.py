@@ -9,7 +9,7 @@ from datetime import date, datetime
 from pathlib import Path
 
 from taxi import cache as cache_mod, claude, data, estimate as est_mod, gapfill as gf_mod, net, plan as planner, publish as pub_mod
-from taxi.model import SYD, shift_slot, working_days
+from taxi.model import SYD, shift_date, shift_slot, working_days
 from taxi.score import score_candidate
 from taxi.sources import cruise, offices as office_src, ticketmaster, weather
 
@@ -22,15 +22,18 @@ SECRET_ENV = {"ticketmaster_key": "TICKETMASTER_KEY", "claude_oauth_token": "CLA
 
 def load_secrets(root: Path) -> dict:
     try:
-        file = json.loads((root / "secrets.json").read_text(encoding="utf-8"))
-    except (OSError, ValueError):
+        file = json.loads((root / "secrets.json").read_text(encoding="utf-8-sig"))
+    except FileNotFoundError:
+        file = {}
+    except (OSError, ValueError) as e:
+        log.warning("secrets.json unreadable (%s); ignoring it", type(e).__name__)
         file = {}
     file = file if isinstance(file, dict) else {}
     return {k: os.environ.get(env) or file.get(k) or "" for k, env in SECRET_ENV.items()}
 
 
 def _err(e: Exception) -> str:
-    return "error: " + claude._clean(str(e))[:ERR_MAX]  # _clean strips URL query strings (API key)
+    return "error: " + net.clean(str(e))[:ERR_MAX]  # strips URL query strings (API key) and local paths
 
 
 def run(now: datetime, root: Path, get_text=None, call_claude=None, publish_fn=None,
@@ -49,7 +52,7 @@ def run(now: datetime, root: Path, get_text=None, call_claude=None, publish_fn=N
     office_rows = data.load_offices(root / "data" / "offices.json", areas)
     steady = data.load_steady(root / "data" / "steady.json", areas)
     venues = data.load_venues(root / "data" / "gapfill_venues.json", areas)
-    today = now.date()
+    today = shift_date(now)  # a scan at 01:30 still serves the shift that began the day before
     days = working_days(today)
     cache_path = root / "cache" / "estimates.json"
     cache = cache_mod.load_cache(cache_path)
@@ -99,11 +102,11 @@ def run(now: datetime, root: Path, get_text=None, call_claude=None, publish_fn=N
         log.warning("gapfill: %s", sources["gapfill"])
     log.info("gapfill: %s, %d events, %d disruptions", sources["gapfill"], len(gf_cands), len(disruptions))
 
-    cache_mod.prune(cache, today, w["cache_keep_days"])
     try:
+        cache_mod.prune(cache, today, w["cache_keep_days"])
         cache_mod.save_cache(cache, cache_path)
     except Exception as e:  # a locked OneDrive file must not lose the plan
-        log.warning("estimate cache not saved: %s", pub_mod.strip_query(str(e)))
+        log.warning("estimate cache not pruned or saved: %s", net.clean(str(e)))
 
     by_day: dict[date, list] = {d: [] for d in days}
     for c in tm_est + gf_cands + results["cruise"] + results["offices"]:
@@ -112,15 +115,18 @@ def run(now: datetime, root: Path, get_text=None, call_claude=None, publish_fn=N
             score_candidate(c, w, rain, disruptions)
             by_day[slot[0]].append(c)
 
-    sources = {k: claude._clean(v)[:ERR_MAX] for k, v in sources.items()}
+    sources = {k: net.clean(v)[:ERR_MAX] for k, v in sources.items()}
     # a weather error alone stays "ok": rain is only a score boost, a red header would cry wolf
     healthy = (sources["ticketmaster"] == "ok" and sources["estimate"] == "ok" and sources["cruise"] == "ok"
                and not sources["gapfill"].startswith("error"))
-    plan = {"generated_at": now.isoformat(timespec="seconds"), "status": "ok" if healthy else "partial", "sources": sources,
+    plan = {"schema": 1, "generated_at": now.isoformat(timespec="seconds"), "status": "ok" if healthy else "partial", "sources": sources,
             "days": [{"date": d.isoformat(), "entries": planner.plan_day(by_day[d], steady, t, w)} for d in days]}
     pub_mod.write_plan(plan, root / "site" / "plan.json")
     if do_publish:
-        log.info("publish: %s", publish_fn(root, today))
+        result = publish_fn(root, today)
+        log.info("publish: %s", result)
+        if result.startswith("error"):
+            raise RuntimeError("publish failed: " + result)  # plan is written; exit non-zero so the scheduler retries
     return plan
 
 
@@ -141,7 +147,7 @@ def main(argv: list[str] | None = None) -> int:
         run(datetime.now(SYD), a.root, use_claude=not a.no_claude, do_publish=not a.no_publish)
         return 0
     except Exception:
-        log.error("scan failed:\n%s", pub_mod.strip_query(traceback.format_exc()))
+        log.error("scan failed:\n%s", net.clean(traceback.format_exc()))
         return 1
     finally:
         top.removeHandler(handler)

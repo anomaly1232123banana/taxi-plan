@@ -27,7 +27,7 @@ class TestPublish(unittest.TestCase):
     def test_publish_commits_and_pushes(self):
         r = Runner(diff=1)
         self.assertEqual(publish(Path("."), TODAY, run=r), "ok")
-        self.assertEqual(r.argvs, [["git", "add", "site/plan.json"], ["git", "diff", "--cached", "--quiet"],
+        self.assertEqual(r.argvs, [["git", "add", "site/plan.json"], ["git", "diff", "--cached", "--quiet", "--", "site/plan.json"],
                                    ["git", "commit", "-m", "plan: 2026-11-23", "--", "site/plan.json"],
                                    ["git", "push", "origin", "HEAD:main"]])
 

@@ -5,14 +5,15 @@ import shutil
 import subprocess
 from typing import Any
 
+from taxi.net import clean
+
 
 class ClaudeError(Exception):
     pass
 
 
 def _clean(text: str) -> str:
-    """Error text must never carry a URL query string."""
-    return re.sub(r"(https?://[^\s?#]+)\?\S*", r"\1", text)[:200]
+    return clean(text)[:200]
 
 
 def claude_args(tools: list[str], max_turns: int) -> list[str]:

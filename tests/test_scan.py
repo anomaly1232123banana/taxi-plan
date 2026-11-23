@@ -198,6 +198,40 @@ class TestScan(unittest.TestCase):
             self.assertIn(s, log)
         self.assertNotIn("SECRETKEY123", log)
 
+    def test_source_error_hides_local_paths(self):
+        def no_cruise(url):
+            if "portauthoritynsw" in url:
+                raise SourceError(r"cannot open C:\Users\x\foo.txt and /home/bob/.claude/x")
+            return get(url)
+        text = json.dumps(self.scan(get_text=no_cruise))
+        self.assertNotIn("x\\\\foo", text)
+        self.assertNotIn("bob", text)
+
+    def test_plan_has_schema(self):
+        self.assertEqual(self.scan()["schema"], 1)
+
+    def test_secrets_bom_and_unparsable_warning(self):
+        (self.root / "secrets.json").write_bytes(b"\xef\xbb\xbf" + json.dumps({"ticketmaster_key": "BOMKEY"}).encode())
+        with patch.dict(os.environ, {"TICKETMASTER_KEY": ""}):
+            self.assertEqual(load_secrets(self.root)["ticketmaster_key"], "BOMKEY")
+            (self.root / "secrets.json").write_text("{not json", encoding="utf-8")
+            with self.assertLogs("scan", "WARNING"):
+                self.assertEqual(load_secrets(self.root)["ticketmaster_key"], "")
+
+    def test_cache_prune_failure_does_not_stop_scan(self):
+        with patch("taxi.cache.prune", Mock(side_effect=KeyError("event"))):
+            self.assertEqual(self.scan()["status"], "ok")
+
+    def test_small_hours_scan_uses_previous_shift_day(self):
+        plan = run(datetime(2026, 11, 24, 1, 30, tzinfo=SYD), self.root, get_text=get, call_claude=fake_claude,
+                   publish_fn=self.pub)
+        self.assertEqual(plan["days"][0]["date"], "2026-11-23")
+
+    def test_push_failure_exits_non_zero(self):
+        with patch("taxi.net.get_text", get), patch("taxi.publish.publish", Mock(return_value="error: push failed")):
+            self.assertEqual(main(["--root", str(self.root), "--no-claude"]), 1)
+        self.assertTrue((self.root / "site" / "plan.json").exists())
+
     def test_load_secrets_env_override(self):
         with patch.dict(os.environ, {"TICKETMASTER_KEY": "ENVKEY"}):
             s = load_secrets(self.root)

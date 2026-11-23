@@ -62,6 +62,12 @@ class ClaudeTests(unittest.TestCase):
             extract_json("no json here")
         self.assertEqual(extract_json("See [ICC](https://x.com/a) and [1]:\n{\"a\": 2}"), {"a": 2})
 
+    def test_clean_strips_query_and_paths(self):
+        from taxi.net import clean
+        self.assertEqual(clean(r"a C:\Users\x\foo b"), "a <path> b")
+        self.assertEqual(clean("see /home/bob/.cfg and /Users/me/x"), "see <path> and <path>")
+        self.assertEqual(clean("https://a.com/home/q?k=S"), "https://a.com/home/q")
+
     @patch("taxi.claude.subprocess.run")
     def test_errors_hide_query_strings(self, run):
         run.return_value = reply(type="result", subtype="success", is_error=True, result="404 at https://api.x.com/v1?apikey=SECRET&b=1 sorry")

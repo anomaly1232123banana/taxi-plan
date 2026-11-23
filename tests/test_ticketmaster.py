@@ -44,6 +44,18 @@ class TestTicketmaster(unittest.TestCase):
         self.assertIn("page=1", get.urls[1]); self.assertEqual(len(get.urls), 2)
         self.assertEqual(len(evs), 2)
 
+    def test_later_page_failure_keeps_earlier_pages(self):
+        pages = [json.dumps({"_embedded": {"events": [{"id": "A"}]}, "page": {"totalPages": 3}})]
+
+        def get(url):
+            if "page=0" in url:
+                return pages[0]
+            raise SourceError("app.ticketmaster.com: HTTP 429")
+        with patch("taxi.sources.ticketmaster.time.sleep"), self.assertLogs("taxi.sources.ticketmaster", "WARNING"):
+            self.assertEqual(fetch_events("KEY", [date(2026, 11, 23)], get, W), [{"id": "A"}])
+        with self.assertRaises(SourceError):
+            fetch_events("KEY", [date(2026, 11, 23)], lambda u: (_ for _ in ()).throw(SourceError("x")), W)
+
     def test_no_events_key(self):
         get = FakeGet([{"page": {"totalPages": 1}}])
         self.assertEqual(fetch_events("KEY", [date(2026, 11, 23)], get, W), [])
