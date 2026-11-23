@@ -57,6 +57,9 @@ def estimate_prompt(events: list[Candidate], language: str) -> str:
         "- exit: the local time (HH:MM, 24 hour) most of the crowd leaves\n"
         "- wait: the best nearby place for a taxi to wait\n"
         "- desc: one plain sentence for a taxi driver\n"
+        "Calibration: an Opera House opera is about 2000 people aged 50 to 70 (pays 0.15, spend 1.0); "
+        "an Olympic Park rave is young, about 22 (pays 0, spend 0.15); "
+        "pays is near 0 for public concerts and sport, high only for corporate crowds.\n"
         f"Write wait and desc in {language}. Estimate only the events listed and never add others."
     )
 

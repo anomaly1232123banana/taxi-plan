@@ -38,6 +38,7 @@ def make_root(tmp: Path) -> Path:
     wjson(tmp / "data" / "gapfill_venues.json", HDR | {"venues": [
         {"name": "ICC Sydney", "kind": "venue", "area": "Pyrmont", "address": "14 Darling Dr, Sydney NSW 2000",
          "what_on_url": "https://www.iccsydney.com.au/whats-on"}]})
+    shutil.copy(ROOT / "data" / "holidays.json", tmp / "data" / "holidays.json")
     shutil.copy(ROOT / "weights.json", tmp / "weights.json")
     (tmp / "site").mkdir(exist_ok=True)
     shutil.copy(ROOT / "site" / "strings.json", tmp / "site" / "strings.json")
@@ -206,6 +207,14 @@ class TestScan(unittest.TestCase):
         text = json.dumps(self.scan(get_text=no_cruise))
         self.assertNotIn("x\\\\foo", text)
         self.assertNotIn("bob", text)
+
+    def test_sunday_shift_events_not_estimated(self):
+        from scan import drop_sunday_shift
+        from tests.helpers import cand
+        sat, sun, mon_small = (datetime(2026, 11, 28, 20, 0, tzinfo=SYD), datetime(2026, 11, 29, 20, 0, tzinfo=SYD),
+                               datetime(2026, 11, 30, 1, 0, tzinfo=SYD))
+        kept = drop_sunday_shift([cand(id=i, start=s) for i, s in (("a", sat), ("b", sun), ("c", mon_small))])
+        self.assertEqual([c.id for c in kept], ["a"])
 
     def test_plan_has_schema(self):
         self.assertEqual(self.scan()["schema"], 1)

@@ -100,7 +100,15 @@ class TestSources(unittest.TestCase):
         self.assertEqual([c.id for c in cs], ["office:kpmg-barangaroo:normal:2026-11-23", "office:kpmg-barangaroo:late:2026-11-23"])
         n, l = cs
         self.assertEqual((n.pays, n.size, n.exit), (0.6, 3000, datetime(2026, 11, 23, 17, 30, tzinfo=SYD)))
-        self.assertEqual((l.pays, l.size, l.name, l.exit), (1.0, 600, "KPMG Barangaroo · late finish", datetime(2026, 11, 23, 20, 30, tzinfo=SYD)))
+        self.assertEqual((l.pays, l.size, l.name, l.exit), (0.6, 600, "KPMG Barangaroo · late finish", datetime(2026, 11, 23, 20, 30, tzinfo=SYD)))
+
+    def test_no_offices_on_holidays_or_shutdown(self):
+        from taxi.data import load_holidays
+        hol = load_holidays(ROOT / "data" / "holidays.json")
+        days = [date(2026, 12, 25), date(2026, 12, 28), date(2026, 12, 29), date(2027, 1, 4)]
+        cs = office_candidates([OFFICE], days, W, S, hol)
+        self.assertEqual({c.exit.date().isoformat() for c in cs}, {"2027-01-04"})
+        self.assertEqual(len(office_candidates([OFFICE], days, W, S)), 8)
 
 
 if __name__ == "__main__":

@@ -55,7 +55,7 @@ def gapfill_prompt(venues: list[dict], days: list[date], known: list[str], area_
         "\"median_age\", \"age_lo\", \"age_hi\", \"size\" (expected attendance), \"pays\" (share whose taxi an employer pays, 0 to 1), "
         "\"spend\" (spending power 0 to 1), \"wait\" (best nearby place for a taxi to wait), "
         "\"desc\" (one plain sentence for a taxi driver)}\n"
-        "Disruption: {\"area\" (an allowed area name or \"ALL\"), \"date\", \"from\": \"HH:MM\", \"to\": \"HH:MM\" (same day), "
+        "Disruption: {\"area\" (an allowed area name, or \"ALL\" for a strike only), \"date\", \"from\": \"HH:MM\", \"to\": \"HH:MM\" (same day), "
         "\"what\": \"trackwork\" or \"strike\", \"source_url\"}"
     )
 
@@ -78,6 +78,7 @@ def validate_disruption(obj: dict, days: set[date], area_names: set[str]) -> dic
         return None
     ok = (isinstance(obj.get("area"), str) and obj["area"] in area_names | {"ALL"} and _day(obj.get("date"), days) and _hm(obj.get("from"))
           and _hm(obj.get("to")) and obj["from"] <= obj["to"] and obj.get("what") in DISRUPTION_KINDS
+          and (obj["area"] != "ALL" or obj["what"] == "strike")  # network-wide trackwork would boost every stop
           and _url(obj.get("source_url")))
     return {k: obj[k] for k in ("area", "date", "from", "to", "what", "source_url")} if ok else None
 

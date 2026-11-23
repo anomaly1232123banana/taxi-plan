@@ -1,6 +1,7 @@
 import json
 import re
 from itertools import combinations
+from datetime import date
 from pathlib import Path
 from typing import Any
 
@@ -155,6 +156,16 @@ def load_steady(path, area_names: set[str]) -> list[dict]:
 
 def load_venues(path, area_names: set[str]) -> list[dict]:
     return _load_list(path, "venues", _venue_problems, area_names, id_key="name")
+
+
+def load_holidays(path) -> frozenset[date]:
+    fname = Path(path).name
+    obj = load_json(path)
+    _check_header(obj, fname)
+    try:
+        return frozenset(date.fromisoformat(d) for d in obj["dates"])
+    except (KeyError, TypeError, ValueError) as e:
+        raise DataError(f"{fname}: \"dates\" must be a list of YYYY-MM-DD") from e
 
 
 def load_weights(path) -> dict:

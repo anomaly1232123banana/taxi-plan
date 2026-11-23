@@ -160,5 +160,12 @@ class EstimateTests(unittest.TestCase):
         self.assertEqual(list(cache["gapfill"]), ["today"])
 
 
+    def test_prompt_has_calibration_anchors(self):
+        from taxi.estimate import estimate_prompt
+        p = estimate_prompt([], "English")
+        self.assertIn("Opera House", p)
+        self.assertIn("rave", p)
+
+
 if __name__ == "__main__":
     unittest.main()

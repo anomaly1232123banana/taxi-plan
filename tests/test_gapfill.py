@@ -95,6 +95,8 @@ class GapfillTests(unittest.TestCase):
         ok = {"area": "ALL", "date": "2026-11-24", "from": "00:00", "to": "23:59", "what": "strike",
               "source_url": "https://transportnsw.info/x"}
         self.assertIsNotNone(validate_disruption(ok, set(DAYS), AREAS))
+        self.assertIsNone(validate_disruption(dict(ok, area="ALL", what="trackwork"), set(DAYS), AREAS))
+        self.assertIsNotNone(validate_disruption(dict(ok, area="CBD", what="trackwork"), set(DAYS), AREAS))
         self.assertIsNone(validate_disruption(dict(ok, area="Mars"), set(DAYS), AREAS))
         self.assertIsNone(validate_disruption(dict(ok, what="party"), set(DAYS), AREAS))
         self.assertIsNone(validate_disruption(dict(ok, **{"from": "20:00", "to": "10:00"}), set(DAYS), AREAS))

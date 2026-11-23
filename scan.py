@@ -36,6 +36,11 @@ def _err(e: Exception) -> str:
     return "error: " + net.clean(str(e))[:ERR_MAX]  # strips URL query strings (API key) and local paths
 
 
+def drop_sunday_shift(cands):
+    """Events on a Sunday shift are never planned, so they must not use estimate slots."""
+    return [c for c in cands if shift_date(c.start).weekday() != 6]
+
+
 def run(now: datetime, root: Path, get_text=None, call_claude=None, publish_fn=None,
         use_claude: bool = True, do_publish: bool = True) -> dict:
     get_text = get_text or net.get_text
@@ -52,6 +57,7 @@ def run(now: datetime, root: Path, get_text=None, call_claude=None, publish_fn=N
     office_rows = data.load_offices(root / "data" / "offices.json", areas)
     steady = data.load_steady(root / "data" / "steady.json", areas)
     venues = data.load_venues(root / "data" / "gapfill_venues.json", areas)
+    holidays = data.load_holidays(root / "data" / "holidays.json")
     today = shift_date(now)  # a scan at 01:30 still serves the shift that began the day before
     days = working_days(today)
     cache_path = root / "cache" / "estimates.json"
@@ -77,7 +83,7 @@ def run(now: datetime, root: Path, get_text=None, call_claude=None, publish_fn=N
 
     collect("ticketmaster", tm)
     collect("cruise", lambda: cruise.boarding_candidates(cruise.fetch_departures(get_text, today), days, w, S))
-    collect("offices", lambda: office_src.office_candidates(office_rows, days, w, S))
+    collect("offices", lambda: office_src.office_candidates(office_rows, days, w, S, holidays))
     collect("weather", lambda: weather.fetch_rain(get_text, w))
     rain = results["weather"] or set()
 
@@ -87,7 +93,7 @@ def run(now: datetime, root: Path, get_text=None, call_claude=None, publish_fn=N
         gf_call = lambda p: call_claude(p, claude.claude_args(["WebSearch", "WebFetch"], cw["gapfill_max_turns"]),
                                         cw["gapfill_timeout_s"])
 
-    tm_cands = results["ticketmaster"]
+    tm_cands = drop_sunday_shift(results["ticketmaster"])
     try:
         tm_est, sources["estimate"] = est_mod.estimate_events(tm_cands, cache, est_call, w, today, language)
     except Exception as e:  # events without an estimate are dropped: scoring them would crash
