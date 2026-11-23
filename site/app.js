@@ -1,12 +1,12 @@
 (function () {
   const app = document.getElementById("app");
-  const toggled = new Set();
-  let S = null, plan = null, pos = null, last = "";
+  const toggled = new Map();   // card id -> open state he left it in
+  let S = null, plan = null, pos = null, last = "", lastNow = new Date();
 
   function render() {
     if (!S || !plan) return;
-    const html = window.PlanView.renderPage(plan, S, new Date(), pos, toggled);
-    if (html !== last) { app.innerHTML = html; last = html; }
+    const now = new Date(), html = window.PlanView.renderPage(plan, S, now, pos, toggled);
+    if (html !== last) { app.innerHTML = html; last = html; lastNow = now; }
   }
   async function load() {
     try {
@@ -21,10 +21,9 @@
   // Capture: toggle does not bubble. Set from details.open (never flip) so a re-render keeps opened cards open.
   app.addEventListener("toggle", ev => {
     const d = ev.target; if (!d.dataset || !d.dataset.id) return;
-    const isNow = d.classList.contains("now");
-    if (d.open !== isNow) toggled.add(d.dataset.id); else toggled.delete(d.dataset.id);
+    toggled.set(d.dataset.id, d.open);
     const tap = d.querySelector(".tap"); if (tap && S) tap.textContent = d.open ? S.tap_close : S.tap_open;
-    if (plan && S) last = window.PlanView.renderPage(plan, S, new Date(), pos, toggled);   // DOM already matches; skip a rewrite
+    if (plan && S) last = window.PlanView.renderPage(plan, S, lastNow, pos, toggled);   // same time as the DOM drawn, so a stale DOM is still rewritten next tick
   }, true);
 
   document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") load(); });

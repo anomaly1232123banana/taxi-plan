@@ -22,9 +22,9 @@ summary::-webkit-details-marker{display:none}
 .f{font-size:21px;line-height:1.6;margin-top:8px}
 .more{padding:0 16px 16px}
 .go{display:block;margin-top:12px;text-align:center;border-radius:14px;padding:16px;font-size:26px;font-weight:800;background:#ffd60a;color:#000;text-decoration:none}
-.tap{font-size:20px;color:#999;margin-top:6px}
+.tap{font-size:20px;color:#bbb;margin-top:6px}
 .quiet{margin:8px 12px;padding:14px 16px;border-radius:16px;border:2px dashed #444;color:#bbb}
-.quiet .lbl{color:#888}
+.quiet .lbl{color:#bbb}
 .quiet b{color:#fff;font-size:22px}
 .quiet .alt{font-size:20px;margin-top:6px;line-height:1.4}
 .gap{height:30px}

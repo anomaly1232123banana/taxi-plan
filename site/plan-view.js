@@ -78,7 +78,7 @@
   }
 
   function card(e, S, isNow, pos, toggled) {
-    const open = isNow !== toggled.has(e.id);
+    const open = toggled.has(e.id) ? toggled.get(e.id) : isNow;   // toggled: Map id -> explicit open state
     const exit = S["exit_" + e.kind] ? fill(S["exit_" + e.kind], {time: fmtTime(e.exit, S)}) : "";
     const desc = e.desc ? `<div class="s">${esc(e.desc)}</div>` : "";
     const f = [fill(S.address, {address: e.address})];
@@ -99,7 +99,7 @@
 
   function renderPage(plan, S, now, pos, toggled) {
     const stamp = headerStamp(plan, now, S);
-    const top = `<div class="top"><span class="d">${esc(fmtDate(sydNow(now).ymd, S))}</span><span class="upd ${stamp.cls}">${stamp.text}</span></div>`;
+    const top = `<div class="top"><span class="d">${esc(fmtDate(shiftPos(now).ymd, S))}</span><span class="upd ${stamp.cls}">${stamp.text}</span></div>`;
     const loc = locateNow(plan.days || [], now);
     if (!loc) return top + `<div class="empty">${esc(S.no_plan)}</div>`;
     const one = (e, isNow) => e.type === "quiet" ? quiet(e, S) : card(e, S, isNow, pos, toggled);
