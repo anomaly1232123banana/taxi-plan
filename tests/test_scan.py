@@ -139,6 +139,34 @@ class TestScan(unittest.TestCase):
         self.assertEqual(plan["sources"]["gapfill"], "error: gf broke")
         self.assertIn("tm:Z1", [s["id"] for s in stops(plan, "2026-11-25")])
 
+    def test_weather_error_alone_stays_ok(self):
+        def no_weather(url):
+            if "open-meteo" in url:
+                raise SourceError("api.open-meteo.com: HTTP 500")
+            return get(url)
+        plan = self.scan(get_text=no_weather)
+        self.assertEqual(plan["status"], "ok")
+        self.assertTrue(plan["sources"]["weather"].startswith("error"))
+
+    def test_cruise_error_is_partial(self):
+        def no_cruise(url):
+            if "portauthoritynsw" in url:
+                raise SourceError("portauthoritynsw.com.au: HTTP 500")
+            return get(url)
+        self.assertEqual(self.scan(get_text=no_cruise)["status"], "partial")
+
+    def test_gapfill_error_status_is_partial_and_cleaned(self):
+        with patch("taxi.gapfill.gapfill", Mock(return_value=([], [], "error: bad https://x.test/p?apikey=SECRETKEY123"))):
+            plan = self.scan()
+        self.assertEqual(plan["status"], "partial")
+        self.assertNotIn("SECRETKEY123", json.dumps(plan))
+
+    def test_cache_save_failure_does_not_stop_scan(self):
+        with patch("taxi.cache.save_cache", Mock(side_effect=PermissionError("locked"))):
+            plan = self.scan()
+        self.assertEqual(plan["status"], "ok")
+        self.assertTrue((self.root / "site" / "plan.json").exists())
+
     def test_no_claude_and_no_publish(self):
         call = Mock()
         plan = self.scan(call_claude=call, use_claude=False, do_publish=False)
@@ -158,7 +186,9 @@ class TestScan(unittest.TestCase):
         with patch("taxi.net.get_text", get), patch("taxi.plan.plan_day", Mock(side_effect=RuntimeError("boom"))):
             self.assertEqual(main(["--root", str(self.root), "--no-claude", "--no-publish"]), 1)
         self.assertEqual((self.root / "site" / "plan.json").read_text("utf-8"), '{"old": true}')
-        self.assertIn("scan failed", (self.root / "logs" / "scan.log").read_text("utf-8"))
+        log = (self.root / "logs" / "scan.log").read_text("utf-8")
+        self.assertIn("scan failed", log)
+        self.assertIn("RuntimeError: boom", log)
 
     def test_main_ok_logs_each_source(self):
         with patch("taxi.net.get_text", get):

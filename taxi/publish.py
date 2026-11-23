@@ -1,12 +1,24 @@
 import json
+import logging
 import os
+import re
 import subprocess
+import time
 from datetime import date
 from pathlib import Path
 
+log = logging.getLogger(__name__)
+
 GIT_TIMEOUT_S = 120
+REPLACE_RETRY_S = 2
+GIT_ENV = {"GIT_TERMINAL_PROMPT": "0", "GCM_INTERACTIVE": "never"}  # a scheduled run has nobody to answer a prompt
 PLAN_PATH = "site/plan.json"
 BRANCH = "main"
+
+
+def strip_query(text: str) -> str:
+    """Remove URL query strings (they can hold an API key); never truncates."""
+    return re.sub(r'(https?://[^\s?#]+)\?\S*', r'\1', text)
 
 
 def write_plan(plan: dict, path: Path) -> None:
@@ -23,14 +35,17 @@ def write_plan(plan: dict, path: Path) -> None:
             tmp.unlink(missing_ok=True)
             if attempt == 2:
                 raise
+            time.sleep(REPLACE_RETRY_S)
 
 
 def publish(root: Path, today: date, run=subprocess.run) -> str:
     """Commit and push site/plan.json. The result never carries git output (a remote URL could hold a token)."""
     def step(argv: list[str]):
         try:
-            return run(argv, cwd=root, capture_output=True, text=True, timeout=GIT_TIMEOUT_S)
-        except (subprocess.TimeoutExpired, OSError):
+            return run(argv, cwd=root, capture_output=True, text=True, timeout=GIT_TIMEOUT_S,
+                       stdin=subprocess.DEVNULL, env={**os.environ, **GIT_ENV})
+        except (subprocess.TimeoutExpired, OSError) as e:
+            log.warning("%s: %s", argv[1], type(e).__name__)
             return None
 
     r = step(["git", "add", PLAN_PATH])
@@ -41,9 +56,11 @@ def publish(root: Path, today: date, run=subprocess.run) -> str:
         return "error: diff failed"
     if r.returncode == 0:
         return "no changes"
-    for name, argv in (("commit", ["git", "commit", "-m", f"plan: {today.isoformat()}"]),
-                       ("push", ["git", "push", "origin", BRANCH])):
+    for name, argv in (("commit", ["git", "commit", "-m", f"plan: {today.isoformat()}", "--", PLAN_PATH]),  # only the plan, never staged dev work
+                       ("push", ["git", "push", "origin", f"HEAD:{BRANCH}"])):
         r = step(argv)
         if r is None or r.returncode != 0:
+            if r is not None:
+                log.warning("git %s failed: %s", name, strip_query((r.stderr or "").strip()))
             return f"error: {name} failed"
     return "ok"

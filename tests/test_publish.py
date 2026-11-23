@@ -4,6 +4,7 @@ import tempfile
 import unittest
 from datetime import date
 from pathlib import Path
+from unittest.mock import patch
 
 from taxi.publish import publish, write_plan
 
@@ -17,6 +18,8 @@ class Runner:
     def __call__(self, argv, **kw):
         self.argvs.append(argv)
         assert kw["capture_output"] and kw["text"] and kw["timeout"] == 120 and kw["cwd"]
+        assert kw["stdin"] == subprocess.DEVNULL
+        assert kw["env"]["GIT_TERMINAL_PROMPT"] == "0" and kw["env"]["GCM_INTERACTIVE"] == "never"
         return subprocess.CompletedProcess(argv, self.codes.get(argv[1], 0), "", "")
 
 
@@ -25,7 +28,8 @@ class TestPublish(unittest.TestCase):
         r = Runner(diff=1)
         self.assertEqual(publish(Path("."), TODAY, run=r), "ok")
         self.assertEqual(r.argvs, [["git", "add", "site/plan.json"], ["git", "diff", "--cached", "--quiet"],
-                                   ["git", "commit", "-m", "plan: 2026-11-23"], ["git", "push", "origin", "main"]])
+                                   ["git", "commit", "-m", "plan: 2026-11-23", "--", "site/plan.json"],
+                                   ["git", "push", "origin", "HEAD:main"]])
 
     def test_no_changes(self):
         r = Runner(diff=0)
@@ -43,6 +47,23 @@ class TestPublish(unittest.TestCase):
         def hang(argv, **kw):
             raise subprocess.TimeoutExpired(argv, 120)
         self.assertEqual(publish(Path("."), TODAY, run=hang), "error: add failed")
+
+    def test_push_failure_logs_stderr_without_query(self):
+        def r(argv, **kw):
+            return subprocess.CompletedProcess(argv, {"push": 128, "diff": 1}.get(argv[1], 0), "",
+                                               "fatal: https://h.example/r.git?token=SECRET unreachable")
+        with self.assertLogs("taxi.publish", "WARNING") as cm:
+            self.assertEqual(publish(Path("."), TODAY, run=r), "error: push failed")
+        out = " ".join(cm.output)
+        self.assertIn("unreachable", out)
+        self.assertNotIn("SECRET", out)
+
+    def test_write_plan_retries_after_lock(self):
+        with tempfile.TemporaryDirectory() as d, patch("taxi.publish.time.sleep") as sl, \
+                patch("taxi.publish.os.replace", side_effect=[PermissionError("locked"), None]) as rp:
+            write_plan({"a": 1}, Path(d) / "plan.json")
+        self.assertEqual(rp.call_count, 2)
+        sl.assert_called_once_with(2)
 
     def test_write_plan_atomic(self):
         with tempfile.TemporaryDirectory() as d:

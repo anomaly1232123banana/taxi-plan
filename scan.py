@@ -100,7 +100,10 @@ def run(now: datetime, root: Path, get_text=None, call_claude=None, publish_fn=N
     log.info("gapfill: %s, %d events, %d disruptions", sources["gapfill"], len(gf_cands), len(disruptions))
 
     cache_mod.prune(cache, today, w["cache_keep_days"])
-    cache_mod.save_cache(cache, cache_path)
+    try:
+        cache_mod.save_cache(cache, cache_path)
+    except Exception as e:  # a locked OneDrive file must not lose the plan
+        log.warning("estimate cache not saved: %s", pub_mod.strip_query(str(e)))
 
     by_day: dict[date, list] = {d: [] for d in days}
     for c in tm_est + gf_cands + results["cruise"] + results["offices"]:
@@ -109,8 +112,10 @@ def run(now: datetime, root: Path, get_text=None, call_claude=None, publish_fn=N
             score_candidate(c, w, rain, disruptions)
             by_day[slot[0]].append(c)
 
-    healthy = (sources["ticketmaster"] == "ok" and sources["estimate"] == "ok"
-               and not any(v.startswith("error") for v in sources.values()))
+    sources = {k: claude._clean(v)[:ERR_MAX] for k, v in sources.items()}
+    # a weather error alone stays "ok": rain is only a score boost, a red header would cry wolf
+    healthy = (sources["ticketmaster"] == "ok" and sources["estimate"] == "ok" and sources["cruise"] == "ok"
+               and not sources["gapfill"].startswith("error"))
     plan = {"generated_at": now.isoformat(timespec="seconds"), "status": "ok" if healthy else "partial", "sources": sources,
             "days": [{"date": d.isoformat(), "entries": planner.plan_day(by_day[d], steady, t, w)} for d in days]}
     pub_mod.write_plan(plan, root / "site" / "plan.json")
@@ -136,7 +141,7 @@ def main(argv: list[str] | None = None) -> int:
         run(datetime.now(SYD), a.root, use_claude=not a.no_claude, do_publish=not a.no_publish)
         return 0
     except Exception:
-        log.error("scan failed:\n%s", claude._clean(traceback.format_exc()))
+        log.error("scan failed:\n%s", pub_mod.strip_query(traceback.format_exc()))
         return 1
     finally:
         top.removeHandler(handler)
