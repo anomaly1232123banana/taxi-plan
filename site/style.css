@@ -26,5 +26,8 @@ summary::-webkit-details-marker{display:none}
 .quiet{margin:8px 12px;padding:14px 16px;border-radius:16px;border:2px dashed #444;color:#bbb}
 .quiet .lbl{color:#bbb}
 .quiet b{color:#fff;font-size:22px}
+.quiet.now{border:4px solid #ffd60a;background:#111;color:#fff}
+.quiet.now .lbl{color:#ffd60a}
+.quiet .venue{color:#ffd60a;text-decoration:underline}
 .quiet .alt{font-size:20px;margin-top:6px;line-height:1.4}
 .gap{height:30px}

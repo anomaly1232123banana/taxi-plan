@@ -3,6 +3,8 @@
   const PLAN_TIME = "10:00";      // a plan generated before this on the cut-off day is old
   const ROAD_FACTOR = 1.3;        // straight line -> road distance
   const SPEED_KMH = 35;
+  const EXIT_GRACE = 30;          // minutes after a stop's exit before Go Now moves on
+  const POS_EVERY_MS = 180000;    // refresh position at most every 3 min
 
   const fill = (t, v) => t.replace(/\{(\w+)\}/g, (_, k) => esc(v[k]));
   const mins = hm => +hm.slice(0, 2) * 60 + +hm.slice(3);
@@ -38,8 +40,8 @@
   }
   function headerStamp(plan, now, S) {
     const g = sydNow(new Date(plan.generated_at)), time = fmtTime(g.hm, S);
+    if (isStale(plan.generated_at, "ok", now)) return {text: fill(S.updated_old, {day: S.days[g.dow], time}), cls: "bad"};
     if (plan.status !== "ok") return {text: fill(S.updated_partial, {time}), cls: "bad"};
-    if (isStale(plan.generated_at, plan.status, now)) return {text: fill(S.updated_old, {day: S.days[g.dow], time}), cls: "bad"};
     return {text: fill(S.updated_ok, {time}), cls: "ok"};
   }
 
@@ -49,16 +51,30 @@
     if (n.hm <= "03:00") return {ymd: prevYmd(n.ymd), m: 720 + mins(n.hm)};
     return {ymd: n.ymd, m: n.hm < "12:00" ? 0 : mins(n.hm) - 720};
   }
+  // Stop exit as shift minutes (00:00-11:59 is after midnight).
+  const exitShift = hm => mins(hm) - 720 + (hm < "12:00" ? 1440 : 0);
   function locateNow(days, now) {
     const {ymd, m} = shiftPos(now);
     const d = days.findIndex(x => x.date === ymd);
+    let at = null;
     if (d >= 0) {
       const e = days[d].entries.findIndex(x => (x.block[0] <= m && m < x.block[1]) || (m === 900 && x.block[1] === 900));
-      if (e >= 0) return {day: d, entry: e};
+      if (e >= 0) at = {day: d, entry: e};
     }
-    const later = days.findIndex(x => x.date > ymd);
-    return later >= 0 ? {day: later, entry: 0} : null;
+    if (!at) {
+      const later = days.findIndex(x => x.date > ymd);
+      return later >= 0 ? {day: later, entry: 0} : null;
+    }
+    // Skip stops whose crowd left more than EXIT_GRACE minutes ago.
+    for (let {day, entry} = at; day < days.length; ) {
+      const x = days[day].entries[entry];
+      if (!x) { day++; entry = 0; continue; }
+      if (!(day === d && x.type !== "quiet" && x.exit && m > exitShift(x.exit) + EXIT_GRACE)) return {day, entry};
+      entry++;
+    }
+    return null;
   }
+  const shouldRefreshPos = (last, now) => !last || now - last >= POS_EVERY_MS;
 
   function minutesFromYou(lat1, lon1, lat2, lon2) {
     const r = x => x * Math.PI / 180, a = Math.sin(r(lat2 - lat1) / 2) ** 2 +
@@ -67,14 +83,22 @@
     return Math.max(1, Math.round(km * ROAD_FACTOR / SPEED_KMH * 60));
   }
   const esc = s => String(s).replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
-  const mapsUrl = address => "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(address);
+  const mapsUrl = (address, lat, lon) => "https://www.google.com/maps/dir/?api=1&destination=" +
+    encodeURIComponent(lat != null && lon != null ? `${lat},${lon}` : address);
+  // Fallback venue: {name, lat, lon} or a bare name; no address known, so search by name when there is no lat/lon.
+  function venueLink(v) {
+    const o = typeof v === "string" ? {name: v} : v;
+    const href = o.lat != null && o.lon != null ? mapsUrl(null, o.lat, o.lon)
+      : "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(o.name + " Sydney");
+    return `<a class="venue" href="${esc(href)}" target="_blank" rel="noopener">${esc(o.name)}</a>`;
+  }
 
   const GOOD_SCORE = 55;          // green badge at or above, yellow below
 
-  function quiet(e, S) {
+  function quiet(e, S, isNow) {
     const head = e.until ? fill(S.free_until, {time: fmtTime(e.until, S), name: e.next}) : S.free_rest;
-    const alt = e.nearby && e.nearby.length ? `<div class="alt">${fill(S.try_nearby, {names: e.nearby.join(" · ")})}</div>` : "";
-    return `<div class="quiet"><div class="lbl">${esc(blockLabel(e.block, S))} · ${esc(S.quiet)}</div><b>${head}</b>${alt}</div>`;
+    const alt = e.nearby && e.nearby.length ? `<div class="alt">${S.try_nearby.replace("{names}", e.nearby.map(venueLink).join(" · "))}</div>` : "";
+    return `<div class="quiet${isNow ? " now" : ""}"><div class="lbl">${esc(blockLabel(e.block, S))} · ${esc(S.quiet)}</div><b>${head}</b>${alt}</div>`;
   }
 
   function card(e, S, isNow, pos, toggled) {
@@ -94,7 +118,7 @@
       `<div class="p">${exit}</div>${isNow ? desc : ""}` +
       `<div class="tap">${esc(open ? S.tap_close : S.tap_open)}</div></summary>` +
       `<div class="more">${isNow ? "" : desc}<div class="f">${f.join("<br>")}</div>` +
-      `<a class="go" href="${esc(mapsUrl(e.address))}" target="_blank" rel="noopener">${esc(S.navigate)}</a></div></details>`;
+      `<a class="go" href="${esc(mapsUrl(e.address, e.lat, e.lon))}" target="_blank" rel="noopener">${esc(S.navigate)}</a></div></details>`;
   }
 
   function renderPage(plan, S, now, pos, toggled) {
@@ -102,7 +126,7 @@
     const top = `<div class="top"><span class="d">${esc(fmtDate(shiftPos(now).ymd, S))}</span><span class="upd ${stamp.cls}">${stamp.text}</span></div>`;
     const loc = locateNow(plan.days || [], now);
     if (!loc) return top + `<div class="empty">${esc(S.no_plan)}</div>`;
-    const one = (e, isNow) => e.type === "quiet" ? quiet(e, S) : card(e, S, isNow, pos, toggled);
+    const one = (e, isNow) => e.type === "quiet" ? quiet(e, S, isNow) : card(e, S, isNow, pos, toggled);
     const day = plan.days[loc.day], hd = t => `<div class="hd">${esc(t)}</div>`;
     let h = top + hd(S.go_now) + one(day.entries[loc.entry], true);
     const rest = day.entries.slice(loc.entry + 1);
@@ -111,6 +135,6 @@
     return h + '<div class="gap"></div>';
   }
 
-  const api = {sydNow, fmtTime, fmtDate, blockLabel, isStale, headerStamp, locateNow, minutesFromYou, esc, mapsUrl, shiftPos, fill, renderPage};
+  const api = {sydNow, fmtTime, fmtDate, blockLabel, isStale, headerStamp, locateNow, minutesFromYou, esc, mapsUrl, shiftPos, fill, shouldRefreshPos, renderPage};
   if (typeof module !== "undefined" && module.exports) module.exports = api; else root.PlanView = api;
 })(this);

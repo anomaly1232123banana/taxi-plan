@@ -49,3 +49,13 @@ test("helpers", () => {
   assert.equal(esc(`<a href="x">&'`), "&lt;a href=&quot;x&quot;&gt;&amp;&#39;");
   assert.equal(mapsUrl("Bennelong Point, Sydney NSW 2000"), "https://www.google.com/maps/dir/?api=1&destination=Bennelong%20Point%2C%20Sydney%20NSW%202000");
 });
+
+test("J5 position refresh throttle", () => {
+  const { shouldRefreshPos } = require("../../site/plan-view.js");
+  assert.equal(shouldRefreshPos(0, 1000), true);            // never fetched
+  assert.equal(shouldRefreshPos(1000, 1000 + 179000), false);
+  assert.equal(shouldRefreshPos(1000, 1000 + 180000), true);
+});
+test("J6 mapsUrl prefers lat/lon", () => {
+  assert.equal(mapsUrl("x", -33.8, 151.2), "https://www.google.com/maps/dir/?api=1&destination=-33.8%2C151.2");
+});
