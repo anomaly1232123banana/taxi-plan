@@ -1,0 +1,243 @@
+{
+ "generated_at": "2026-11-23T10:02:00+11:00",
+ "status": "ok",
+ "sources": {},
+ "days": [
+  {
+   "date": "2026-11-23",
+   "entries": [
+    {
+     "type": "quiet",
+     "block": [
+      0,
+      240
+     ],
+     "until": "16:00",
+     "next": "KPMG Barangaroo",
+     "nearby": []
+    },
+    {
+     "type": "stop",
+     "start": null,
+     "wait": "Barangaroo Ave rank",
+     "lat": -33.8619,
+     "lon": 151.2013,
+     "size": 3000,
+     "age_lo": 30,
+     "age_hi": 55,
+     "drive_min": 6,
+     "drive_from": null,
+     "url": null,
+     "desc": "Big accounting firm, about 3,000 staff. Many use Cabcharge.",
+     "block": [
+      240,
+      360
+     ],
+     "id": "office:kpmg-barangaroo:normal:2026-11-23",
+     "kind": "office",
+     "name": "KPMG Barangaroo",
+     "score": 60,
+     "exit": "17:30",
+     "address": "Tower 3, 300 Barangaroo Ave, Barangaroo NSW 2000"
+    },
+    {
+     "type": "stop",
+     "start": null,
+     "wait": "Darling Dr, outside the main entrance",
+     "lat": null,
+     "lon": null,
+     "size": 2500,
+     "age_lo": 40,
+     "age_hi": 60,
+     "drive_min": 8,
+     "drive_from": "KPMG Barangaroo",
+     "url": null,
+     "desc": "Medical industry conference, 2,500 delegates, mostly 40+. Many staying at hotels across the city.",
+     "block": [
+      360,
+      480
+     ],
+     "id": "gf:icc",
+     "kind": "event",
+     "name": "ICC Sydney conference",
+     "score": 58,
+     "exit": "18:30",
+     "address": "14 Darling Dr, Sydney NSW 2000"
+    },
+    {
+     "type": "quiet",
+     "block": [
+      480,
+      600
+     ],
+     "until": "22:00",
+     "next": "Opera House",
+     "nearby": [
+      "The Star",
+      "Shangri-La",
+      "Four Seasons"
+     ]
+    },
+    {
+     "type": "stop",
+     "start": "19:30",
+     "wait": "Macquarie St, near the forecourt",
+     "lat": null,
+     "lon": null,
+     "size": 2000,
+     "age_lo": 50,
+     "age_hi": 70,
+     "drive_min": 9,
+     "drive_from": "ICC Sydney conference",
+     "url": null,
+     "desc": "Opera Australia, \"La Traviata\". Classic opera with mostly older, well-off ticket holders.",
+     "block": [
+      600,
+      720
+     ],
+     "id": "tm:opera1",
+     "kind": "event",
+     "name": "Opera House",
+     "score": 66,
+     "exit": "22:15",
+     "address": "Bennelong Point, Sydney NSW 2000"
+    },
+    {
+     "type": "quiet",
+     "block": [
+      720,
+      900
+     ],
+     "until": null,
+     "next": null,
+     "nearby": []
+    }
+   ]
+  },
+  {
+   "date": "2026-11-24",
+   "entries": [
+    {
+     "type": "stop",
+     "start": null,
+     "wait": "",
+     "lat": null,
+     "lon": null,
+     "size": 3000,
+     "age_lo": 50,
+     "age_hi": 75,
+     "drive_min": 10,
+     "drive_from": null,
+     "url": null,
+     "desc": "Ship departs at 5pm from the Overseas Passenger Terminal. Pick up passengers at city hotels heading to the terminal.",
+     "block": [
+      0,
+      120
+     ],
+     "id": "cruise:ovation:2026-11-24",
+     "kind": "cruise",
+     "name": "Cruise ship boarding",
+     "score": 45,
+     "exit": "15:00",
+     "address": "Circular Quay West, The Rocks NSW 2000"
+    },
+    {
+     "type": "quiet",
+     "block": [
+      120,
+      240
+     ],
+     "until": "16:00",
+     "next": "Deloitte · Quay Quarter",
+     "nearby": [
+      "Hilton",
+      "Westin"
+     ]
+    },
+    {
+     "type": "stop",
+     "start": null,
+     "wait": "",
+     "lat": null,
+     "lon": null,
+     "size": 2500,
+     "age_lo": 30,
+     "age_hi": 55,
+     "drive_min": 10,
+     "drive_from": null,
+     "url": null,
+     "desc": "",
+     "block": [
+      240,
+      360
+     ],
+     "id": "office:deloitte:normal:2026-11-24",
+     "kind": "office",
+     "name": "Deloitte · Quay Quarter",
+     "score": 57,
+     "exit": "17:30",
+     "address": "50 Bridge St, Sydney NSW 2000"
+    },
+    {
+     "type": "quiet",
+     "block": [
+      360,
+      900
+     ],
+     "until": null,
+     "next": null,
+     "nearby": []
+    }
+   ]
+  },
+  {
+   "date": "2026-11-25",
+   "entries": [
+    {
+     "type": "quiet",
+     "block": [
+      0,
+      600
+     ],
+     "until": "22:00",
+     "next": "Concert · Qudos Arena",
+     "nearby": []
+    },
+    {
+     "type": "stop",
+     "start": null,
+     "wait": "",
+     "lat": null,
+     "lon": null,
+     "size": 18000,
+     "age_lo": 40,
+     "age_hi": 60,
+     "drive_min": 35,
+     "drive_from": null,
+     "url": null,
+     "desc": "",
+     "block": [
+      600,
+      720
+     ],
+     "id": "tm:qudos1",
+     "kind": "event",
+     "name": "Concert · Qudos Arena",
+     "score": 72,
+     "exit": "22:45",
+     "address": "Olympic Blvd, Sydney Olympic Park NSW 2127"
+    },
+    {
+     "type": "quiet",
+     "block": [
+      720,
+      900
+     ],
+     "until": null,
+     "next": null,
+     "nearby": []
+    }
+   ]
+  }
+ ]
+}

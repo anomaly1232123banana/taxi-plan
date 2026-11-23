@@ -69,6 +69,48 @@
   const esc = s => String(s).replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
   const mapsUrl = address => "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(address);
 
-  const api = {sydNow, fmtTime, fmtDate, blockLabel, isStale, headerStamp, locateNow, minutesFromYou, esc, mapsUrl, shiftPos, fill};
+  const GOOD_SCORE = 55;          // green badge at or above, yellow below
+
+  function quiet(e, S) {
+    const head = e.until ? fill(S.free_until, {time: fmtTime(e.until, S), name: e.next}) : S.free_rest;
+    const alt = e.nearby && e.nearby.length ? `<div class="alt">${fill(S.try_nearby, {names: e.nearby.join(" · ")})}</div>` : "";
+    return `<div class="quiet"><div class="lbl">${esc(blockLabel(e.block, S))} · ${esc(S.quiet)}</div><b>${head}</b>${alt}</div>`;
+  }
+
+  function card(e, S, isNow, pos, toggled) {
+    const open = isNow !== toggled.has(e.id);
+    const exit = S["exit_" + e.kind] ? fill(S["exit_" + e.kind], {time: fmtTime(e.exit, S)}) : "";
+    const desc = e.desc ? `<div class="s">${esc(e.desc)}</div>` : "";
+    const f = [fill(S.address, {address: e.address})];
+    if (e.start) f.push(fill(S.starts_ends, {start: fmtTime(e.start, S), end: fmtTime(e.exit, S)}));
+    if (e.size != null) f.push(fill(S.crowd, {size: e.size.toLocaleString("en-US"), lo: e.age_lo, hi: e.age_hi}));
+    if (e.wait) f.push(fill(S.wait, {wait: e.wait}));
+    if (isNow && pos && e.lat != null && e.lon != null) f.push(fill(S.from_you, {min: minutesFromYou(pos.lat, pos.lon, e.lat, e.lon)}));
+    else if (e.drive_from) f.push(fill(S.from_prev, {min: e.drive_min, name: e.drive_from}));
+    else f.push(fill(S.from_cbd, {min: e.drive_min}));
+    return `<details${isNow ? ' class="now"' : ""}${open ? " open" : ""} data-id="${esc(e.id)}"><summary>` +
+      `<div class="lbl">${esc(blockLabel(e.block, S))}</div>` +
+      `<div class="row1"><span class="t">${esc(e.name)}</span><span class="${e.score >= GOOD_SCORE ? "sc" : "sc mid"}">${esc(e.score)}</span></div>` +
+      `<div class="p">${exit}</div>${isNow ? desc : ""}` +
+      `<div class="tap">${esc(open ? S.tap_close : S.tap_open)}</div></summary>` +
+      `<div class="more">${isNow ? "" : desc}<div class="f">${f.join("<br>")}</div>` +
+      `<a class="go" href="${esc(mapsUrl(e.address))}" target="_blank" rel="noopener">${esc(S.navigate)}</a></div></details>`;
+  }
+
+  function renderPage(plan, S, now, pos, toggled) {
+    const stamp = headerStamp(plan, now, S);
+    const top = `<div class="top"><span class="d">${esc(fmtDate(sydNow(now).ymd, S))}</span><span class="upd ${stamp.cls}">${stamp.text}</span></div>`;
+    const loc = locateNow(plan.days || [], now);
+    if (!loc) return top + `<div class="empty">${esc(S.no_plan)}</div>`;
+    const one = (e, isNow) => e.type === "quiet" ? quiet(e, S) : card(e, S, isNow, pos, toggled);
+    const day = plan.days[loc.day], hd = t => `<div class="hd">${esc(t)}</div>`;
+    let h = top + hd(S.go_now) + one(day.entries[loc.entry], true);
+    const rest = day.entries.slice(loc.entry + 1);
+    if (rest.length) h += hd(day.date === shiftPos(now).ymd ? S.rest_of_today : fmtDate(day.date, S, true)) + rest.map(e => one(e, false)).join("");
+    for (const d of plan.days.slice(loc.day + 1)) h += hd(fmtDate(d.date, S, true)) + d.entries.map(e => one(e, false)).join("");
+    return h + '<div class="gap"></div>';
+  }
+
+  const api = {sydNow, fmtTime, fmtDate, blockLabel, isStale, headerStamp, locateNow, minutesFromYou, esc, mapsUrl, shiftPos, fill, renderPage};
   if (typeof module !== "undefined" && module.exports) module.exports = api; else root.PlanView = api;
 })(this);
