@@ -1,116 +1,172 @@
 {
- "generated_at": "2026-11-23T10:02:00+11:00",
- "status": "ok",
- "sources": {},
+ "schema": 1,
+ "generated_at": "2026-11-23T11:56:54+11:00",
+ "status": "partial",
+ "sources": {
+  "ticketmaster": "error: no Ticketmaster key",
+  "cruise": "ok",
+  "offices": "ok",
+  "weather": "ok",
+  "estimate": "ok",
+  "gapfill": "error: Failed to authenticate: this login reached its time limit and cannot be renewed. Run `claude auth login` to sign "
+ },
  "days": [
   {
    "date": "2026-11-23",
    "entries": [
     {
-     "type": "quiet",
+     "type": "stop",
      "block": [
       0,
-      240
+      120
      ],
-     "until": "16:00",
-     "next": "KPMG Barangaroo",
-     "nearby": []
-    },
-    {
-     "type": "stop",
+     "id": "cruise:anthem-of-the-seas:2026-11-23",
+     "kind": "cruise",
+     "name": "Cruise ship boarding · Anthem of the Seas",
+     "score": 62,
+     "exit": "13:00",
      "start": null,
-     "wait": "Barangaroo Ave rank",
-     "lat": -33.8619,
-     "lon": 151.2013,
+     "desc": "Ship departs at 4:45pm from the Overseas Passenger Terminal. Pick up passengers at city hotels heading to the terminal.",
+     "address": "Circular Quay West, The Rocks NSW 2000",
+     "lat": -33.8583,
+     "lon": 151.2099,
      "size": 3000,
-     "age_lo": 30,
-     "age_hi": 55,
-     "drive_min": 6,
+     "age_lo": 45,
+     "age_hi": 75,
+     "wait": "City hotels, then the Overseas Passenger Terminal",
+     "drive_min": 5,
      "drive_from": null,
-     "url": null,
-     "desc": "Big accounting firm, about 3,000 staff. Many use Cabcharge.",
-     "block": [
-      240,
-      360
-     ],
-     "id": "office:kpmg-barangaroo:normal:2026-11-23",
-     "kind": "office",
-     "name": "KPMG Barangaroo",
-     "score": 60,
-     "exit": "17:30",
-     "address": "Tower 3, 300 Barangaroo Ave, Barangaroo NSW 2000"
-    },
-    {
-     "type": "stop",
-     "start": null,
-     "wait": "Darling Dr, outside the main entrance",
-     "lat": null,
-     "lon": null,
-     "size": 2500,
-     "age_lo": 40,
-     "age_hi": 60,
-     "drive_min": 8,
-     "drive_from": "KPMG Barangaroo",
-     "url": null,
-     "desc": "Medical industry conference, 2,500 delegates, mostly 40+. Many staying at hotels across the city.",
-     "block": [
-      360,
-      480
-     ],
-     "id": "gf:icc",
-     "kind": "event",
-     "name": "ICC Sydney conference",
-     "score": 58,
-     "exit": "18:30",
-     "address": "14 Darling Dr, Sydney NSW 2000"
+     "url": "https://www.portauthoritynsw.com.au/cruise/cruise-schedule/"
     },
     {
      "type": "quiet",
      "block": [
-      480,
-      600
+      120,
+      240
      ],
-     "until": "22:00",
-     "next": "Opera House",
+     "until": "17:09",
+     "next": "Westpac Group",
      "nearby": [
-      "The Star",
-      "Shangri-La",
-      "Four Seasons"
+      {
+       "name": "Crown Sydney",
+       "address": "1 Barangaroo Ave, Barangaroo NSW 2000",
+       "lat": -33.8624,
+       "lon": 151.2011
+      },
+      {
+       "name": "City Tattersalls Club",
+       "address": "198 Pitt St, Sydney NSW 2000",
+       "lat": -33.8712,
+       "lon": 151.2083
+      },
+      {
+       "name": "The Star Sydney",
+       "address": "80 Pyrmont St, Pyrmont NSW 2009",
+       "lat": -33.8687,
+       "lon": 151.1956
+      }
      ]
     },
     {
      "type": "stop",
-     "start": "19:30",
-     "wait": "Macquarie St, near the forecourt",
-     "lat": null,
-     "lon": null,
-     "size": 2000,
-     "age_lo": 50,
-     "age_hi": 70,
-     "drive_min": 9,
-     "drive_from": "ICC Sydney conference",
-     "url": null,
-     "desc": "Opera Australia, \"La Traviata\". Classic opera with mostly older, well-off ticket holders.",
      "block": [
-      600,
-      720
+      240,
+      360
      ],
-     "id": "tm:opera1",
-     "kind": "event",
-     "name": "Opera House",
+     "id": "office:westpac-kent-st:normal:2026-11-23",
+     "kind": "office",
+     "name": "Westpac Group",
      "score": 66,
-     "exit": "22:15",
-     "address": "Bennelong Point, Sydney NSW 2000"
+     "exit": "17:15",
+     "start": null,
+     "desc": "Major bank head office. Many staff use corporate taxi accounts.",
+     "address": "275 Kent St, Sydney NSW 2000",
+     "lat": -33.8659,
+     "lon": 151.2041,
+     "size": 5000,
+     "age_lo": 28,
+     "age_hi": 60,
+     "wait": "Kent St kerb",
+     "drive_min": 6,
+     "drive_from": "Cruise ship boarding · Anthem of the Seas",
+     "url": "https://www.mirvac.com/office-and-industrial/Master-Office-Portfolio/nsw/275-kent-street"
+    },
+    {
+     "type": "stop",
+     "block": [
+      360,
+      480
+     ],
+     "id": "office:macquarie-group-elizabeth:normal:2026-11-23",
+     "kind": "office",
+     "name": "Macquarie Group",
+     "score": 65,
+     "exit": "18:00",
+     "start": null,
+     "desc": "Investment bank and asset manager head office. Bankers often take corporate taxis late.",
+     "address": "1 Elizabeth St, Sydney NSW 2000",
+     "lat": -33.8671,
+     "lon": 151.2127,
+     "size": 6000,
+     "age_lo": 25,
+     "age_hi": 58,
+     "wait": "Elizabeth St / Martin Place kerb",
+     "drive_min": 9,
+     "drive_from": "Westpac Group",
+     "url": "https://www.macquarie.com/"
+    },
+    {
+     "type": "stop",
+     "block": [
+      480,
+      600
+     ],
+     "id": "office:macquarie-group-elizabeth:late:2026-11-23",
+     "kind": "office",
+     "name": "Macquarie Group · late finish",
+     "score": 65,
+     "exit": "21:00",
+     "start": null,
+     "desc": "Investment bank and asset manager head office. Bankers often take corporate taxis late.",
+     "address": "1 Elizabeth St, Sydney NSW 2000",
+     "lat": -33.8671,
+     "lon": 151.2127,
+     "size": 1200,
+     "age_lo": 25,
+     "age_hi": 58,
+     "wait": "Elizabeth St / Martin Place kerb",
+     "drive_min": 5,
+     "drive_from": "Macquarie Group",
+     "url": "https://www.macquarie.com/"
     },
     {
      "type": "quiet",
      "block": [
-      720,
+      600,
       900
      ],
      "until": null,
      "next": null,
-     "nearby": []
+     "nearby": [
+      {
+       "name": "Crown Sydney",
+       "address": "1 Barangaroo Ave, Barangaroo NSW 2000",
+       "lat": -33.8624,
+       "lon": 151.2011
+      },
+      {
+       "name": "The Star Sydney",
+       "address": "80 Pyrmont St, Pyrmont NSW 2009",
+       "lat": -33.8687,
+       "lon": 151.1956
+      },
+      {
+       "name": "Four Seasons Hotel Sydney",
+       "address": "199 George St, Sydney NSW 2000",
+       "lat": -33.8617,
+       "lon": 151.2076
+      }
+     ]
     }
    ]
   },
@@ -119,27 +175,27 @@
    "entries": [
     {
      "type": "stop",
-     "start": null,
-     "wait": "",
-     "lat": null,
-     "lon": null,
-     "size": 3000,
-     "age_lo": 50,
-     "age_hi": 75,
-     "drive_min": 10,
-     "drive_from": null,
-     "url": null,
-     "desc": "Ship departs at 5pm from the Overseas Passenger Terminal. Pick up passengers at city hotels heading to the terminal.",
      "block": [
       0,
       120
      ],
-     "id": "cruise:ovation:2026-11-24",
+     "id": "cruise:carnival-splendor:2026-11-24",
      "kind": "cruise",
-     "name": "Cruise ship boarding",
-     "score": 45,
-     "exit": "15:00",
-     "address": "Circular Quay West, The Rocks NSW 2000"
+     "name": "Cruise ship boarding · Carnival Splendor",
+     "score": 62,
+     "exit": "13:00",
+     "start": null,
+     "desc": "Ship departs at 3:30pm from the Overseas Passenger Terminal. Pick up passengers at city hotels heading to the terminal.",
+     "address": "Circular Quay West, The Rocks NSW 2000",
+     "lat": -33.8583,
+     "lon": 151.2099,
+     "size": 3000,
+     "age_lo": 45,
+     "age_hi": 75,
+     "wait": "City hotels, then the Overseas Passenger Terminal",
+     "drive_min": 5,
+     "drive_from": null,
+     "url": "https://www.portauthoritynsw.com.au/cruise/cruise-schedule/"
     },
     {
      "type": "quiet",
@@ -147,46 +203,129 @@
       120,
       240
      ],
-     "until": "16:00",
-     "next": "Deloitte · Quay Quarter",
+     "until": "17:09",
+     "next": "Westpac Group",
      "nearby": [
-      "Hilton",
-      "Westin"
+      {
+       "name": "Crown Sydney",
+       "address": "1 Barangaroo Ave, Barangaroo NSW 2000",
+       "lat": -33.8624,
+       "lon": 151.2011
+      },
+      {
+       "name": "City Tattersalls Club",
+       "address": "198 Pitt St, Sydney NSW 2000",
+       "lat": -33.8712,
+       "lon": 151.2083
+      },
+      {
+       "name": "The Star Sydney",
+       "address": "80 Pyrmont St, Pyrmont NSW 2009",
+       "lat": -33.8687,
+       "lon": 151.1956
+      }
      ]
     },
     {
      "type": "stop",
-     "start": null,
-     "wait": "",
-     "lat": null,
-     "lon": null,
-     "size": 2500,
-     "age_lo": 30,
-     "age_hi": 55,
-     "drive_min": 10,
-     "drive_from": null,
-     "url": null,
-     "desc": "",
      "block": [
       240,
       360
      ],
-     "id": "office:deloitte:normal:2026-11-24",
+     "id": "office:westpac-kent-st:normal:2026-11-24",
      "kind": "office",
-     "name": "Deloitte · Quay Quarter",
-     "score": 57,
-     "exit": "17:30",
-     "address": "50 Bridge St, Sydney NSW 2000"
+     "name": "Westpac Group",
+     "score": 66,
+     "exit": "17:15",
+     "start": null,
+     "desc": "Major bank head office. Many staff use corporate taxi accounts.",
+     "address": "275 Kent St, Sydney NSW 2000",
+     "lat": -33.8659,
+     "lon": 151.2041,
+     "size": 5000,
+     "age_lo": 28,
+     "age_hi": 60,
+     "wait": "Kent St kerb",
+     "drive_min": 6,
+     "drive_from": "Cruise ship boarding · Carnival Splendor",
+     "url": "https://www.mirvac.com/office-and-industrial/Master-Office-Portfolio/nsw/275-kent-street"
+    },
+    {
+     "type": "stop",
+     "block": [
+      360,
+      480
+     ],
+     "id": "office:macquarie-group-elizabeth:normal:2026-11-24",
+     "kind": "office",
+     "name": "Macquarie Group",
+     "score": 65,
+     "exit": "18:00",
+     "start": null,
+     "desc": "Investment bank and asset manager head office. Bankers often take corporate taxis late.",
+     "address": "1 Elizabeth St, Sydney NSW 2000",
+     "lat": -33.8671,
+     "lon": 151.2127,
+     "size": 6000,
+     "age_lo": 25,
+     "age_hi": 58,
+     "wait": "Elizabeth St / Martin Place kerb",
+     "drive_min": 9,
+     "drive_from": "Westpac Group",
+     "url": "https://www.macquarie.com/"
+    },
+    {
+     "type": "stop",
+     "block": [
+      480,
+      600
+     ],
+     "id": "office:macquarie-group-elizabeth:late:2026-11-24",
+     "kind": "office",
+     "name": "Macquarie Group · late finish",
+     "score": 65,
+     "exit": "21:00",
+     "start": null,
+     "desc": "Investment bank and asset manager head office. Bankers often take corporate taxis late.",
+     "address": "1 Elizabeth St, Sydney NSW 2000",
+     "lat": -33.8671,
+     "lon": 151.2127,
+     "size": 1200,
+     "age_lo": 25,
+     "age_hi": 58,
+     "wait": "Elizabeth St / Martin Place kerb",
+     "drive_min": 5,
+     "drive_from": "Macquarie Group",
+     "url": "https://www.macquarie.com/"
     },
     {
      "type": "quiet",
      "block": [
-      360,
+      600,
       900
      ],
      "until": null,
      "next": null,
-     "nearby": []
+     "nearby": [
+      {
+       "name": "Crown Sydney",
+       "address": "1 Barangaroo Ave, Barangaroo NSW 2000",
+       "lat": -33.8624,
+       "lon": 151.2011
+      },
+      {
+       "name": "The Star Sydney",
+       "address": "80 Pyrmont St, Pyrmont NSW 2009",
+       "lat": -33.8687,
+       "lon": 151.1956
+      },
+      {
+       "name": "Four Seasons Hotel Sydney",
+       "address": "199 George St, Sydney NSW 2000",
+       "lat": -33.8617,
+       "lon": 151.2076
+      }
+     ]
     }
    ]
   },
@@ -194,48 +333,452 @@
    "date": "2026-11-25",
    "entries": [
     {
-     "type": "quiet",
+     "type": "stop",
      "block": [
       0,
-      600
+      120
      ],
-     "until": "22:00",
-     "next": "Concert · Qudos Arena",
-     "nearby": []
+     "id": "cruise:royal-princess:2026-11-25",
+     "kind": "cruise",
+     "name": "Cruise ship boarding · Royal Princess",
+     "score": 54,
+     "exit": "13:00",
+     "start": null,
+     "desc": "Ship departs at 4pm from the Overseas Passenger Terminal. Pick up passengers at city hotels heading to the terminal.",
+     "address": "Circular Quay West, The Rocks NSW 2000",
+     "lat": -33.8583,
+     "lon": 151.2099,
+     "size": 3000,
+     "age_lo": 45,
+     "age_hi": 75,
+     "wait": "City hotels, then the Overseas Passenger Terminal",
+     "drive_min": 5,
+     "drive_from": null,
+     "url": "https://www.portauthoritynsw.com.au/cruise/cruise-schedule/"
+    },
+    {
+     "type": "quiet",
+     "block": [
+      120,
+      240
+     ],
+     "until": "17:09",
+     "next": "Westpac Group",
+     "nearby": [
+      {
+       "name": "Crown Sydney",
+       "address": "1 Barangaroo Ave, Barangaroo NSW 2000",
+       "lat": -33.8624,
+       "lon": 151.2011
+      },
+      {
+       "name": "City Tattersalls Club",
+       "address": "198 Pitt St, Sydney NSW 2000",
+       "lat": -33.8712,
+       "lon": 151.2083
+      },
+      {
+       "name": "The Star Sydney",
+       "address": "80 Pyrmont St, Pyrmont NSW 2009",
+       "lat": -33.8687,
+       "lon": 151.1956
+      }
+     ]
     },
     {
      "type": "stop",
-     "start": null,
-     "wait": "",
-     "lat": null,
-     "lon": null,
-     "size": 18000,
-     "age_lo": 40,
-     "age_hi": 60,
-     "drive_min": 35,
-     "drive_from": null,
-     "url": null,
-     "desc": "",
      "block": [
-      600,
-      720
+      240,
+      360
      ],
-     "id": "tm:qudos1",
-     "kind": "event",
-     "name": "Concert · Qudos Arena",
-     "score": 72,
-     "exit": "22:45",
-     "address": "Olympic Blvd, Sydney Olympic Park NSW 2127"
+     "id": "office:westpac-kent-st:normal:2026-11-25",
+     "kind": "office",
+     "name": "Westpac Group",
+     "score": 58,
+     "exit": "17:15",
+     "start": null,
+     "desc": "Major bank head office. Many staff use corporate taxi accounts.",
+     "address": "275 Kent St, Sydney NSW 2000",
+     "lat": -33.8659,
+     "lon": 151.2041,
+     "size": 5000,
+     "age_lo": 28,
+     "age_hi": 60,
+     "wait": "Kent St kerb",
+     "drive_min": 6,
+     "drive_from": "Cruise ship boarding · Royal Princess",
+     "url": "https://www.mirvac.com/office-and-industrial/Master-Office-Portfolio/nsw/275-kent-street"
+    },
+    {
+     "type": "stop",
+     "block": [
+      360,
+      480
+     ],
+     "id": "office:macquarie-group-elizabeth:normal:2026-11-25",
+     "kind": "office",
+     "name": "Macquarie Group",
+     "score": 57,
+     "exit": "18:00",
+     "start": null,
+     "desc": "Investment bank and asset manager head office. Bankers often take corporate taxis late.",
+     "address": "1 Elizabeth St, Sydney NSW 2000",
+     "lat": -33.8671,
+     "lon": 151.2127,
+     "size": 6000,
+     "age_lo": 25,
+     "age_hi": 58,
+     "wait": "Elizabeth St / Martin Place kerb",
+     "drive_min": 9,
+     "drive_from": "Westpac Group",
+     "url": "https://www.macquarie.com/"
+    },
+    {
+     "type": "stop",
+     "block": [
+      480,
+      600
+     ],
+     "id": "office:macquarie-group-elizabeth:late:2026-11-25",
+     "kind": "office",
+     "name": "Macquarie Group · late finish",
+     "score": 56,
+     "exit": "21:00",
+     "start": null,
+     "desc": "Investment bank and asset manager head office. Bankers often take corporate taxis late.",
+     "address": "1 Elizabeth St, Sydney NSW 2000",
+     "lat": -33.8671,
+     "lon": 151.2127,
+     "size": 1200,
+     "age_lo": 25,
+     "age_hi": 58,
+     "wait": "Elizabeth St / Martin Place kerb",
+     "drive_min": 5,
+     "drive_from": "Macquarie Group",
+     "url": "https://www.macquarie.com/"
     },
     {
      "type": "quiet",
      "block": [
-      720,
+      600,
       900
      ],
      "until": null,
      "next": null,
-     "nearby": []
+     "nearby": [
+      {
+       "name": "Crown Sydney",
+       "address": "1 Barangaroo Ave, Barangaroo NSW 2000",
+       "lat": -33.8624,
+       "lon": 151.2011
+      },
+      {
+       "name": "The Star Sydney",
+       "address": "80 Pyrmont St, Pyrmont NSW 2009",
+       "lat": -33.8687,
+       "lon": 151.1956
+      },
+      {
+       "name": "Four Seasons Hotel Sydney",
+       "address": "199 George St, Sydney NSW 2000",
+       "lat": -33.8617,
+       "lon": 151.2076
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "date": "2026-11-26",
+   "entries": [
+    {
+     "type": "stop",
+     "block": [
+      0,
+      120
+     ],
+     "id": "cruise:carnival-adventure:2026-11-26",
+     "kind": "cruise",
+     "name": "Cruise ship boarding · Carnival Adventure",
+     "score": 54,
+     "exit": "13:00",
+     "start": null,
+     "desc": "Ship departs at 3:30pm from the Overseas Passenger Terminal. Pick up passengers at city hotels heading to the terminal.",
+     "address": "Circular Quay West, The Rocks NSW 2000",
+     "lat": -33.8583,
+     "lon": 151.2099,
+     "size": 3000,
+     "age_lo": 45,
+     "age_hi": 75,
+     "wait": "City hotels, then the Overseas Passenger Terminal",
+     "drive_min": 5,
+     "drive_from": null,
+     "url": "https://www.portauthoritynsw.com.au/cruise/cruise-schedule/"
+    },
+    {
+     "type": "quiet",
+     "block": [
+      120,
+      240
+     ],
+     "until": "17:09",
+     "next": "Westpac Group",
+     "nearby": [
+      {
+       "name": "Crown Sydney",
+       "address": "1 Barangaroo Ave, Barangaroo NSW 2000",
+       "lat": -33.8624,
+       "lon": 151.2011
+      },
+      {
+       "name": "City Tattersalls Club",
+       "address": "198 Pitt St, Sydney NSW 2000",
+       "lat": -33.8712,
+       "lon": 151.2083
+      },
+      {
+       "name": "The Star Sydney",
+       "address": "80 Pyrmont St, Pyrmont NSW 2009",
+       "lat": -33.8687,
+       "lon": 151.1956
+      }
+     ]
+    },
+    {
+     "type": "stop",
+     "block": [
+      240,
+      360
+     ],
+     "id": "office:westpac-kent-st:normal:2026-11-26",
+     "kind": "office",
+     "name": "Westpac Group",
+     "score": 58,
+     "exit": "17:15",
+     "start": null,
+     "desc": "Major bank head office. Many staff use corporate taxi accounts.",
+     "address": "275 Kent St, Sydney NSW 2000",
+     "lat": -33.8659,
+     "lon": 151.2041,
+     "size": 5000,
+     "age_lo": 28,
+     "age_hi": 60,
+     "wait": "Kent St kerb",
+     "drive_min": 6,
+     "drive_from": "Cruise ship boarding · Carnival Adventure",
+     "url": "https://www.mirvac.com/office-and-industrial/Master-Office-Portfolio/nsw/275-kent-street"
+    },
+    {
+     "type": "stop",
+     "block": [
+      360,
+      480
+     ],
+     "id": "office:macquarie-group-elizabeth:normal:2026-11-26",
+     "kind": "office",
+     "name": "Macquarie Group",
+     "score": 57,
+     "exit": "18:00",
+     "start": null,
+     "desc": "Investment bank and asset manager head office. Bankers often take corporate taxis late.",
+     "address": "1 Elizabeth St, Sydney NSW 2000",
+     "lat": -33.8671,
+     "lon": 151.2127,
+     "size": 6000,
+     "age_lo": 25,
+     "age_hi": 58,
+     "wait": "Elizabeth St / Martin Place kerb",
+     "drive_min": 9,
+     "drive_from": "Westpac Group",
+     "url": "https://www.macquarie.com/"
+    },
+    {
+     "type": "stop",
+     "block": [
+      480,
+      600
+     ],
+     "id": "office:macquarie-group-elizabeth:late:2026-11-26",
+     "kind": "office",
+     "name": "Macquarie Group · late finish",
+     "score": 56,
+     "exit": "21:00",
+     "start": null,
+     "desc": "Investment bank and asset manager head office. Bankers often take corporate taxis late.",
+     "address": "1 Elizabeth St, Sydney NSW 2000",
+     "lat": -33.8671,
+     "lon": 151.2127,
+     "size": 1200,
+     "age_lo": 25,
+     "age_hi": 58,
+     "wait": "Elizabeth St / Martin Place kerb",
+     "drive_min": 5,
+     "drive_from": "Macquarie Group",
+     "url": "https://www.macquarie.com/"
+    },
+    {
+     "type": "quiet",
+     "block": [
+      600,
+      900
+     ],
+     "until": null,
+     "next": null,
+     "nearby": [
+      {
+       "name": "Crown Sydney",
+       "address": "1 Barangaroo Ave, Barangaroo NSW 2000",
+       "lat": -33.8624,
+       "lon": 151.2011
+      },
+      {
+       "name": "The Star Sydney",
+       "address": "80 Pyrmont St, Pyrmont NSW 2009",
+       "lat": -33.8687,
+       "lon": 151.1956
+      },
+      {
+       "name": "Four Seasons Hotel Sydney",
+       "address": "199 George St, Sydney NSW 2000",
+       "lat": -33.8617,
+       "lon": 151.2076
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "date": "2026-11-27",
+   "entries": [
+    {
+     "type": "quiet",
+     "block": [
+      0,
+      240
+     ],
+     "until": "17:09",
+     "next": "Westpac Group",
+     "nearby": [
+      {
+       "name": "Crown Sydney",
+       "address": "1 Barangaroo Ave, Barangaroo NSW 2000",
+       "lat": -33.8624,
+       "lon": 151.2011
+      },
+      {
+       "name": "Four Seasons Hotel Sydney",
+       "address": "199 George St, Sydney NSW 2000",
+       "lat": -33.8617,
+       "lon": 151.2076
+      },
+      {
+       "name": "Hilton Sydney",
+       "address": "488 George St, Sydney NSW 2000",
+       "lat": -33.8718,
+       "lon": 151.2076
+      }
+     ]
+    },
+    {
+     "type": "stop",
+     "block": [
+      240,
+      360
+     ],
+     "id": "office:westpac-kent-st:normal:2026-11-27",
+     "kind": "office",
+     "name": "Westpac Group",
+     "score": 58,
+     "exit": "17:15",
+     "start": null,
+     "desc": "Major bank head office. Many staff use corporate taxi accounts.",
+     "address": "275 Kent St, Sydney NSW 2000",
+     "lat": -33.8659,
+     "lon": 151.2041,
+     "size": 5000,
+     "age_lo": 28,
+     "age_hi": 60,
+     "wait": "Kent St kerb",
+     "drive_min": 6,
+     "drive_from": null,
+     "url": "https://www.mirvac.com/office-and-industrial/Master-Office-Portfolio/nsw/275-kent-street"
+    },
+    {
+     "type": "stop",
+     "block": [
+      360,
+      480
+     ],
+     "id": "office:macquarie-group-elizabeth:normal:2026-11-27",
+     "kind": "office",
+     "name": "Macquarie Group",
+     "score": 57,
+     "exit": "18:00",
+     "start": null,
+     "desc": "Investment bank and asset manager head office. Bankers often take corporate taxis late.",
+     "address": "1 Elizabeth St, Sydney NSW 2000",
+     "lat": -33.8671,
+     "lon": 151.2127,
+     "size": 6000,
+     "age_lo": 25,
+     "age_hi": 58,
+     "wait": "Elizabeth St / Martin Place kerb",
+     "drive_min": 9,
+     "drive_from": "Westpac Group",
+     "url": "https://www.macquarie.com/"
+    },
+    {
+     "type": "stop",
+     "block": [
+      480,
+      600
+     ],
+     "id": "office:macquarie-group-elizabeth:late:2026-11-27",
+     "kind": "office",
+     "name": "Macquarie Group · late finish",
+     "score": 56,
+     "exit": "21:00",
+     "start": null,
+     "desc": "Investment bank and asset manager head office. Bankers often take corporate taxis late.",
+     "address": "1 Elizabeth St, Sydney NSW 2000",
+     "lat": -33.8671,
+     "lon": 151.2127,
+     "size": 1200,
+     "age_lo": 25,
+     "age_hi": 58,
+     "wait": "Elizabeth St / Martin Place kerb",
+     "drive_min": 5,
+     "drive_from": "Macquarie Group",
+     "url": "https://www.macquarie.com/"
+    },
+    {
+     "type": "quiet",
+     "block": [
+      600,
+      900
+     ],
+     "until": null,
+     "next": null,
+     "nearby": [
+      {
+       "name": "Crown Sydney",
+       "address": "1 Barangaroo Ave, Barangaroo NSW 2000",
+       "lat": -33.8624,
+       "lon": 151.2011
+      },
+      {
+       "name": "The Star Sydney",
+       "address": "80 Pyrmont St, Pyrmont NSW 2009",
+       "lat": -33.8687,
+       "lon": 151.1956
+      },
+      {
+       "name": "Four Seasons Hotel Sydney",
+       "address": "199 George St, Sydney NSW 2000",
+       "lat": -33.8617,
+       "lon": 151.2076
+      }
+     ]
     }
    ]
   }
