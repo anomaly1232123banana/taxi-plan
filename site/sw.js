@@ -8,7 +8,7 @@ self.addEventListener("fetch", e => {
   const r = e.request, u = new URL(r.url);
   if (r.method !== "GET" || u.origin !== location.origin) return;
   e.respondWith(fetch(r).then(res => {
-    if (res.ok) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(key(r.url), copy)); }
+    if (res.ok) { const copy = res.clone(); e.waitUntil(caches.open(CACHE).then(c => c.put(key(r.url), copy))); }
     return res;
   }).catch(() => caches.match(r, {ignoreSearch: true})));
 });
