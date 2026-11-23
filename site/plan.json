@@ -1,47 +1,22 @@
 {
  "schema": 1,
- "generated_at": "2026-11-23T12:01:02+11:00",
+ "generated_at": "2026-11-23T12:11:04+11:00",
  "status": "partial",
  "sources": {
   "ticketmaster": "error: no Ticketmaster key",
-  "cruise": "ok",
   "offices": "ok",
   "weather": "ok",
   "estimate": "ok",
-  "gapfill": "ok"
+  "gapfill": "cached"
  },
  "days": [
   {
    "date": "2026-11-23",
    "entries": [
     {
-     "type": "stop",
-     "block": [
-      0,
-      120
-     ],
-     "id": "cruise:anthem-of-the-seas:2026-11-23",
-     "kind": "cruise",
-     "name": "Cruise ship boarding · Anthem of the Seas",
-     "score": 62,
-     "exit": "13:00",
-     "start": null,
-     "desc": "Ship departs at 4:45pm from the Overseas Passenger Terminal. Pick up passengers at city hotels heading to the terminal.",
-     "address": "Circular Quay West, The Rocks NSW 2000",
-     "lat": -33.8583,
-     "lon": 151.2099,
-     "size": 3000,
-     "age_lo": 45,
-     "age_hi": 75,
-     "wait": "City hotels, then the Overseas Passenger Terminal",
-     "drive_min": 5,
-     "drive_from": null,
-     "url": "https://www.portauthoritynsw.com.au/cruise/cruise-schedule/"
-    },
-    {
      "type": "quiet",
      "block": [
-      120,
+      0,
       240
      ],
      "until": "17:09",
@@ -54,16 +29,16 @@
        "lon": 151.2011
       },
       {
-       "name": "City Tattersalls Club",
-       "address": "198 Pitt St, Sydney NSW 2000",
-       "lat": -33.8712,
-       "lon": 151.2083
+       "name": "Four Seasons Hotel Sydney",
+       "address": "199 George St, Sydney NSW 2000",
+       "lat": -33.8617,
+       "lon": 151.2076
       },
       {
-       "name": "The Star Sydney",
-       "address": "80 Pyrmont St, Pyrmont NSW 2009",
-       "lat": -33.8687,
-       "lon": 151.1956
+       "name": "Hilton Sydney",
+       "address": "488 George St, Sydney NSW 2000",
+       "lat": -33.8718,
+       "lon": 151.2076
       }
      ]
     },
@@ -88,7 +63,7 @@
      "age_hi": 60,
      "wait": "Kent St kerb",
      "drive_min": 6,
-     "drive_from": "Cruise ship boarding · Anthem of the Seas",
+     "drive_from": null,
      "url": "https://www.mirvac.com/office-and-industrial/Master-Office-Portfolio/nsw/275-kent-street"
     },
     {
@@ -174,33 +149,9 @@
    "date": "2026-11-24",
    "entries": [
     {
-     "type": "stop",
-     "block": [
-      0,
-      120
-     ],
-     "id": "cruise:carnival-splendor:2026-11-24",
-     "kind": "cruise",
-     "name": "Cruise ship boarding · Carnival Splendor",
-     "score": 62,
-     "exit": "13:00",
-     "start": null,
-     "desc": "Ship departs at 3:30pm from the Overseas Passenger Terminal. Pick up passengers at city hotels heading to the terminal.",
-     "address": "Circular Quay West, The Rocks NSW 2000",
-     "lat": -33.8583,
-     "lon": 151.2099,
-     "size": 3000,
-     "age_lo": 45,
-     "age_hi": 75,
-     "wait": "City hotels, then the Overseas Passenger Terminal",
-     "drive_min": 5,
-     "drive_from": null,
-     "url": "https://www.portauthoritynsw.com.au/cruise/cruise-schedule/"
-    },
-    {
      "type": "quiet",
      "block": [
-      120,
+      0,
       240
      ],
      "until": "17:09",
@@ -213,16 +164,16 @@
        "lon": 151.2011
       },
       {
-       "name": "City Tattersalls Club",
-       "address": "198 Pitt St, Sydney NSW 2000",
-       "lat": -33.8712,
-       "lon": 151.2083
+       "name": "Four Seasons Hotel Sydney",
+       "address": "199 George St, Sydney NSW 2000",
+       "lat": -33.8617,
+       "lon": 151.2076
       },
       {
-       "name": "The Star Sydney",
-       "address": "80 Pyrmont St, Pyrmont NSW 2009",
-       "lat": -33.8687,
-       "lon": 151.1956
+       "name": "Hilton Sydney",
+       "address": "488 George St, Sydney NSW 2000",
+       "lat": -33.8718,
+       "lon": 151.2076
       }
      ]
     },
@@ -247,7 +198,7 @@
      "age_hi": 60,
      "wait": "Kent St kerb",
      "drive_min": 6,
-     "drive_from": "Cruise ship boarding · Carnival Splendor",
+     "drive_from": null,
      "url": "https://www.mirvac.com/office-and-industrial/Master-Office-Portfolio/nsw/275-kent-street"
     },
     {
@@ -333,33 +284,9 @@
    "date": "2026-11-25",
    "entries": [
     {
-     "type": "stop",
-     "block": [
-      0,
-      120
-     ],
-     "id": "cruise:royal-princess:2026-11-25",
-     "kind": "cruise",
-     "name": "Cruise ship boarding · Royal Princess",
-     "score": 54,
-     "exit": "13:00",
-     "start": null,
-     "desc": "Ship departs at 4pm from the Overseas Passenger Terminal. Pick up passengers at city hotels heading to the terminal.",
-     "address": "Circular Quay West, The Rocks NSW 2000",
-     "lat": -33.8583,
-     "lon": 151.2099,
-     "size": 3000,
-     "age_lo": 45,
-     "age_hi": 75,
-     "wait": "City hotels, then the Overseas Passenger Terminal",
-     "drive_min": 5,
-     "drive_from": null,
-     "url": "https://www.portauthoritynsw.com.au/cruise/cruise-schedule/"
-    },
-    {
      "type": "quiet",
      "block": [
-      120,
+      0,
       240
      ],
      "until": "17:09",
@@ -372,16 +299,16 @@
        "lon": 151.2011
       },
       {
-       "name": "City Tattersalls Club",
-       "address": "198 Pitt St, Sydney NSW 2000",
-       "lat": -33.8712,
-       "lon": 151.2083
+       "name": "Four Seasons Hotel Sydney",
+       "address": "199 George St, Sydney NSW 2000",
+       "lat": -33.8617,
+       "lon": 151.2076
       },
       {
-       "name": "The Star Sydney",
-       "address": "80 Pyrmont St, Pyrmont NSW 2009",
-       "lat": -33.8687,
-       "lon": 151.1956
+       "name": "Hilton Sydney",
+       "address": "488 George St, Sydney NSW 2000",
+       "lat": -33.8718,
+       "lon": 151.2076
       }
      ]
     },
@@ -406,7 +333,7 @@
      "age_hi": 60,
      "wait": "Kent St kerb",
      "drive_min": 6,
-     "drive_from": "Cruise ship boarding · Royal Princess",
+     "drive_from": null,
      "url": "https://www.mirvac.com/office-and-industrial/Master-Office-Portfolio/nsw/275-kent-street"
     },
     {
@@ -492,33 +419,9 @@
    "date": "2026-11-26",
    "entries": [
     {
-     "type": "stop",
-     "block": [
-      0,
-      120
-     ],
-     "id": "cruise:carnival-adventure:2026-11-26",
-     "kind": "cruise",
-     "name": "Cruise ship boarding · Carnival Adventure",
-     "score": 54,
-     "exit": "13:00",
-     "start": null,
-     "desc": "Ship departs at 3:30pm from the Overseas Passenger Terminal. Pick up passengers at city hotels heading to the terminal.",
-     "address": "Circular Quay West, The Rocks NSW 2000",
-     "lat": -33.8583,
-     "lon": 151.2099,
-     "size": 3000,
-     "age_lo": 45,
-     "age_hi": 75,
-     "wait": "City hotels, then the Overseas Passenger Terminal",
-     "drive_min": 5,
-     "drive_from": null,
-     "url": "https://www.portauthoritynsw.com.au/cruise/cruise-schedule/"
-    },
-    {
      "type": "quiet",
      "block": [
-      120,
+      0,
       240
      ],
      "until": "17:09",
@@ -531,16 +434,16 @@
        "lon": 151.2011
       },
       {
-       "name": "City Tattersalls Club",
-       "address": "198 Pitt St, Sydney NSW 2000",
-       "lat": -33.8712,
-       "lon": 151.2083
+       "name": "Four Seasons Hotel Sydney",
+       "address": "199 George St, Sydney NSW 2000",
+       "lat": -33.8617,
+       "lon": 151.2076
       },
       {
-       "name": "The Star Sydney",
-       "address": "80 Pyrmont St, Pyrmont NSW 2009",
-       "lat": -33.8687,
-       "lon": 151.1956
+       "name": "Hilton Sydney",
+       "address": "488 George St, Sydney NSW 2000",
+       "lat": -33.8718,
+       "lon": 151.2076
       }
      ]
     },
@@ -565,7 +468,7 @@
      "age_hi": 60,
      "wait": "Kent St kerb",
      "drive_min": 6,
-     "drive_from": "Cruise ship boarding · Carnival Adventure",
+     "drive_from": null,
      "url": "https://www.mirvac.com/office-and-industrial/Master-Office-Portfolio/nsw/275-kent-street"
     },
     {
