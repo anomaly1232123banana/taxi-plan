@@ -32,6 +32,12 @@ class TestSources(unittest.TestCase):
         self.assertEqual(v.desc, "Ship departs at 6pm from the White Bay Cruise Terminal. Pick up passengers at city hotels heading to the terminal.")
         self.assertEqual(v.name, "Cruise ship boarding · Viking Venus")
 
+    def test_white_bay_4_is_white_bay_terminal(self):
+        deps = parse_schedule(row("Bay Four", "Mon 23 Nov<br>18:00", "White Bay 4"), date(2026, 11, 23))
+        c, = boarding_candidates(deps, DAYS, W, S)
+        self.assertEqual((c.area, c.address), ("Pyrmont", "5 Robert St, Rozelle NSW 2039"))
+        self.assertIn("from the White Bay 4.", c.desc)
+
     def test_unknown_berth_skipped(self):
         deps = parse_schedule(row("Odd Ship", "Mon 23 Nov<br>18:00", "Mystery Wharf"), date(2026, 11, 23))
         with self.assertLogs("taxi.sources.cruise", "WARNING"):
