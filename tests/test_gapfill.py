@@ -102,6 +102,32 @@ class GapfillTests(unittest.TestCase):
         (_, dis, _), _ = run(fake(reply(disruptions=[ok, dict(ok, area="Mars")])))
         self.assertEqual(dis, [ok])
 
+    def test_hostile_values_do_not_crash(self):
+        ok = {"area": "ALL", "date": "2026-11-24", "from": "00:00", "to": "23:59", "what": "strike", "source_url": "https://t.nsw/x"}
+        self.assertIsNone(validate_event(dict(GOOD, area=["Pyrmont"]), set(DAYS), AREAS))
+        self.assertIsNone(validate_disruption(dict(ok, area=["ALL"]), set(DAYS), AREAS))
+        self.assertIsNone(validate_event(dict(GOOD, date="20261124"), set(DAYS), AREAS))
+
+        def boom(u):
+            raise ValueError("bad url")
+        with self.assertLogs("taxi.gapfill", "INFO"):
+            (cands, _, status), cache = run(fake(reply([GOOD])), alive=boom)
+        self.assertEqual((cands, cache["gapfill"], status), ([], {}, "ok"))
+
+    def test_dedupes_against_own_cache(self):
+        cache, cid = self.cached("2026-11-24")
+        call = fake(reply([dict(GOOD, name="Medical Congress 2026")]))
+        (cands, _, _), cache = run(call, cache=cache)
+        self.assertIn("ICC Sydney | 2026-11-24", call.prompts[0])
+        self.assertEqual([c.id for c in cands], [cid])
+        self.assertEqual(list(cache["gapfill"]), [cid])
+
+    def test_cached_dropped_when_existing_now_covers_it(self):
+        cache, _ = self.cached("2026-11-24")
+        tm = cand(id="tm:N", area="Pyrmont", start=datetime(2026, 11, 24, 9, 15, tzinfo=SYD))
+        (cands, _, _), _ = run(None, existing=[tm], cache=cache)
+        self.assertEqual(cands, [])
+
     def test_validate_event_returns_fields(self):
         ev = validate_event(dict(GOOD, junk=1), set(DAYS), AREAS)
         self.assertNotIn("junk", ev)

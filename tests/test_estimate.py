@@ -89,6 +89,16 @@ class EstimateTests(unittest.TestCase):
         self.assertEqual(len(call.prompts), 2)
         self.assertEqual([c.id for c in got], ["tm:A"])
 
+    def test_non_string_id_ignored(self):
+        call = fake(json.dumps([dict(est("tm:A"), id=["tm:A"])]), json.dumps([est("tm:A")]))
+        got, _ = estimate_events([self.A], empty(), call, W, TODAY, "English")
+        self.assertEqual(([c.id for c in got], len(call.prompts)), (["tm:A"], 2))
+
+    def test_nothing_valid_is_error(self):
+        call = fake(json.dumps([est("tm:A", pays=9)]), json.dumps([]))
+        got, status = estimate_events([self.A], empty(), call, W, TODAY, "English")
+        self.assertEqual((got, status), ([], "error: no valid estimates"))
+
     def test_claude_error(self):
         call = fake(ClaudeError("auth"))
         got, status = estimate_events([self.A, self.B], self.cached("tm:A"), call, W, TODAY, "English")

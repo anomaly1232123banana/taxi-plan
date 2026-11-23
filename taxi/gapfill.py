@@ -26,7 +26,7 @@ def _url(v) -> bool:
 
 def _day(v, days: set[date]) -> bool:
     try:
-        return isinstance(v, str) and date.fromisoformat(v) in days
+        return isinstance(v, str) and re.fullmatch(r"\d{4}-\d{2}-\d{2}", v) is not None and date.fromisoformat(v) in days
     except ValueError:
         return False
 
@@ -64,7 +64,7 @@ def validate_event(obj: dict, days: set[date], area_names: set[str]) -> dict | N
     if not isinstance(obj, dict):
         return None
     est = validate_estimate(obj)
-    ok = (est is not None and all(_s(obj.get(k)) for k in ("name", "venue", "address")) and obj.get("area") in area_names
+    ok = (est is not None and all(_s(obj.get(k)) for k in ("name", "venue", "address")) and isinstance(obj.get("area"), str) and obj["area"] in area_names
           and obj.get("kind") in EVENT_KINDS and _day(obj.get("date"), days) and _hm(obj.get("start"))
           and _url(obj.get("source_url")))
     if not ok:
@@ -76,7 +76,7 @@ def validate_event(obj: dict, days: set[date], area_names: set[str]) -> dict | N
 def validate_disruption(obj: dict, days: set[date], area_names: set[str]) -> dict | None:
     if not isinstance(obj, dict):
         return None
-    ok = (obj.get("area") in area_names | {"ALL"} and _day(obj.get("date"), days) and _hm(obj.get("from"))
+    ok = (isinstance(obj.get("area"), str) and obj["area"] in area_names | {"ALL"} and _day(obj.get("date"), days) and _hm(obj.get("from"))
           and _hm(obj.get("to")) and obj["from"] <= obj["to"] and obj.get("what") in DISRUPTION_KINDS
           and _url(obj.get("source_url")))
     return {k: obj[k] for k in ("area", "date", "from", "to", "what", "source_url")} if ok else None
@@ -93,8 +93,16 @@ def event_to_candidate(ev: dict, t: dict) -> Candidate:
     return c
 
 
-def _overlaps(c: Candidate, existing: list[Candidate]) -> bool:
-    return any(e.area == c.area and e.start and abs(e.start - c.start) <= timedelta(minutes=OVERLAP_MIN) for e in existing)
+def _overlaps(c: Candidate, others: list[Candidate]) -> bool:
+    return any(o.id != c.id and o.area == c.area and o.start and abs(o.start - c.start) <= timedelta(minutes=OVERLAP_MIN)
+               for o in others)
+
+
+def _alive(alive: Callable[[str], bool], url: str) -> bool:
+    try:
+        return bool(alive(url))
+    except Exception:  # a malformed URL from Claude must not stop the scan
+        return False
 
 
 def gapfill(call: Callable[[str], str] | None, venues: list[dict], days: list[date], existing: list[Candidate],
@@ -103,11 +111,16 @@ def gapfill(call: Callable[[str], str] | None, venues: list[dict], days: list[da
     store = cache["gapfill"]
     disruptions: list[dict] = []
     status = "ok"
+
+    def cached() -> list[Candidate]:
+        return [event_to_candidate(v["event"], t) for v in store.values() if v["event"]["date"] >= today.isoformat()]
+
     if call is None:
         status = "skipped"
     else:
         names = set(t["areas"])
-        known = sorted({f"{e.venue} | {e.start:%Y-%m-%d}" for e in existing if e.start})
+        pool = existing + cached()
+        known = sorted({f"{e.venue} | {e.start:%Y-%m-%d}" for e in pool if e.start})
         cw = w["claude"]
         try:
             obj = extract_json(call(gapfill_prompt(venues, days, known, sorted(names), cw["gapfill_max_searches"], language)))
@@ -122,16 +135,16 @@ def gapfill(call: Callable[[str], str] | None, venues: list[dict], days: list[da
             if ev is None:
                 continue
             c = event_to_candidate(ev, t)
-            if _overlaps(c, existing):
+            if _overlaps(c, pool):
                 continue
             if kept >= cw["gapfill_max_events"]:
                 log.warning("gap-fill event cap reached; dropping the rest")
                 break
-            if not alive(ev["source_url"]):
+            if not _alive(alive, ev["source_url"]):
                 log.info("gap-fill event dropped, dead link: %s", ev["name"])
                 continue
             store[c.id] = {"event": ev, "seen": today.isoformat()}
+            pool.append(c)
             kept += 1
         disruptions = [d for d in (validate_disruption(x, set(days), names) for x in dis) if d] if isinstance(dis, list) else []
-    cands = [event_to_candidate(v["event"], t) for v in store.values() if v["event"]["date"] >= today.isoformat()]
-    return cands, disruptions, status
+    return [c for c in cached() if not _overlaps(c, existing)], disruptions, status

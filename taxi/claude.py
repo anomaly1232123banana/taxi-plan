@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import shutil
 import subprocess
 from typing import Any
@@ -7,6 +8,11 @@ from typing import Any
 
 class ClaudeError(Exception):
     pass
+
+
+def _clean(text: str) -> str:
+    """Error text must never carry a URL query string."""
+    return re.sub(r"(https?://[^\s?#]+)\?\S*", r"\1", text)[:200]
 
 
 def claude_args(tools: list[str], max_turns: int) -> list[str]:
@@ -32,20 +38,26 @@ def run_claude(prompt: str, args: list[str], timeout_s: int, token: str | None =
     try:
         out = json.loads(p.stdout)
     except ValueError:
-        raise ClaudeError(f"claude exited {p.returncode} without JSON: {(p.stderr or p.stdout).strip()[:200]}") from None
+        raise ClaudeError(f"claude exited {p.returncode} without JSON: {_clean((p.stderr or p.stdout).strip())}") from None
     if not isinstance(out, dict):
         raise ClaudeError("claude returned unexpected JSON")
     # An auth failure arrives as subtype "success" with is_error true.
     if out.get("is_error") or out.get("subtype") != "success":
-        raise ClaudeError(str(out.get("result") or out.get("subtype") or "claude failed")[:200])
+        raise ClaudeError(_clean(str(out.get("result") or out.get("subtype") or "claude failed")))
     return str(out.get("result", ""))
 
 
 def extract_json(text: str) -> Any:
-    i = min((k for k in (text.find("["), text.find("{")) if k >= 0), default=-1)
-    if i < 0:
+    dec, first = json.JSONDecoder(), None
+    for m in re.finditer(r"[\[{]", text):
+        try:
+            v = dec.raw_decode(text[m.start():])[0]
+        except ValueError:
+            continue
+        # prose can hold stray "[1]" or links before the real payload: prefer objects / lists of objects
+        if isinstance(v, dict) or (isinstance(v, list) and v and all(isinstance(i, dict) for i in v)):
+            return v
+        first = [v] if first is None else first
+    if first is None:
         raise ClaudeError("no JSON in reply")
-    try:
-        return json.JSONDecoder().raw_decode(text[i:])[0]
-    except ValueError:
-        raise ClaudeError("reply JSON did not parse") from None
+    return first[0]

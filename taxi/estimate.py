@@ -67,7 +67,7 @@ def _ask(call, events, language, got: dict) -> None:
     items = extract_json(call(estimate_prompt(events, language)))
     for item in items if isinstance(items, list) else []:
         e = validate_estimate(item) if isinstance(item, dict) else None
-        if e and item.get("id") in wanted:
+        if e and isinstance(item.get("id"), str) and item["id"] in wanted:
             got[item["id"]] = e
 
 
@@ -91,6 +91,8 @@ def estimate_events(events: list[Candidate], cache: dict, call: Callable[[str], 
                 _ask(call, missing, language, got)
         except ClaudeError as e:
             status = f"error: {e}"
+        if not got and status == "ok":
+            status = "error: no valid estimates"
         for i, e in got.items():
             store[i] = {"est": e, "seen": today.isoformat()}
     done = []

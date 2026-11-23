@@ -41,7 +41,7 @@ class ClaudeTests(unittest.TestCase):
         run.return_value = reply(type="result", subtype="success", is_error=True, result="Failed to authenticate: expired")
         with self.assertRaisesRegex(ClaudeError, "Failed to authenticate"):
             run_claude("p", ["-p"], 5, which=FAKE)
-        run.return_value = reply(type="result", subtype="error_max_turns", is_error=True, result="")
+        run.return_value = reply(type="result", subtype="error_max_turns", is_error=False, result="")
         with self.assertRaisesRegex(ClaudeError, "error_max_turns"):
             run_claude("p", ["-p"], 5, which=FAKE)
         run.side_effect = subprocess.TimeoutExpired("claude", 5)
@@ -60,6 +60,19 @@ class ClaudeTests(unittest.TestCase):
         self.assertEqual(extract_json("Here you go:\n[1,2]\nThanks"), [1, 2])
         with self.assertRaises(ClaudeError):
             extract_json("no json here")
+        self.assertEqual(extract_json("See [ICC](https://x.com/a) and [1]:\n{\"a\": 2}"), {"a": 2})
+
+    @patch("taxi.claude.subprocess.run")
+    def test_errors_hide_query_strings(self, run):
+        run.return_value = reply(type="result", subtype="success", is_error=True, result="404 at https://api.x.com/v1?apikey=SECRET&b=1 sorry")
+        with self.assertRaises(ClaudeError) as cm:
+            run_claude("p", ["-p"], 5, which=FAKE)
+        self.assertNotIn("SECRET", str(cm.exception))
+        self.assertIn("https://api.x.com/v1", str(cm.exception))
+        run.return_value = subprocess.CompletedProcess([], 1, "", "failed https://h.com/p?key=SECRET")
+        with self.assertRaises(ClaudeError) as cm:
+            run_claude("p", ["-p"], 5, which=FAKE)
+        self.assertNotIn("SECRET", str(cm.exception))
 
 
 if __name__ == "__main__":
